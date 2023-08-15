@@ -1,0 +1,215 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapCartTable {
+  .cartTable_product {
+    display: flex;
+    align-items: center;
+    .product__btnDelete {
+      margin-right: 10px;
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      border-radius: 50%;
+      padding: 3px;
+      background-color: $smoke-14-color;
+      // border: 1px solid $black-color;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        color: $black-color;
+        @include mq(md) {
+          font-size: 16px;
+        }
+        @include mq(md, "max") {
+          font-size: 14px;
+        }
+      }
+    }
+    .product__img {
+      min-width: 60px;
+      max-width: 90px;
+      width: 90px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .product__info {
+      @include mq(md) {
+        margin-left: 20px;
+      }
+      @include mq(md, "max") {
+        margin-left: 10px;
+      }
+      .info___name {
+        line-height: 22px;
+        text-transform: capitalize;
+        a {
+          color: $black-color;
+          font-weight: 400;
+          display: block;
+          text-decoration: none;
+          &:hover {
+            color: $pink-2-color;
+          }
+
+          @include mq(md) {
+            font-size: 16px;
+          }
+
+          @include mq(md, "max") {
+            font-size: 14px;
+          }
+        }
+      }
+      .info___price {
+        font-weight: bolder;
+        line-height: 24px;
+        @include mq(md) {
+          font-size: 15px;
+        }
+        @include mq(md, "max") {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+  .cartTable_quantity,
+  .cartTable_subtotal {
+    line-height: 22px;
+    text-transform: capitalize;
+    @include mq(md) {
+      font-size: 16px;
+    }
+    @include mq(md, "max") {
+      font-size: 14px;
+    }
+  }
+  .cartTable_quantity {
+    display: inline-block;
+    position: relative;
+
+    input {
+      height: 30px;
+      font-size: 13px;
+      border: 1px solid #b9b9b9;
+      border-radius: 5px;
+      color: $dark-7-color;
+      font-weight: 700;
+      padding: 0 30px;
+      text-align: center;
+      @include mq(md) {
+        width: 120px;
+      }
+      @include mq(md, "max") {
+        width: 90px;
+      }
+    }
+
+    .main__BtnDec,
+    .main__btnInc {
+      position: absolute;
+      line-height: 25px;
+      color: $smoke-5-color;
+      height: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      font-weight: 600;
+      width: 30px;
+      text-align: center;
+      transition: all 0.5s ease 0s;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover {
+        transition: opacity 0.3s linear, visibility 0.3s linear,
+          color 0.15s linear, border-color 0.15s linear,
+          background-color 0.15s linear, box-shadow 0.15s linear;
+      }
+    }
+
+    .main__BtnDec {
+      left: 0;
+      border-right: 1px solid $smoke-10-color;
+    }
+
+    .main__btnInc {
+      right: 0;
+      border-left: 1px solid $smoke-10-color;
+    }
+  }
+  .cartTable_subtotal {
+    font-weight: bolder;
+  }
+  :global {
+    .ant-table-wrapper {
+      .ant-table {
+        .ant-table-container {
+          .ant-table-content {
+            tr {
+              &:hover {
+                td {
+                  background: $white-color;
+                }
+              }
+              th,
+              td {
+                background: $white-color;
+                @include mq(md) {
+                  padding: 15px 15px 15px 0;
+                  &:not(:first-child) {
+                    padding-left: 15px;
+                  }
+                }
+                @include mq(md, "max") {
+                  padding: 10px 10px 10px 0;
+                  &:not(:first-child) {
+                    padding-left: 10px;
+                  }
+                  &:nth-child(2) {
+                    padding-right: 0;
+                    padding-left: 0;
+                  }
+                  &:nth-child(3) {
+                    display: none;
+                  }
+                }
+              }
+              th {
+                line-height: 18px;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                font-weight: bolder;
+                border-bottom: 1px solid $smoke-14-color;
+                padding-top: 0;
+                &::before {
+                  content: none !important;
+                }
+                @include mq(md) {
+                  font-size: 16px;
+                }
+                @include mq(md, "max") {
+                  font-size: 14px;
+                }
+              }
+              td {
+                border-bottom: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

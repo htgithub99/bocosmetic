@@ -1,0 +1,129 @@
+//global css
+@import url("https://fonts.googleapis.com/css2?family=Mulish&display=swap");
+@import "./variables.scss";
+@import "./mixin.scss";
+body {
+  font-family: "Mulish", sans-serif;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.d-flex {
+  display: flex;
+}
+
+//Pagination
+.ant-pagination {
+  align-items: center;
+  .ant-pagination-item-active {
+    background: #1677ff !important;
+    a {
+      color: $white-color !important;
+    }
+    &:hover {
+      a {
+        color: $white-color;
+      }
+    }
+  }
+  .ant-pagination-item {
+    border-radius: 50%;
+    background: none;
+    min-width: 24px;
+    height: 24px;
+    a {
+      padding: 0;
+      color: $black-color;
+      height: 100%;
+      width: 100%;
+      position: relative;
+      top: -4px;
+      font-size: 12px;
+    }
+  }
+}
+
+.w-100 {
+  width: 100%;
+}
+.h-100 {
+  height: 100%;
+}
+.disabled-div {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.custom-ant-image-mask {
+  .ant-image-mask {
+    .ant-image-mask-info {
+      display: none;
+    }
+  }
+}
+
+//Table
+.ant-table {
+  margin: 0 !important;
+  .ant-table-container {
+    .ant-table-content {
+      table {
+        .ant-table-tbody {
+          .ant-table-row {
+            td.ant-table-cell {
+              padding: 10px 15px;
+              .material-symbols-outlined {
+                font-size: 30px;
+                color: $gray-2-color;
+                opacity: 0.6;
+              }
+              .ant-image {
+                img {
+                  width: 100%;
+                  height: 40px;
+                  object-fit: contain;
+                  border-radius: 5px;
+                }
+                .ant-image-mask {
+                  .ant-image-mask-info {
+                    display: none;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .ant-table-thead {
+          th,
+          td {
+            padding: 10px 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+//Sidenav
+.toggle-side-nav {
+  display: none;
+  transition: width 200ms;
+}
+
+.btn-submit-login {
+  width: 279px;
+  border-radius: 50px;
+  height: 64px;
+  text-align: center;
+  font-size: 24px;
+  opacity: 0.5;
+}
+
+input:-internal-autofill-selected {
+  background: none;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}

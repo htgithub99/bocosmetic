@@ -1,0 +1,362 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+
+.wrapProductDetail {
+  min-height: 100vh;
+  .productDetail_content {
+    @include mq(lg) {
+      padding: 0 30px;
+    }
+    @include mq(lg, "max") {
+      padding: 0 15px;
+    }
+    .wrapContentTop {
+      margin-top: 40px;
+      @include mq(lg) {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      @include mq(md, "max") {
+        margin-top: 15px;
+      }
+
+      .contentTop_listSale {
+        @include mq(lg) {
+          width: 20%;
+          margin-right: 25px;
+          min-width: 250px;
+        }
+
+        @include mq(lg, "max") {
+          display: none;
+        }
+
+        @include mq(md, "max") {
+          margin-right: 20px;
+        }
+      }
+      .contentTop__top {
+        @include mq(lg) {
+          flex: 1;
+          overflow: hidden;
+          // border: 1px solid $smoke-14-color;
+          padding: 30.69px;
+        }
+        @include mq(md) {
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .top___images {
+          flex: 1;
+          @include mq(md) {
+            width: 40%;
+          }
+
+          @include mq(md, "max") {
+            width: 100%;
+          }
+
+          img {
+            width: 100%;
+          }
+        }
+
+        .top___info {
+          @include mq(md) {
+            padding-left: 42px;
+          }
+
+          @include mq(md, "max") {
+            margin-top: 30px;
+          }
+
+          .info____collection {
+            button {
+              color: $black-color;
+              background: none;
+              margin-bottom: 15px;
+              border: 1px solid $smoke-color;
+              border-radius: 5px;
+              cursor: pointer;
+              padding: 2px 5px;
+              font-weight: 500;
+              @include mq(md) {
+                font-size: 16px;
+              }
+
+              @include mq(md, "max") {
+                font-size: 14px;
+              }
+            }
+          }
+
+          .info____name {
+            font-weight: bold;
+            color: $dark-5-color;
+
+            @include mq(lg) {
+              font-size: 24px;
+            }
+
+            @include mq(lg, "max") {
+              font-size: 20px;
+            }
+
+            @include mq(md, "max") {
+              font-size: 18px;
+            }
+          }
+
+          .info____more {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+
+            .more_____star {
+              margin-right: 10px;
+              :global {
+                .ant-rate {
+                  padding: 0;
+                  margin: 0;
+                  position: relative;
+                  top: -2px;
+
+                  @include mq(md) {
+                    font-size: 14px;
+                  }
+
+                  @include mq(md, "max") {
+                    font-size: 12px;
+                  }
+
+                  .ant-rate-star {
+                    margin-right: 5px;
+                  }
+                  .ant-rate-star-full,
+                  .ant-rate-star-half {
+                    color: $pink-2-color;
+                  }
+                }
+              }
+            }
+
+            .more_____slot {
+              font-size: 12px;
+              font-weight: 700;
+            }
+          }
+
+          .info____price {
+            font-weight: bold;
+            font-family: initial;
+            margin-top: 10px;
+            color: $red-1-color;
+
+            @include mq(lg) {
+              font-size: 30px;
+            }
+
+            @include mq(lg, "max") {
+              font-size: 24px;
+            }
+
+            @include mq(md, "max") {
+              font-size: 18px;
+            }
+
+            .price_____low {
+              opacity: 0.6;
+              text-decoration: line-through;
+              margin-left: 10px;
+
+              @include mq(lg) {
+                font-size: 24px;
+              }
+
+              @include mq(lg, "max") {
+                font-size: 16px;
+              }
+
+              @include mq(md, "max") {
+                font-size: 14px;
+              }
+            }
+          }
+
+          .info____type {
+            margin-top: 20px;
+            :global {
+              .ant-radio-group {
+                display: flex;
+                flex-wrap: wrap;
+                .ant-radio-wrapper {
+                  .ant-radio {
+                    transform: scale(1.2);
+                  }
+                  .ant-radio.ant-radio-checked {
+                    .ant-radio-inner {
+                      background-color: $pink-2-color;
+                      border-color: $pink-2-color;
+                      ::after {
+                        transform: scale(0.5);
+                      }
+                    }
+                  }
+                }
+                label {
+                  font-weight: 400;
+                  margin-bottom: 10px;
+                  @include mq(md) {
+                    font-size: 16px;
+                  }
+                  @include mq(md, "max") {
+                    font-size: 14px;
+                  }
+                }
+              }
+            }
+
+            h5 {
+              font-weight: 600;
+              margin-top: 10px;
+              @include mq(md) {
+                font-size: 18px;
+              }
+              @include mq(md, "max") {
+                font-size: 14px;
+              }
+            }
+          }
+
+          .info____qty {
+            h5 {
+              font-weight: 600;
+              margin-top: 10px;
+
+              @include mq(lg) {
+                font-size: 18px;
+              }
+
+              @include mq(lg, "max") {
+                font-size: 16px;
+              }
+
+              @include mq(md, "max") {
+                font-size: 14px;
+              }
+            }
+            margin-bottom: 26px;
+            margin-top: 10px;
+
+            .qty_____main {
+              display: inline-block;
+              position: relative;
+
+              input {
+                width: 120px;
+                height: 30px;
+                font-size: 13px;
+                border: 1px solid #b9b9b9;
+                border-radius: 5px;
+                color: $dark-7-color;
+                font-weight: 700;
+                padding: 0 30px;
+                text-align: center;
+              }
+
+              .main______BtnDec,
+              .main______btnInc {
+                position: absolute;
+                line-height: 25px;
+                color: $smoke-5-color;
+                height: 100%;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 24px;
+                font-weight: 600;
+                width: 30px;
+                text-align: center;
+                transition: all 0.5s ease 0s;
+                cursor: pointer;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                &:hover {
+                  transition: opacity 0.3s linear, visibility 0.3s linear,
+                    color 0.15s linear, border-color 0.15s linear,
+                    background-color 0.15s linear, box-shadow 0.15s linear;
+                }
+              }
+
+              .main______BtnDec {
+                left: 0;
+                border-right: 1px solid $smoke-10-color;
+              }
+
+              .main______btnInc {
+                right: 0;
+                border-left: 1px solid $smoke-10-color;
+              }
+            }
+            .qty_____slot {
+              margin-left: 10px;
+              font-size: 12px;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+    }
+
+    .content__bottom {
+      @include mq(md) {
+        margin-top: 50px;
+      }
+
+      @include mq(md, "max") {
+        margin-top: 20px;
+      }
+      .bottom___description {
+        @include mq(md) {
+          font-size: 16px;
+        }
+
+        @include mq(md, "max") {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .info____btn {
+    width: 60%;
+    font-size: 13px;
+    color: $white-color;
+    font-weight: 500;
+    height: 38px;
+    border: none;
+    margin-top: 10px;
+
+    &:disabled {
+      color: $black-color;
+    }
+
+    @include mq(lg) {
+    }
+
+    @include mq(lg, "max") {
+    }
+
+    @include mq(md, "max") {
+      height: 30px;
+      width: 45%;
+    }
+  }
+}

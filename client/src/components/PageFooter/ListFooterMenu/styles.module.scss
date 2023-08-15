@@ -1,0 +1,28 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapList {
+  ul {
+    margin: 0;
+    padding: 0;
+    
+    li {
+      list-style: none;
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+      a {
+        text-decoration: none;
+        font-size: 15px;
+        color: $dark-5-color;
+        font-weight: 600;
+        &:hover {
+          text-decoration: underline;
+        }
+        @include mq(md, "max") {
+          font-size: 13px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}

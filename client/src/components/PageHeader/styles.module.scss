@@ -1,0 +1,72 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapPageHeader {
+  box-shadow: 0 1px 4px 2px rgba(255, 255, 255, 0.6);
+  .pageHeader_shopInfo,
+  .shopInfo__contact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .pageHeader_shopInfo {
+    background-color: $pink-color;
+    flex-wrap: wrap;
+
+    @include mq(lg) {
+      padding: 5px 20px;
+    }
+
+    @include mq(lg, "max") {
+      padding: 5px 15px;
+      display: none;
+    }
+
+    .shopInfo__name {
+      p {
+        margin: 0;
+        font-size: 0.8em;
+        font-weight: 400;
+        color: $white-color;
+      }
+    }
+    .shopInfo__contact {
+      .contact___email,
+      .contact___phone {
+        margin-right: 0.8em;
+        a {
+          text-decoration: none;
+          font-size: 0.8em;
+          font-weight: 400;
+          color: $white-color;
+          span {
+            margin-right: 5px;
+          }
+        }
+      }
+      .contact___email {
+        position: relative;
+
+        &::after {
+          content: "";
+          height: 1px;
+          width: 0.8em;
+          transform: rotateZ(90deg);
+          background-color: $white-color;
+          position: absolute;
+          right: -0.8em;
+          top: 10px;
+        }
+      }
+      .contact___other {
+        a {
+          font-size: 0.8em;
+          font-weight: 400;
+          color: $white-color;
+          &:not(&:last-child) {
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.productSlidersWrap {
+  &:hover {
+    :global {
+      .swiper-button-prev,
+      .swiper-button-next {
+        opacity: 1;
+        transition: all 0.3s;
+      }
+    }
+  }
+  :global {
+    .swiper-wrapper {
+      .swiper-slide {
+        cursor: pointer;
+        .ant-image {
+          width: 100%;
+          .ant-image-mask {
+            .ant-image-mask-info {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+    .swiper-button-prev,
+    .swiper-button-next {
+      color: $pink-3-color;
+      opacity: 0;
+      transition: all 0.3s;
+      &::after {
+        font-size: 24px;
+        font-weight: 600;
+      }
+    }
+    .swiper-button-prev.swiper-button-disabled,
+    .swiper-button-next.swiper-button-disabled {
+      opacity: 0.3;
+    }
+    .swiper-thumbs {
+      .swiper-wrapper {
+        .swiper-slide:not(.swiper-slide-thumb-active) {
+          opacity: 0.3;
+        }
+      }
+    }
+  }
+  .mySwiperMain {
+    margin-bottom: 10px;
+  }
+}

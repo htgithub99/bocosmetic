@@ -1,0 +1,133 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapContact {
+  padding: 0 30px;
+  @include mq(lg) {
+    font-size: 16px;
+  }
+  @include mq(lg, "max") {
+    margin-top: 15px;
+    padding: 0 15px;
+  }
+
+  @include mq(md, "max") {
+    margin-top: 0;
+  }
+
+  .contact_header {
+    .header__banner {
+      @include mq(lg) {
+        margin: 0 -30px 30px -30px;
+      }
+
+      @include mq(lg, "max") {
+        margin: 0 -15px 10px -15px;
+      }
+    }
+  }
+  .contact_content {
+    @include mq(lg) {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .content__description {
+      font-weight: 300;
+      @include mq(lg) {
+        margin-right: 25px;
+      }
+      p {
+        text-align: justify;
+        @include mq(lg) {
+          font-size: 18px;
+        }
+
+        @include mq(lg, "max") {
+          font-size: 14px;
+        }
+
+        @include mq(md, "max") {
+          font-size: 12px;
+        }
+      }
+      li {
+        @include mq(lg) {
+          font-size: 16px;
+        }
+
+        @include mq(lg, "max") {
+          font-size: 14px;
+        }
+
+        @include mq(md, "max") {
+          font-size: 12px;
+        }
+        &:not(:last-child) {
+          margin-bottom: 10px;
+          @include mq(md, "max") {
+            margin-bottom: 5px;
+          }
+        }
+        span {
+          font-weight: bold;
+          margin-right: 5px;
+        }
+      }
+    }
+    .content__info {
+      @include mq(lg, "max") {
+        margin-top: 30px;
+      }
+      .info___title {
+        margin-bottom: 15px;
+        text-transform: none;
+        @include mq(md, "max") {
+          margin-bottom: 10px;
+        }
+        h4 {
+          font-size: 18px;
+          font-weight: bold;
+          @include mq(lg) {
+            font-size: 18px;
+          }
+
+          @include mq(lg, "max") {
+            font-size: 16px;
+          }
+
+          @include mq(md, "max") {
+            font-size: 14px;
+          }
+        }
+      }
+      ul.info___content {
+        margin: 20px 0;
+        padding: 0 0 0 35px;
+        li {
+          font-weight: 300;
+          @include mq(lg) {
+            font-size: 16px;
+          }
+
+          @include mq(lg, "max") {
+            font-size: 14px;
+          }
+
+          @include mq(md, "max") {
+            font-size: 12px;
+          }
+          &:not(:last-child) {
+            margin-bottom: 10px;
+            @include mq(md, "max") {
+              margin-bottom: 5px;
+            }
+          }
+          span {
+            font-weight: bold;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+}

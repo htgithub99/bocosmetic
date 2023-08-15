@@ -1,0 +1,93 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.pageHeader_certificate {
+  display: flex;
+  align-items: center;
+  background: $pink-4-color;
+  padding: 5px 20px;
+  justify-content: space-between;
+
+  @include mq(lg) {
+    height: 83px;
+  }
+
+  @include mq(lg, "max") {
+    height: 62px;
+  }
+
+  .menu_icon,
+  .cart_icon {
+    span {
+      svg {
+        font-size: 32px;
+        color: $pink-3-color;
+      }
+    }
+
+    @include mq(lg, "max") {
+      display: block;
+    }
+  }
+  .cart_icon {
+    cursor: pointer;
+    :global {
+      .ant-badge {
+        .ant-badge-count {
+          box-shadow: 0 0 0 1px $pink-2-color;
+          background: $pink-2-color;
+          padding: 0 5px;
+          top: 5px;
+        }
+      }
+    }
+  }
+  .menu_icon {
+    @include mq(lg) {
+      display: none;
+    }
+  }
+
+  .certificate__logo {
+    cursor: pointer;
+    @include mq(lg, "max") {
+      margin-right: 5px;
+    }
+    img {
+      @include mq(lg) {
+        max-height: 55px;
+      }
+
+      @include mq(lg, "max") {
+        max-height: 52px;
+      }
+    }
+  }
+
+  .certificate__item {
+    display: flex;
+    align-items: center;
+    @include mq(lg, "max") {
+      margin-right: 5px;
+      display: none;
+    }
+
+    .item___logo {
+      margin-right: 15px;
+      img {
+        width: 37px;
+        height: auto;
+        object-fit: fill;
+        image-rendering: pixelated;
+      }
+    }
+    .item___info {
+      .info_name {
+        margin-bottom: 5px;
+        font-size: 16px;
+      }
+      .info_link {
+        font-size: 14px;
+      }
+    }
+  }
+}

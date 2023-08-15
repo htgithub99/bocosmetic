@@ -1,0 +1,33 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+
+.wrapPayment {
+  min-height: 100vh;
+  display: flex;
+  @include mq(lg) {
+    padding: 0 30px;
+    margin-top: 50px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  @include mq(lg, "max") {
+    padding: 0 15px;
+    margin-top: 20px;
+    flex-direction: column;
+  }
+  .payment_form {
+    @include mq(lg) {
+      flex: 1;
+    }
+    @include mq(lg, "max") {
+      margin-bottom: 30px;
+      order: 2;
+    }
+  }
+  .payment_info {
+    @include mq(lg) {
+      min-width: 300px;
+      margin-left: 30px;
+    }
+  }
+}

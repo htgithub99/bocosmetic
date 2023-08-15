@@ -1,0 +1,76 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapPaymentForm {
+  .paymentForm_title {
+    font-weight: bolder;
+    text-transform: uppercase;
+
+    @include mq(md) {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    @include mq(md, "max") {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+  }
+  .paymentForm_form {
+    input {
+      height: 2.507em;
+    }
+    input,
+    textarea {
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      border: 1px solid #ddd;
+      padding: 0 0.75em;
+      max-width: 100%;
+      width: 100%;
+      vertical-align: middle;
+      background-color: #fff;
+      color: #333;
+      -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+      -webkit-transition: color 0.3s, border 0.3s, background 0.3s, opacity 0.3s;
+      -o-transition: color 0.3s, border 0.3s, background 0.3s, opacity 0.3s;
+      transition: color 0.3s, border 0.3s, background 0.3s, opacity 0.3s;
+
+      &:focus {
+        outline: none;
+      }
+
+      @include mq(md) {
+        font-size: 16px;
+      }
+      @include mq(md, "max") {
+        font-size: 14px;
+      }
+    }
+
+    button {
+      width: 100%;
+      height: 100%;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      font-weight: bolder;
+      text-align: center;
+      line-height: 2.4em;
+      min-height: 2.5em;
+      padding: 0 1.2em;
+      max-width: 100%;
+      background-color: $pink-2-color;
+      border: 1px solid $pink-2-color;
+      color: $white-color;
+
+      &:hover {
+        background-color: $pink-2-color !important;
+      }
+      @include mq(md) {
+        font-size: 16px;
+      }
+      @include mq(md, "max") {
+        font-size: 14px;
+      }
+    }
+  }
+}

@@ -1,0 +1,74 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapCategory {
+  min-width: 25%;
+  @include mq(lg) {
+    border: 1px solid $smoke-14-color;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 30px;
+  }
+  .category_title {
+    background-color: $pink-2-color;
+    padding: 5px 10px;
+    font-weight: 600;
+    color: $white-color;
+    @include mq(lg) {
+      font-size: 18px;
+    }
+    @include mq(lg, "max") {
+      font-size: 16px;
+    }
+  }
+  ul.category_content {
+    margin: 0;
+    padding: 0 10px;
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    li {
+      list-style: none;
+      color: $black-color;
+      font-weight: 500;
+      cursor: pointer;
+      &:hover {
+        color: $pink-2-color;
+      }
+      @include mq(lg) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 16px;
+        margin: 15px 0;
+      }
+      @include mq(lg, "max") {
+        font-size: 14px;
+      }
+    }
+  }
+  @include mq(lg, "max") {
+    :global {
+      .ant-drawer {
+        .ant-drawer-content-wrapper {
+          .ant-drawer-content {
+            .ant-drawer-wrapper-body {
+              .ant-drawer-header {
+                padding: 5px 15px;
+                .ant-drawer-header-title {
+                  .ant-drawer-title {
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .category_title,
+    ul.category_content {
+      display: none;
+    }
+  }
+}

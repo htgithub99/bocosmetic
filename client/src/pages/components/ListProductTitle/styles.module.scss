@@ -1,0 +1,57 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapListProductTitle {
+  text-align: center;
+  margin-bottom: 50px;
+
+  @include mq(md, "max") {
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    font-weight: 400;
+    line-height: 39px;
+    text-transform: capitalize;
+    margin-bottom: 0;
+    @include mq(lg) {
+      font-size: 50px;
+    }
+
+    @include mq(lg, "max") {
+      font-size: 32px;
+    }
+
+    @include mq(md, "max") {
+      font-size: 24px;
+    }
+  }
+  p {
+    max-width: 430px;
+    margin: 25px auto 0 auto;
+    padding: 0;
+    @include mq(lg) {
+      font-size: 16px;
+    }
+  
+    @include mq(md, "max") {
+      font-size: 14px;
+      margin: 10px auto 0 auto;
+    }
+  }
+  img {
+    object-fit: fill;
+    margin-top: 10px;
+    @include mq(lg) {
+      width: calc(50px * 2);
+    }
+
+    @include mq(lg, "max") {
+      width: calc(32px * 2);
+    }
+
+    @include mq(md, "max") {
+      width: calc(28px * 2);
+      margin-top: 5px;
+    }
+  }
+}

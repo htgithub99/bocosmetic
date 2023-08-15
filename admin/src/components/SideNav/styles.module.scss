@@ -1,0 +1,78 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapSideNav {
+  background: $bg-side-nav;
+  border-right: 1px solid $bg-side-nav;
+  height: 100%;
+  transition: width 200ms;
+  width: 230px;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+
+  .wrapLogo {
+    width: 100%;
+    padding: 5px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background: $bg-side-nav;
+    z-index: 2;
+    border-bottom: 1px solid #263d53;
+
+    img {
+      width: 130px;
+      height: 55px;
+      cursor: pointer;
+    }
+
+    :global {
+      .material-symbols-outlined {
+        color: $white-color;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .wrapContent {
+    overflow-y: scroll;
+    @include customScrollBar(0, 0, 0);
+    height: calc(100% - 65px);
+    padding-bottom: 20px;
+
+    :global {
+      .ant-menu-inline,
+      .ant-menu-vertical,
+      .ant-menu-vertical-left {
+        border: none;
+      }
+
+      .ant-menu {
+        .ant-menu-item,
+        .ant-menu-submenu {
+          .anticon {
+            min-width: 18px;
+            font-size: 18px;
+          }
+        }
+      }
+
+      span.material-symbols-outlined {
+        cursor: pointer;
+        color: $white-color;
+      }
+    }
+  }
+
+
+}
+
+.sideNavCollapsed {
+  width: 85px;
+  transition: width 200ms;
+}

@@ -1,0 +1,11 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.pageWrapper {
+  height: 100vh;
+}
+.mainWrapper {
+  height: 100%;
+}
+.pageContent {
+  background: $white-color;
+}

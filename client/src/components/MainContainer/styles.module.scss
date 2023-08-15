@@ -1,0 +1,8 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapContainer {
+  @include mq(lg) {
+    max-width: 1476px;
+    margin: 0 auto;
+  }
+}

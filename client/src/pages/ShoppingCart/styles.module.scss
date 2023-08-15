@@ -1,0 +1,30 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapShoppingCart {
+  min-height: 100vh;
+  .shoppingCart_content {
+    @include mq(lg) {
+      margin-top: 50px;
+      padding: 0 30px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    @include mq(lg, "max") {
+      padding: 0 15px;
+      margin-top: 20px;
+    }
+
+    .content__table {
+      @include mq(lg, "max") {
+        margin-bottom: 30px;
+      }
+    }
+    .content__checkout {
+      @include mq(lg) {
+        min-width: 300px;
+        margin-left: 30px;
+      }
+    }
+  }
+}

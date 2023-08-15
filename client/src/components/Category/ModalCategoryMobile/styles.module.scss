@@ -1,0 +1,19 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapChildren {
+  color: $black-color;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @include mq(md) {
+    font-size: 14px;
+  }
+  @include mq(md, "max") {
+    font-size: 13px;
+  }
+  .content_subCategory {
+  }
+  .content_count {
+  }
+}

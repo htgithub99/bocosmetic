@@ -1,0 +1,45 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapHome {
+  min-height: 100vh;
+
+  @include mq(lg) {
+    padding: 0 30px 30px 30px;
+  }
+
+  @include mq(lg, "max") {
+    padding: 0 15px 30px 15px;
+  }
+  .home_productType {
+    @include mq(lg) {
+      margin-top: 115px;
+    }
+
+    @include mq(lg, "max") {
+      margin-top: 70px;
+    }
+
+    @include mq(md, "max") {
+      margin-top: 30px;
+    }
+  }
+  .home_listProduct, .home_listBlog {
+    @include mq(lg) {
+      margin-top: 115px;
+    }
+
+    @include mq(lg, "max") {
+      margin-top: 70px;
+    }
+
+    @include mq(md, "max") {
+      margin-top: 30px;
+    }
+  }
+  .home_listBlog {
+    @include mq(md, "max") {
+    }
+  }
+}
+.wrapBanner {
+}

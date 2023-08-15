@@ -1,0 +1,37 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapBannerHeaderPage {
+  aspect-ratio: auto 1920 / 530;
+  position: relative;
+  min-height: 180px;
+  width: 100%;
+  &::after {
+    content: "";
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.12) 15%,
+      rgba(255, 255, 255, 0.21) 24%,
+      rgba(255, 255, 255, 0.55) 48%,
+      rgba(255, 255, 255, 0.76) 68%,
+      rgba(255, 255, 255, 0.9) 83%,
+      rgba(255, 255, 255, 0.98) 95%,
+      #ffffff
+    );
+    height: 20px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  :global {
+    .ant-image {
+      height: 100%;
+      img {
+        object-fit: cover;
+        height: 100%;
+      }
+    }
+  }
+}

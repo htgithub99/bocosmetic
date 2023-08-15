@@ -1,0 +1,117 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapProductCardSideNav {
+  @include mq(lg) {
+    border: 1px solid $smoke-14-color;
+  }
+  .category_title {
+    background-color: $pink-2-color;
+    padding: 5px 10px;
+    font-weight: 600;
+    color: $white-color;
+    @include mq(lg) {
+      font-size: 18px;
+    }
+    @include mq(lg, "max") {
+      font-size: 16px;
+    }
+  }
+  .category_content {
+    padding: 5px 10px;
+    .content__item {
+      display: flex;
+      align-items: flex-start;
+
+      &:not(:last-child) {
+        margin-bottom: 30px;
+      }
+      .item___image {
+        margin-right: 10px;
+        width: 60px;
+        height: 60px;
+        margin-top: 6px;
+        img {
+          object-fit: cover;
+          width: auto;
+          height: 100%;
+        }
+      }
+      .item___right {
+        .right____name {
+          margin-bottom: 5px;
+          overflow: hidden;
+          display: -webkit-box;
+          text-overflow: ellipsis;
+          -webkit-box-orient: vertical;
+          
+
+          @include mq(lg) {
+            line-height: 25px;
+            -webkit-line-clamp: 3;
+          }
+
+          @include mq(lg, "max") {
+            line-height: 25px;
+            -webkit-line-clamp: 2;
+          }
+
+          @include mq(md, "max") {
+            line-height: 20px;
+            height: 40px;
+            font-size: 14px;
+          }
+          a {
+            color: $black-color;
+            font-weight: 400;
+            display: block;
+            text-decoration: none;
+            &:hover {
+              color: $pink-2-color;
+            }
+
+            @include mq(md) {
+              font-size: 16px;
+            }
+
+            @include mq(md, "max") {
+              font-size: 14px;
+            }
+          }
+        }
+        .right____price {
+          font-family: initial;
+          color: $red-1-color;
+          font-weight: 600;
+
+          @include mq(lg) {
+            font-size: 16px;
+          }
+
+          @include mq(lg, "max") {
+            font-size: 14px;
+          }
+
+          @include mq(md, "max") {
+          }
+
+          .price_____lowPrice {
+            opacity: 0.6;
+            text-decoration: line-through;
+            margin-left: 10px;
+            @include mq(lg) {
+              font-size: 14px;
+            }
+
+            @include mq(lg, "max") {
+              font-size: 12px;
+            }
+
+            @include mq(md, "max") {
+              font-size: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

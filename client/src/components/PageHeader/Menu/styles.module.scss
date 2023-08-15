@@ -1,0 +1,102 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapPageHeader {
+  ul.menu_ul {
+    margin: 0;
+    @include mq(lg) {
+      min-height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @include mq(lg, "max") {
+      background-color: $white-color;
+      position: fixed;
+      padding: 35px 0 0 0;
+      width: 60%;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      height: 100%;
+      -webkit-transition: -webkit-transform 0.2s;
+      transition: -webkit-transform 0.2s;
+      -o-transition: transform 0.2s;
+      transition: transform 0.2s;
+      transition: transform 0.2s, -webkit-transform 0.2s;
+      -webkit-transform: translateX(-500%);
+      -ms-transform: translateX(-500%);
+      transform: translateX(-500%);
+      -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    li {
+      list-style-type: none;
+      @include mq(lg) {
+        margin-right: 10px;
+      }
+
+      @include mq(lg, "max") {
+        padding: 15px 10px 15px 30px;
+        &:not(:last-child) {
+          border-bottom: 1px solid $smoke-12-color;
+        }
+      }
+
+      .homeIcon {
+        @include mq(lg) {
+          display: none;
+        }
+        @include mq(lg, "max") {
+          display: inline;
+          margin-right: 10px;
+
+          svg {
+            font-size: 1em;
+            color: $smoke-9-color;
+          }
+        }
+      }
+
+      .a_active {
+        color: $pink-2-color;
+      }
+
+      a {
+        text-transform: uppercase;
+        text-decoration: none;
+        color: $smoke-9-color;
+        font-size: 0.9em;
+        font-weight: bolder;
+        @include mq(lg, "max") {
+          font-size: 0.8em;
+        }
+        &:hover,
+        &:active {
+          color: $pink-2-color;
+        }
+      }
+    }
+  }
+
+  ul.menu_ul_active {
+    @include mq(lg, "max") {
+      -webkit-transform: translateX(0);
+      -ms-transform: translateX(0);
+      transform: translateX(0);
+    }
+  }
+
+  .pageHeader_mask {
+    @include mq(lg, "max") {
+      position: fixed;
+      right: 0;
+      top: 0;
+      background-color: $smoke-13-color;
+      width: 40%;
+      height: 100%;
+      z-index: 998;
+    }
+  }
+}

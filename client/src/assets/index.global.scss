@@ -1,0 +1,114 @@
+//global css
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap");
+@import "./variables.scss";
+@import "./mixin.scss";
+
+body,
+button,
+input {
+  font-family: "Noto Serif", serif;
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
+}
+.btn-submit-login {
+  width: 279px;
+  border-radius: 50px;
+  height: 64px;
+  text-align: center;
+  font-size: 24px;
+  opacity: 0.5;
+}
+
+input:-internal-autofill-selected {
+  background: none;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.border-radius-5 {
+  border-radius: 5px;
+}
+
+.p-5 {
+  padding: 5px;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+//css style global breakcum
+.product-detail-breakcum {
+  background: $pink-4-color;
+  padding: 5px 10px;
+  font-size: 14px;
+  nav {
+    ol {
+      li {
+        a {
+          &:hover {
+            background: none;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
+.cosmetic-drawer-category-wrapper {
+  @include mq(lg, "max") {
+    .ant-drawer-content-wrapper {
+      .ant-drawer-content {
+        .ant-drawer-wrapper-body {
+          .ant-drawer-header {
+            padding: 10px 5px 10px 15px;
+            text-align: center;
+            .ant-drawer-header-title {
+              flex-direction: row-reverse;
+              .ant-drawer-close {
+                margin-right: 0;
+              }
+              .ant-drawer-title {
+                font-size: 18px;
+                font-weight: bolder;
+                @include mq(md, "max") {
+                  font-size: 16px;
+                }
+              }
+            }
+          }
+          .ant-drawer-body {
+            padding: 0;
+            .ant-collapse {
+              background: none;
+              .ant-collapse-item {
+                &:not(:last-child) {
+                  border-bottom: 1px solid $smoke-12-color;
+                }
+                .ant-collapse-header {
+                  padding: 10px;
+                  flex-direction: row-reverse;
+                  .ant-collapse-expand-icon {
+                    padding-right: 0;
+                  }
+                  .ant-collapse-header-text {
+                    font-size: 16px;
+                    font-weight: bolder;
+                    @include mq(md, "max") {
+                      font-size: 14px;
+                    }
+                  }
+                }
+                .ant-collapse-content {
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

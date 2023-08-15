@@ -1,0 +1,191 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapPaymentListProduct {
+  .paymentListProduct_title {
+    line-height: 18px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: bolder;
+    @include mq(md) {
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+    @include mq(md, "max") {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+  }
+  .paymentListProduct_content {
+    @include mq(md, "max") {
+      margin-bottom: 30px;
+      border-bottom: 1px solid $smoke-14-color;
+    }
+    .content__item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      @include mq(md) {
+        font-size: 16px;
+        margin-bottom: 30px;
+      }
+      @include mq(md, "max") {
+        font-size: 14px;
+        margin-bottom: 15px;
+      }
+      .item___field {
+      }
+      .item___price {
+        margin-left: 10px;
+        font-weight: bolder;
+      }
+    }
+  }
+  .paymentListProduct_cartTable {
+    //Table css
+    margin-bottom: 20px;
+    @include mq(md, "max") {
+      border-bottom: 1px solid $smoke-14-color;
+    }
+    .cartTable__product {
+      display: flex;
+      align-items: center;
+      // .product___img {
+      //   min-width: 60px;
+      //   max-width: 90px;
+      //   width: 90px;
+
+      //   img {
+      //     width: 100%;
+      //     height: 100%;
+      //     object-fit: cover;
+      //   }
+      // }
+      // .product___btnDelete {
+      //   margin-right: 10px;
+      //   cursor: pointer;
+      //   width: 24px;
+      //   height: 24px;
+      //   min-width: 24px;
+      //   border-radius: 50%;
+      //   padding: 3px;
+      //   background-color: $smoke-14-color;
+      //   // border: 1px solid $black-color;
+      //   display: flex;
+      //   align-items: center;
+      //   justify-content: center;
+  
+      //   svg {
+      //     color: $black-color;
+      //     @include mq(md) {
+      //       font-size: 16px;
+      //     }
+      //     @include mq(md, "max") {
+      //       font-size: 14px;
+      //     }
+      //   }
+      // }
+      .product___info {
+        .info____name {
+          line-height: 22px;
+          text-transform: capitalize;
+          a {
+            color: $black-color;
+            font-weight: 400;
+            display: block;
+            text-decoration: none;
+
+            @include mq(md) {
+              font-size: 16px;
+            }
+
+            @include mq(md, "max") {
+              font-size: 14px;
+            }
+          }
+        }
+        .info____price {
+          font-weight: bolder;
+          line-height: 24px;
+          @include mq(md) {
+            font-size: 15px;
+          }
+          @include mq(md, "max") {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+    .cartTable__subtotal {
+      line-height: 22px;
+      text-transform: capitalize;
+      font-weight: bolder;
+      @include mq(md) {
+        font-size: 16px;
+      }
+      @include mq(md, "max") {
+        font-size: 14px;
+      }
+    }
+
+    :global {
+      .ant-table-wrapper {
+        .ant-table {
+          .ant-table-container {
+            .ant-table-content {
+              tr {
+                &:hover {
+                  td {
+                    background: $white-color;
+                  }
+                }
+                th,
+                td {
+                  background: $white-color;
+                  @include mq(md) {
+                    padding: 10px 15px 10px 0;
+                    &:not(:first-child) {
+                      padding-left: 15px;
+                    }
+                  }
+                  @include mq(md, "max") {
+                    padding: 5px 10px 5px 0;
+                    &:not(:first-child) {
+                      padding-left: 10px;
+                    }
+                    &:nth-child(2) {
+                      padding-right: 0;
+                      padding-left: 0;
+                    }
+                    &:nth-child(3) {
+                      display: none;
+                    }
+                  }
+                }
+                th {
+                  line-height: 18px;
+                  letter-spacing: 0.06em;
+                  text-transform: uppercase;
+                  font-weight: bolder;
+                  border-bottom: 1px solid $smoke-14-color;
+                  padding-top: 0;
+                  &::before {
+                    content: none !important;
+                  }
+                  @include mq(md) {
+                    font-size: 16px;
+                  }
+                  @include mq(md, "max") {
+                    font-size: 14px;
+                  }
+                }
+                td {
+                  border-bottom: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

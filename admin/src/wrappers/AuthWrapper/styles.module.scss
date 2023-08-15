@@ -1,0 +1,17 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.pageWrapper {
+  height: 100vh;
+  display: flex;
+}
+.mainWrapper {
+  height: 100%;
+  flex: 1;
+}
+.pageContent {
+  flex: 1;
+  overflow-y: scroll;
+  height: calc(100vh - 60px);
+  background-color: #f0f1f1;
+  @include customScrollBar(0, 0, 0);
+}
