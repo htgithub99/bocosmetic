@@ -1,10 +1,10 @@
 @import "assets/variables.scss";
 @import "assets/mixin.scss";
 .wrapBannerHeaderPage {
-  aspect-ratio: auto 1920 / 530;
   position: relative;
   min-height: 180px;
   width: 100%;
+  @include aspectp(1920, 530);
   &::after {
     content: "";
     background: linear-gradient(
@@ -27,7 +27,7 @@
   }
   :global {
     .ant-image {
-      height: 100%;
+      @include aspectc();
       img {
         object-fit: cover;
         height: 100%;
