@@ -27,10 +27,6 @@ const Filter: React.FC<IProps> = ({
           options={[
             { value: "price_0_n", label: "Từ thấp đến cao" },
             { value: "price_n_0", label: "Từ cao đến thấp" },
-            { value: "price_0-200", label: "Từ 0 đến 200" },
-            { value: "price_200-500", label: "Từ 200 đến 500" },
-            { value: "price_500-1000", label: "Từ 500 đến 1tr" },
-            { value: "price_1000_n", label: "Trên 1tr" },
           ]}
         />
       </div>

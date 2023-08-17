@@ -1,16 +1,19 @@
 import { HomeOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 import { RoutePath } from "constants/constant";
+import { BreakpointsUp } from "constants/enum";
 import { IMenu } from "constants/interface";
 import { LIST_MENU } from "constants/json";
 import { Link, useParams } from "react-router-dom";
 import useToggleMenu from "utils/hooks/useToggleMenu";
+import useViewport from "utils/hooks/useViewport";
 import styles from "./styles.module.scss";
 
 const Menu = () => {
   const { categoryId } = useParams<string>();
   const { collapsed, onToggleMenu } = useToggleMenu();
-  
+  const { isMobile } = useViewport(BreakpointsUp.LG);
+
   const _renderLink = (list: IMenu[]) => (
     <ul
       className={classNames(styles.menu_ul, {
@@ -27,6 +30,7 @@ const Menu = () => {
             className={classNames({
               [styles.a_active]: categoryId && item.id === +categoryId,
             })}
+            onClick={() => isMobile && onToggleMenu()}
           >
             {item.link_name}
           </Link>

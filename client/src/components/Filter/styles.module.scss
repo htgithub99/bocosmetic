@@ -12,7 +12,30 @@
 
   .filter_select {
     padding-right: 30px;
-
+    :global {
+      .ant-select {
+        .ant-select-selector {
+          .ant-select-selection-search {
+            input {
+              @include mq(md) {
+                font-size: 16px;
+              }
+              @include mq(md, "max") {
+                font-size: 14px;
+              }
+            }
+          }
+          .ant-select-selection-placeholder, .ant-select-selection-item {
+            @include mq(md) {
+              font-size: 16px;
+            }
+            @include mq(md, "max") {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
     @include mq(md, "max") {
       padding-right: 5px;
     }
@@ -26,6 +49,9 @@
         .ant-input-wrapper {
           .ant-input.ant-input-lg {
             height: 40px;
+            @include mq(md, "max") {
+              font-size: 14px;
+            }
           }
         }
       }
@@ -48,7 +74,7 @@
           font-size: 1.3em;
           color: $smoke-2-color;
           background-color: $smoke-12-color;
-          padding: 5px;
+          padding: 7px;
           border-radius: 5px;
         }
       }

@@ -2,6 +2,12 @@
 @import "assets/mixin.scss";
 .wrapPageHeader {
   box-shadow: 0 1px 4px 2px rgba(255, 255, 255, 0.6);
+  @include mq(lg, "max") {
+    position: sticky;
+    top: 0;
+    background: rgba(247, 141, 167, 0.2588235294);
+    z-index: 99;
+  }
   .pageHeader_shopInfo,
   .shopInfo__contact {
     display: flex;

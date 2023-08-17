@@ -3,9 +3,11 @@
 .pageHeader_certificate {
   display: flex;
   align-items: center;
-  background: $pink-4-color;
   padding: 5px 20px;
   justify-content: space-between;
+  @include mq(lg) {
+    background: $pink-4-color;
+  }
 
   @include mq(lg) {
     height: 83px;

@@ -107,7 +107,7 @@ const MainPage = () => {
           items={[
             {
               title: NAME_OF_THE_PAGE.home,
-              href: RoutePath.HOME_PAGE
+              href: RoutePath.HOME_PAGE,
             },
             {
               title: category_name,
