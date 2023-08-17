@@ -1,6 +1,6 @@
 import { FloatButton } from "antd";
 import { RoutePath } from "constants/constant";
-import { lazy, useEffect } from "react";
+import React, { lazy, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import AuthWrapper from "wrappers/AuthWrapper";
 
@@ -28,9 +28,11 @@ const ListRoute = [
 
 export default function AppWrapper() {
   const location = useLocation();
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+  
   return (
     <div className="root-wrapper">
       <PageHeader />
@@ -41,7 +43,7 @@ export default function AppWrapper() {
           element={<ProductDetail />}
         />
         {ListRoute.map((item) => (
-          <Route path={`${item}/:categoryId`} element={<MainPage />} />
+          <React.Fragment key={item}><Route path={`${item}/:categoryId`} element={<MainPage />} /></React.Fragment>
         ))}
         <Route path={RoutePath.CONTACT_PAGE} element={<Contact />} />
         <Route path={`${RoutePath.BLOG_PAGE}/:blogId`} element={<Blog />} />

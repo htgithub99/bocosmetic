@@ -1,9 +1,14 @@
 import { Table } from "antd";
 import { ColumnsType } from "antd/es/table";
-import { calculateSubTotalMoney, calculateSubTotalMoneyToItem, calculateTotalMoney } from "constants/calculate";
+import {
+  calculateSubTotalMoney,
+  calculateSubTotalMoneyToItem,
+  calculateTotalMoney
+} from "constants/calculate";
 import { LocalStorageKey } from "constants/constant";
 import { formatMoney } from "constants/format";
 import { CartDataType, IProductCard } from "constants/interface";
+import { MESSAGE_TABLE } from "constants/mesage";
 import { Link } from "react-router-dom";
 import { useLocalStorage } from "utils/hooks/useLocalStorage";
 import styles from "./styles.module.scss";
@@ -48,7 +53,9 @@ const PaymentListProduct = () => {
             <div className={styles.info____name}>
               <Link to="#">{convertProductName(item.product_name)}</Link>
             </div>
-            <div className={styles.info____price}>{`x${item.quantity_order}`}</div>
+            <div
+              className={styles.info____price}
+            >{`x${item.quantity_order}`}</div>
           </div>
         </div>
       ),
@@ -72,14 +79,21 @@ const PaymentListProduct = () => {
       price: item.sale_price || item.price,
       image: item.images[0],
       _id: item._id,
-      quantity_order: item.quantity_order
+      quantity_order: item.quantity_order,
     },
     key: item._id,
     subtotal: calculateSubTotalMoneyToItem(item),
   }));
 
   const _renderListProduct = () => (
-    <Table columns={columns} dataSource={cartData} pagination={false} />
+    <Table
+      locale={{
+        emptyText: MESSAGE_TABLE.EMPTY_TABLE_PRODUCT,
+      }}
+      columns={columns}
+      dataSource={cartData}
+      pagination={false}
+    />
   );
 
   return (
@@ -91,7 +105,9 @@ const PaymentListProduct = () => {
       <div className={styles.paymentListProduct_content}>
         <div className={styles.content__item}>
           <div className={styles.item___field}>Tạm tính</div>
-          <div className={styles.item___price}>{formatMoney(calculateSubTotalMoney(storedValue))}</div>
+          <div className={styles.item___price}>
+            {formatMoney(calculateSubTotalMoney(storedValue))}
+          </div>
         </div>
         <div className={styles.content__item}>
           <div className={styles.item___field}>Giao hàng</div>
@@ -101,7 +117,9 @@ const PaymentListProduct = () => {
         </div>
         <div className={styles.content__item}>
           <div className={styles.item___field}>Tổng</div>
-          <div className={styles.item___price}>{formatMoney(calculateTotalMoney(storedValue))}</div>
+          <div className={styles.item___price}>
+            {formatMoney(calculateTotalMoney(storedValue))}
+          </div>
         </div>
       </div>
     </div>

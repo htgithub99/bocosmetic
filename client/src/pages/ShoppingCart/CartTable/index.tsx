@@ -1,11 +1,17 @@
 import { CloseOutlined } from "@ant-design/icons";
-import { Table } from "antd";
+import { notification, Table } from "antd";
+import { NotificationPlacement } from "antd/es/notification/interface";
 import { ColumnsType } from "antd/es/table";
 import blogImg from "assets/images/blog-img.jpg";
 import { calculateSubTotalMoneyToItem } from "constants/calculate";
-import { LocalStorageKey, RoutePath } from "constants/constant";
+import {
+  LocalStorageKey,
+  NotificationDuration,
+  RoutePath
+} from "constants/constant";
 import { formatMoney } from "constants/format";
 import { CartDataType, IProductCard } from "constants/interface";
+import { MESSAGE_NOTIFICATION, MESSAGE_TABLE } from "constants/mesage";
 import { useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useLocalStorage } from "utils/hooks/useLocalStorage";
@@ -16,6 +22,8 @@ const CartTable = () => {
     LocalStorageKey.CART_TO_USER_KEY,
     []
   );
+  const [api, contextHolder] = notification.useNotification();
+
   const convertProductName = (text: string) => text;
 
   const onIncreaseQuanitty = useCallback((item: IProductCard) => {
@@ -42,13 +50,26 @@ const CartTable = () => {
     }
   }, []);
 
-  const onDeleteProduct = useCallback((_id: string) => {
-    console.log("______ _____ onDeleteProduct");
-    const newValue = storedValue.filter(
-      (item: IProductCard) => item._id !== _id
-    );
-    setNewStoredValue(newValue);
-  }, [storedValue]);
+  const onnotification = (placement: NotificationPlacement) => {
+    api.success({
+      message: MESSAGE_NOTIFICATION.TITLE_DELETE_PRODUCT,
+      description: MESSAGE_NOTIFICATION.DESCRIPTION_DELETE_PRODUCT,
+      placement,
+      duration: NotificationDuration.SUCCESS,
+      className: "bocosmetic-notification-success",
+    });
+  };
+
+  const onDeleteProduct = useCallback(
+    (_id: string) => {
+      const newValue = storedValue.filter(
+        (item: IProductCard) => item._id !== _id
+      );
+      setNewStoredValue(newValue);
+      onnotification("topRight");
+    },
+    [storedValue]
+  );
 
   const columns: ColumnsType<CartDataType> = [
     {
@@ -85,7 +106,7 @@ const CartTable = () => {
       align: "center",
       render: (item) => (
         <div className={styles.cartTable_quantity}>
-          <input type="text" title="Quantity" value={item.quantity_order} />
+          <input type="text" disabled title="Quantity" value={item.quantity_order} />
           <div
             className={styles.main__BtnDec}
             onClick={() => onDecreaseQuanitty(item)}
@@ -127,7 +148,15 @@ const CartTable = () => {
 
   return (
     <div className={styles.wrapCartTable}>
-      <Table columns={columns} dataSource={cartData} pagination={false} />
+      {contextHolder}
+      <Table
+        locale={{
+          emptyText: MESSAGE_TABLE.EMPTY_TABLE_PRODUCT,
+        }}
+        columns={columns}
+        dataSource={cartData}
+        pagination={false}
+      />
     </div>
   );
 };

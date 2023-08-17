@@ -112,3 +112,54 @@ input:-internal-autofill-selected {
     }
   }
 }
+
+.bocosmetic-notification-success.ant-notification-notice {
+  top: -20px;
+  right: -20px;
+  margin-bottom: 10px;
+  @include mq(md) {
+    padding: 15px;
+  }
+
+  @include mq(md, "max") {
+    padding: 10px;
+    max-width: calc(100vw - 55px);
+  }
+  
+  .ant-notification-notice-content {
+    span {
+      @include mq(md, "max") {
+        font-size: 20px;
+      }
+    }
+    .ant-notification-notice-with-icon {
+      .ant-notification-notice-message {
+        font-weight: bolder;
+        text-transform: uppercase;
+        @include mq(md) {
+          font-size: 15px;
+        }
+
+        @include mq(md, "max") {
+          font-size: 13px;
+          margin-inline-start: 30px;
+        }
+      }
+      .ant-notification-notice-description {
+        @include mq(md) {
+          font-size: 14px;
+          font-weight: 300;
+        }
+
+        @include mq(md, "max") {
+          font-size: 12px;
+          margin-inline-start: 30px;
+        }
+      }
+    }
+  }
+  .ant-notification-notice-close {
+    top: 10px;
+    right: 10px;
+  }
+}

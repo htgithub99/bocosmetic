@@ -1,5 +1,5 @@
-import type { RadioChangeEvent } from "antd";
-import { Breadcrumb, Radio, Rate } from "antd";
+import { Breadcrumb, notification, Radio, RadioChangeEvent, Rate } from "antd";
+import { NotificationPlacement } from "antd/es/notification/interface";
 import { getProductById } from "api/product";
 import Button from "components/Button/Button";
 import MainContainer from "components/MainContainer";
@@ -7,13 +7,15 @@ import {
   CATEGORY_PARENT_TYPE,
   LocalStorageKey,
   NAME_OF_THE_PAGE,
+  NotificationDuration,
   ReactQueryKey,
   RoutePath,
-  TypeTopPage
+  TypeTopPage,
 } from "constants/constant";
 import { formatMoney } from "constants/format";
 import { addProductToCart } from "constants/handle";
 import { IProductCard } from "constants/interface";
+import { MESSAGE_NOTIFICATION } from "constants/mesage";
 import ProductSideNav from "pages/components/ProductSideNav";
 import { useCallback, useLayoutEffect, useState } from "react";
 import { useQuery } from "react-query";
@@ -41,8 +43,9 @@ const ProductDetail = () => {
     () => getProductById(id || "")
   );
 
-  const [value, setValue] = useState(1);
-  const [quantity, setQuantity] = useState(1);
+  const [value, setValue] = useState<number>(1);
+  const [quantity, setQuantity] = useState<number>(1);
+  const [api, contextHolder] = notification.useNotification();
 
   const onChange = useCallback(
     (e: RadioChangeEvent) => {
@@ -51,6 +54,16 @@ const ProductDetail = () => {
     [value]
   );
 
+  const onnotification = (placement: NotificationPlacement) => {
+    api.success({
+      message: MESSAGE_NOTIFICATION.TITLE_ADD_PRODUCT,
+      description: MESSAGE_NOTIFICATION.DESCRIPTION_ADD_PRODUCT,
+      placement,
+      duration: NotificationDuration.SUCCESS,
+      className: "bocosmetic-notification-success",
+    });
+  };
+
   const onIncreaseQuanitty = useCallback(() => {
     if (quantity < items?.data?.quantity) setQuantity(quantity + 1);
   }, [quantity, items?.data?.quantity]);
@@ -58,6 +71,19 @@ const ProductDetail = () => {
   const onDecreaseQuanitty = useCallback(() => {
     if (quantity > 1) setQuantity(quantity - 1);
   }, [quantity, items?.data?.quantity]);
+
+  const onChangeQuantity = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = +event.target.value ?? 0;
+      if (value < 0 || (value > items?.data?.quantity)) {
+        event.preventDefault();
+        setQuantity(0);
+        return;
+      }
+      setQuantity(value);
+    },
+    [quantity, items?.data?.quantity]
+  );
 
   const category_name = CATEGORY_PARENT_TYPE.find(
     (item) => item.category_id === items?.data?.category_id
@@ -71,12 +97,13 @@ const ProductDetail = () => {
 
   return (
     <div className={styles.wrapProductDetail}>
+      {contextHolder}
       <div className="product-detail-breakcum">
         <Breadcrumb
           items={[
             {
               title: NAME_OF_THE_PAGE.home,
-              href: RoutePath.HOME_PAGE
+              href: RoutePath.HOME_PAGE,
             },
             {
               title: category_name,
@@ -136,7 +163,12 @@ const ProductDetail = () => {
                 <div className={styles.info____qty}>
                   <h5>Số lượng</h5>
                   <div className={styles.qty_____main}>
-                    <input type="text" title="Quantity" value={quantity} />
+                    <input
+                      type="text"
+                      onChange={onChangeQuantity}
+                      title="Quantity"
+                      value={quantity}
+                    />
                     <div
                       className={styles.main______BtnDec}
                       onClick={onDecreaseQuanitty}
@@ -157,13 +189,14 @@ const ProductDetail = () => {
                 <Button
                   // disabled={isDisableBtnBuy(storedValue, items?.data?._id)}
                   classNameX={styles.info____btn}
-                  onClick={() =>
+                  onClick={() => {
                     addProductToCart(
                       { ...items?.data, quantity_order: quantity },
                       storedValue,
                       setNewStoredValue
-                    )
-                  }
+                    );
+                    onnotification("topRight");
+                  }}
                 >
                   Mua ngay
                 </Button>

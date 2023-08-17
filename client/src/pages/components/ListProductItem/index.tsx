@@ -1,9 +1,11 @@
-import { Col, Row } from "antd";
+import { Col, notification, Row } from "antd";
+import { NotificationPlacement } from "antd/es/notification/interface";
 import ProductCard from "components/ProductCard";
-import { LocalStorageKey } from "constants/constant";
+import { LocalStorageKey, NotificationDuration } from "constants/constant";
 import { isDisableBtnBuy } from "constants/convert";
 import { addProductToCart } from "constants/handle";
 import { IProductCard } from "constants/interface";
+import { MESSAGE_NOTIFICATION } from "constants/mesage";
 import { useLocalStorage } from "utils/hooks/useLocalStorage";
 import styles from "./styles.module.scss";
 
@@ -15,9 +17,21 @@ const ListProductItem = ({ data }: IProps) => {
     LocalStorageKey.CART_TO_USER_KEY,
     []
   );
+  const [api, contextHolder] = notification.useNotification();
+    
+  const onnotification = (placement: NotificationPlacement) => {
+    api.success({
+      message: MESSAGE_NOTIFICATION.TITLE_ADD_PRODUCT,
+      description: MESSAGE_NOTIFICATION.DESCRIPTION_ADD_PRODUCT,
+      placement,
+      duration: NotificationDuration.SUCCESS,
+      className: "bocosmetic-notification-success",
+    });
+  };
 
   return (
     <div className={styles.wrapListProduct}>
+      {contextHolder}
       <Row gutter={[16, 16]}>
         {!!data?.length &&
           data?.map((item: IProductCard) => (
@@ -35,9 +49,10 @@ const ListProductItem = ({ data }: IProps) => {
                   ...item,
                   isDisabled: isDisableBtnBuy(storedValue, item._id),
                 }}
-                addProductToCart={(newValue) =>
-                  addProductToCart(newValue, storedValue, setNewStoredValue, 1)
-                }
+                addProductToCart={(newValue) => {
+                  addProductToCart(newValue, storedValue, setNewStoredValue, 1);
+                  onnotification("topRight");
+                }}
               />
             </Col>
           ))}

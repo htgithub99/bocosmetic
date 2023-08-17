@@ -91,3 +91,16 @@ export const NAME_OF_THE_PAGE = {
 export const LocalStorageKey = {
   CART_TO_USER_KEY: "cart_to_user",
 };
+
+export const NotificationPlacement_ = {
+  TOP: "top",
+  TOP_LEFT: "topLeft",
+  TOP_RIGHT: "topRight",
+  BOTTOM: "bottom",
+  BOTTOM_LEFT: "bottomLeft",
+  BOTTOM_RIGHT: "bottomRight"
+}
+
+export const NotificationDuration = {
+  SUCCESS: 3
+}
