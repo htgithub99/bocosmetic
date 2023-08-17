@@ -16,6 +16,7 @@ import { formatMoney } from "constants/format";
 import { addProductToCart } from "constants/handle";
 import { IProductCard } from "constants/interface";
 import { MESSAGE_NOTIFICATION } from "constants/mesage";
+import { RegexQuantity } from "constants/regex";
 import ProductSideNav from "pages/components/ProductSideNav";
 import { useCallback, useLayoutEffect, useState } from "react";
 import { useQuery } from "react-query";
@@ -75,7 +76,12 @@ const ProductDetail = () => {
   const onChangeQuantity = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = +event.target.value ?? 0;
-      if (value < 0 || (value > items?.data?.quantity)) {
+      const isValid = [
+        value < 0,
+        value > items?.data?.quantity,
+        !RegexQuantity.test(`${value}`),
+      ];
+      if (isValid.some(Boolean)) {
         event.preventDefault();
         setQuantity(0);
         return;
@@ -133,7 +139,7 @@ const ProductDetail = () => {
                 </h3>
                 <div className={styles.info____more}>
                   <div className={styles.more_____star}>
-                    <Rate defaultValue={100} />
+                    <Rate defaultValue={100} disabled />
                   </div>
                   <div className={styles.more_____slot}>
                     Đã bán {items?.data?.percentage_discount}
@@ -164,7 +170,7 @@ const ProductDetail = () => {
                   <h5>Số lượng</h5>
                   <div className={styles.qty_____main}>
                     <input
-                      type="text"
+                      type="tel"
                       onChange={onChangeQuantity}
                       title="Quantity"
                       value={quantity}

@@ -19,6 +19,9 @@
     .swiper-button-next {
       color: $white-color;
       transition: all 0.3s;
+      @include mq(md, "max") {
+        top: 60%;
+      }
       &::after {
         font-weight: 600;
 

@@ -1,0 +1,1 @@
+export const RegexQuantity = /^[1-9]\d*$/

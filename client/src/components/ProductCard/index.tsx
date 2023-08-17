@@ -37,7 +37,7 @@ const ProductCard: React.FC<IProps> = ({ item, addProductToCart }) => {
         }%`}</div>
         <div className={styles.productCard_more}>
           <div className={styles.more_star}>
-            <Rate defaultValue={100} />
+            <Rate defaultValue={100} disabled />
           </div>
           <div className={styles.more_slot}>Đã bán {quantity_sold}</div>
         </div>
@@ -54,7 +54,9 @@ const ProductCard: React.FC<IProps> = ({ item, addProductToCart }) => {
           disabled={isDisabled}
           classNameX={styles.productCard_button}
           onClick={() => addProductToCart(item)}
-        >Mua ngay</Button>
+        >
+          Mua ngay
+        </Button>
       </div>
     </div>
   );

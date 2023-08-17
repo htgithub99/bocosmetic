@@ -85,6 +85,11 @@
       -webkit-transform: translateX(0);
       -ms-transform: translateX(0);
       transform: translateX(0);
+      -webkit-transition: -webkit-transform 0.2s;
+      transition: -webkit-transform 0.2s;
+      -o-transition: transform 0.2s;
+      transition: transform 0.2s;
+      transition: transform 0.2s, -webkit-transform 0.2s;
     }
   }
 
@@ -97,6 +102,11 @@
       width: 40%;
       height: 100%;
       z-index: 998;
+      -webkit-transition: -webkit-transform 0.2s;
+      transition: -webkit-transform 0.2s;
+      -o-transition: transform 0.2s;
+      transition: transform 0.2s;
+      transition: transform 0.2s, -webkit-transform 0.2s;
     }
   }
 }
