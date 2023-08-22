@@ -1,11 +1,15 @@
-import { Button, Drawer, Image, Popconfirm, Space, Table } from "antd";
+import { Drawer, Image, Space, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { getOrder } from "api/order";
+import Button from "components/Button/Button";
 import MainContainer from "components/MainContainer";
 import SearchHeaderTable from "components/SearchHeaderTable";
-import { QueryKey } from "constants/constant";
+import { QueryKey, TypeButton } from "constants/constant";
+import { BreakpointsUp } from "constants/enum";
+import { DATA_FAKE_LIST_ORDER } from "constants/json";
 import { useState } from "react";
 import { useQuery } from "react-query";
+import useViewport from "utils/hooks/useViewport";
 import CreateOrder from "./components/CreateOrder";
 import EditOrder from "./components/EditProduct";
 import styles from "./styles.module.scss";
@@ -22,6 +26,8 @@ interface DataType {
 
 const Order = () => {
   const [isDrawerCreate, setIsDrawerCreate] = useState<boolean>(false);
+  const { isMobile: isViewport767, width } = useViewport();
+  const { isMobile: isViewport1023 } = useViewport(BreakpointsUp.LG);
   const [updateDrawer, setUpdateDrawer] = useState<{
     orderId: number | null;
     modalHas: boolean;
@@ -45,105 +51,88 @@ const Order = () => {
     });
   };
 
-  const columns: ColumnsType<DataType> = [
+  const COLUMNS_ORDER: ColumnsType<DataType> = [
     {
       title: "Mã đơn hàng",
       dataIndex: "code_order",
-      ellipsis: true,
-      responsive: ["md"],
       align: "center",
-      width: 150,
+      width: isViewport767 ? 125 : 170,
       render: (text: string) => <a>{text}</a>,
     },
     {
       title: "Ngày tạo đơn",
       dataIndex: "create_at",
-      ellipsis: true,
-      responsive: ["md"],
+      align: "center",
+      width: isViewport767 ? 125 : 170,
       render: (text: string) => text,
     },
     {
       title: "Tên khách hàng",
       dataIndex: "customer_name",
-      ellipsis: true,
-      responsive: ["md"],
       align: "left",
+      width: 300,
       render: (text: string) => text,
     },
     {
       title: "Trạng thái đơn hàng",
       dataIndex: "order_status",
-      ellipsis: true,
-      responsive: ["md"],
       align: "center",
-      width: 150,
+      width: isViewport767 ? 165 : 200,
       render: (text: string) => text,
     },
     {
-      title: "Trạng thái Thanh toán",
+      title: "Trạng thái thanh toán",
       dataIndex: "payment_status",
-      ellipsis: true,
-      responsive: ["md"],
       align: "center",
-      width: 150,
+      width: isViewport767 ? 165 : 200,
       render: (text: string) => text,
     },
     {
       title: "Khách phải trả",
       dataIndex: "guest_must_pay",
-      ellipsis: true,
-      responsive: ["md"],
-      align: "right",
-      width: 150,
+      align: "center",
+      width: isViewport767 ? 125 : 150,
       render: (text: string) => text,
     },
     {
       title: "Tác vụ",
       dataIndex: "action",
-      ellipsis: true,
-      responsive: ["md"],
       align: "center",
-      width: 250,
+      width: isViewport767 ? 125 : 200,
+      fixed: "right",
       render: (_, record) => (
-        <Space size="middle">
+        <Space size="small">
           <Button
-            type="dashed"
             onClick={() => onClickUpdateOrder(record)}
-            htmlType="button"
-            size="small"
+            classNameT={TypeButton.EDIT}
           >
-            Chỉnh sửa
+            Sửa
           </Button>
-          <Popconfirm
-            title="Xóa phiên bản"
-            placement="topLeft"
-            description="Bạn chắc chắn muốn xóa?"
-            onConfirm={() => {}}
-            okText="Xác nhận"
-            cancelText="Hủy"
-          >
-            <Button type="dashed" htmlType="button" size="small">
-              Xóa
-            </Button>
-          </Popconfirm>
+          <Button classNameT={TypeButton.DELETE}>Xóa</Button>
         </Space>
       ),
     },
   ];
 
-  const data: DataType[] = orderData?.data?.map((item: any, index: number) => ({
-    key: index,
-    ...item,
-    create_at: `19/02/2023 14:59`,
-  }));
+  // const data: DataType[] = orderData?.data?.map((item: any, index: number) => ({
+  //   key: index,
+  //   ...item,
+  //   create_at: `19/02/2023 14:59`,
+  // }));
+
+  const data: DataType[] = DATA_FAKE_LIST_ORDER?.map(
+    (item: any, index: number) => ({
+      key: index,
+      ...item,
+      create_at: `19/02/2023 14:59`,
+    })
+  );
 
   //child table
   const childColumns: ColumnsType<any> = [
     {
       title: "STT",
       dataIndex: "stt",
-      ellipsis: true,
-      responsive: ["md"],
       width: 100,
       align: "center",
       render: (text: string) => <a>{text}</a>,
@@ -151,8 +140,6 @@ const Order = () => {
     {
       title: "Ảnh",
       dataIndex: "image",
-      ellipsis: true,
-      responsive: ["md"],
       align: "center",
       width: 150,
       render: (url: string) => <Image src={url} alt={url} />,
@@ -160,8 +147,6 @@ const Order = () => {
     {
       title: "Mã SKU",
       dataIndex: "barcode",
-      ellipsis: true,
-      responsive: ["md"],
       align: "center",
       width: 150,
       render: (text: string) => text,
@@ -169,15 +154,11 @@ const Order = () => {
     {
       title: "Tên sản phẩm",
       dataIndex: "name_product",
-      ellipsis: true,
-      responsive: ["md"],
       render: (text: string) => text,
     },
     {
       title: "Số lượng",
       dataIndex: "quantity",
-      ellipsis: true,
-      responsive: ["md"],
       align: "center",
       width: 150,
       render: (text: string) => text,
@@ -185,8 +166,6 @@ const Order = () => {
     {
       title: "Đơn giá",
       dataIndex: "unit_price",
-      ellipsis: true,
-      responsive: ["md"],
       align: "right",
       width: 150,
       render: (text: string) => text,
@@ -194,8 +173,6 @@ const Order = () => {
     {
       title: "Thành tiền",
       dataIndex: "into_money",
-      ellipsis: true,
-      responsive: ["md"],
       align: "right",
       width: 150,
       render: (text: string) => text,
@@ -287,6 +264,7 @@ const Order = () => {
           placement="right"
           onClose={_onCloseDrawerCreate}
           open={isDrawerCreate}
+          size={isViewport767 ? "default" : "large"}
         >
           <CreateOrder
             _onCloseModal={() => _onCloseDrawerCreate()}
@@ -305,6 +283,7 @@ const Order = () => {
           placement="right"
           onClose={_onCloseDrawerEdit}
           open={updateDrawer?.modalHas}
+          size={isViewport767 ? "default" : "large"}
         >
           <EditOrder
             _onCloseModal={() => _onCloseDrawerEdit()}
@@ -317,54 +296,62 @@ const Order = () => {
   };
 
   return (
-    <MainContainer>
-      <div className={styles.wrapOrder}>
-        <SearchHeaderTable _onCreate={() => setIsDrawerCreate(true)} />
-        <div className={styles.wrapContent}>
-          <Table
-            rowSelection={{
-              type: "checkbox",
-              ...rowSelection,
-            }}
-            columns={columns}
-            dataSource={data}
-            loading={isLoadingOrder}
-            expandable={{
-              expandedRowRender: (record: any) => {
-                console.log(record);
-                return (
-                  <Table
-                    columns={childColumns}
-                    dataSource={record?.product?.map(
-                      (item: any, index: number) => ({
-                        key: index,
-                        stt: index + 1,
-                        ...item,
-                      })
-                    )}
-                    loading={false}
-                    pagination={false}
-                  />
-                );
-              },
-              rowExpandable: (record) => record.code_order !== "Not Expandable",
-            }}
-            pagination={{
-              total: orderData?.totalItems,
-              showTotal: (total, range) =>
-                `Từ ${orderData?.pageIndex || 1} đến ${total} trên tổng ${
-                  orderData?.totalItems
-                }`,
-              defaultPageSize: orderData?.pageSize || 5,
-              defaultCurrent: 1,
-              onChange: (page) => _onPaginationTable(page),
-            }}
-          />
+    <>
+      <SearchHeaderTable _onCreate={() => setIsDrawerCreate(true)} />
+      <MainContainer>
+        <div className={styles.wrapOrder}>
+          <div className={styles.wrapContent}>
+            <Table
+              style={{
+                width: isViewport1023 ? width - 30 : width - (60 + 250),
+                overflow: "scroll",
+              }}
+              rowSelection={{
+                type: "checkbox",
+                ...rowSelection,
+              }}
+              columns={COLUMNS_ORDER}
+              dataSource={data}
+              loading={isLoadingOrder}
+              expandable={{
+                expandedRowRender: (record: any) => {
+                  console.log(record);
+                  return (
+                    <Table
+                      columns={childColumns}
+                      dataSource={record?.product?.map(
+                        (item: any, index: number) => ({
+                          key: index,
+                          stt: index + 1,
+                          ...item,
+                        })
+                      )}
+                      loading={false}
+                      pagination={false}
+                    />
+                  );
+                },
+                rowExpandable: (record) =>
+                  record.code_order !== "Not Expandable",
+              }}
+              scroll={{ y: 325 }}
+              // pagination={{
+              //   total: orderData?.totalItems,
+              //   showTotal: (total, range) =>
+              //     `Từ ${orderData?.pageIndex || 1} đến ${total} trên tổng ${
+              //       orderData?.totalItems
+              //     }`,
+              //   defaultPageSize: orderData?.pageSize || 5,
+              //   defaultCurrent: 1,
+              //   onChange: (page) => _onPaginationTable(page),
+              // }}
+            />
+          </div>
         </div>
-      </div>
-      {_renderDrawerCreate()}
-      {_renderDrawerEdit()}
-    </MainContainer>
+        {_renderDrawerCreate()}
+        {_renderDrawerEdit()}
+      </MainContainer>
+    </>
   );
 };
 

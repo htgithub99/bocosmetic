@@ -17,7 +17,6 @@ const EditPurchaseOrders = ({ items }: IProps) => {
           {/* <Form.Item
             label="Mã đơn nhập"
             required
-            tooltip="This is a required field"
           >
             <Input placeholder="Nhập mã đơn nhập" />
           </Form.Item> */}
@@ -239,7 +238,7 @@ const EditPurchaseOrders = ({ items }: IProps) => {
             </Col>
           </Row>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button htmlType="submit">
               Chỉnh sửa
             </Button>
           </Form.Item>

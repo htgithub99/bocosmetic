@@ -10,8 +10,8 @@
 }
 .pageContent {
   flex: 1;
-  overflow-y: scroll;
+  overflow-y: hidden;
   height: calc(100vh - 60px);
-  background-color: #f0f1f1;
+  background-color: $smoke-10-color;
   @include customScrollBar(0, 0, 0);
 }

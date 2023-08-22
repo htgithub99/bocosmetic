@@ -20,7 +20,6 @@ const CreatePurchaseOrders = () => {
           {/* <Form.Item
             label="Mã đơn nhập"
             required
-            tooltip="This is a required field"
           >
             <Input placeholder="Nhập mã đơn nhập" />
           </Form.Item> */}
@@ -243,7 +242,6 @@ const CreatePurchaseOrders = () => {
           </Row>
           <Form.Item>
             <Button
-              type="dashed"
               htmlType="button"
               className="w-100"
               onClick={() => setIsModalOpen(true)}
@@ -252,7 +250,7 @@ const CreatePurchaseOrders = () => {
             </Button>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button htmlType="submit">
               Tạo mới
             </Button>
           </Form.Item>

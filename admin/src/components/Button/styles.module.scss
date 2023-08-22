@@ -1,0 +1,99 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
+.wrapButton {
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  color: $white-color;
+  z-index: 1;
+  border: none;
+
+  @include mq(md) {
+    font-size: 14px;
+  }
+  @include mq(md, "max") {
+    font-size: 12px;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    z-index: -2;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    transition: all 0.3s;
+    border-radius: 5px;
+    z-index: -1;
+  }
+
+  &:hover {
+    color: $white-color;
+    &:before {
+      width: 100%;
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: $black-color;
+    &:after,
+    &::before {
+      background-color: $smoke-14-color;
+    }
+  }
+}
+
+.wrapButton_delete {
+  @include mq(md) {
+    width: 75px;
+    height: 35px;
+  }
+  @include mq(md, "max") {
+    width: 50px;
+    height: 25px;
+  }
+
+  &:after {
+    background-color: $red-1-color;
+  }
+  &:before {
+    background-color: darken($red-color, 15%);
+  }
+}
+
+.wrapButton_edit {
+  @include mq(md) {
+    width: 75px;
+    height: 35px;
+  }
+  @include mq(md, "max") {
+    width: 50px;
+    height: 25px;
+  }
+  &:after {
+    background-color: $blue-6-color;
+  }
+  &:before {
+    background-color: darken($blue-6-color, 15%);
+  }
+}

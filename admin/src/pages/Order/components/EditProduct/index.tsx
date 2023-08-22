@@ -51,7 +51,7 @@ const EditOrder = ({ orderId, sizePage, _onCloseModal }: IProps) => {
 
   useEffect(() => {
     form.setFieldsValue(orderDetail?.data);
-    setPayData(orderDetail?.data?.product)
+    setPayData(orderDetail?.data?.product);
     return () => form.resetFields();
   }, [orderDetail]);
 
@@ -63,13 +63,11 @@ const EditOrder = ({ orderId, sizePage, _onCloseModal }: IProps) => {
             <Col span={12}>
               <Form.Item
                 label="Tên khách hàng"
-                required
-                tooltip="Tên khách hàng không được để trống!"
                 name="customer_name"
                 rules={[
                   {
                     required: true,
-                    message: "Tên khách hàng không được để trống!",
+                    message: "",
                   },
                 ]}
               >
@@ -79,13 +77,11 @@ const EditOrder = ({ orderId, sizePage, _onCloseModal }: IProps) => {
             <Col span={12}>
               <Form.Item
                 label="Mã đơn hàng"
-                required
-                tooltip="Mã đơn hàng không được để trống!"
                 name="code_order"
                 rules={[
                   {
                     required: true,
-                    message: "Mã đơn hàng không được để trống!",
+                    message: "",
                   },
                 ]}
               >
@@ -98,13 +94,11 @@ const EditOrder = ({ orderId, sizePage, _onCloseModal }: IProps) => {
             <Col span={12}>
               <Form.Item
                 label="Người tạo đơn"
-                required
-                tooltip="Người tạo đơn không được để trống!"
                 name="creator_order"
                 rules={[
                   {
                     required: true,
-                    message: "Người tạo đơn không được để trống!",
+                    message: "",
                   },
                 ]}
               >
@@ -210,12 +204,10 @@ const EditOrder = ({ orderId, sizePage, _onCloseModal }: IProps) => {
           <Form.Item
             label="Khách phải trả"
             name="guest_must_pay"
-            required
-            tooltip="Khách phải trả không được để trống!"
             rules={[
               {
                 required: true,
-                message: "Khách phải trả không được để trống!",
+                message: "",
               },
             ]}
           >
@@ -223,7 +215,6 @@ const EditOrder = ({ orderId, sizePage, _onCloseModal }: IProps) => {
           </Form.Item>
           <Form.Item>
             <Button
-              type="dashed"
               htmlType="button"
               className="w-100"
               onClick={() => setIsModalOpen(true)}
@@ -232,9 +223,7 @@ const EditOrder = ({ orderId, sizePage, _onCloseModal }: IProps) => {
             </Button>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Tạo mới
-            </Button>
+            <Button htmlType="submit">Tạo mới</Button>
           </Form.Item>
         </Form>
       </div>

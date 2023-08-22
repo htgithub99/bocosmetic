@@ -1,13 +1,23 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
 .sticky__search {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  padding: 15px 0 5px 0;
+  // position: sticky;
+  // top: 0;
+  // z-index: 2;
+
+  background: linear-gradient(87deg, #11cdef, #1171ef) !important;
+  @include mq(lg) {
+    padding: 20px 30px 250px 30px;
+  }
+
+  @include mq(lg, "max") {
+    padding: 20px 15px 250px 15px;
+  }
   .wrapSearchHeaderTable {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  
+
     .search_item {
       flex: 1;
       margin-right: 20px;
@@ -16,22 +26,44 @@
       }
     }
   }
-  
+
   .wrapBtnHeaderTable {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
+    @include mq(md) {
+      margin-bottom: 20px;
+    }
+  
+    @include mq(md, "max") {
+      margin-bottom: 15px;
+    }
     .btn__import {
       button {
+        @include mq(md) {
+          font-size: 16px;
+        }
+
+        @include mq(md, "max") {
+          font-size: 14px;
+        }
         &:nth-child(1) {
           margin-right: 10px;
         }
       }
     }
-  
+
     .btn_create {
-  
+      button {
+        @include mq(md) {
+          font-size: 16px;
+        }
+
+        @include mq(md, "max") {
+          font-size: 14px;
+        }
+      }
     }
   }
 }

@@ -19,7 +19,7 @@ export default function PageWrapper() {
   const isAuthenticated = !!Cookies.get("token");
   // const { profile } = useProfile(isAuthenticated);
 
-  if (!isAuthenticated) return <Navigate to="/login" />;
+  // if (!isAuthenticated) return <Navigate to="/login" />;
   // if (!profile) return null;
 
   return (

@@ -16,10 +16,28 @@ body {
 //Pagination
 .ant-pagination {
   align-items: center;
+  .ant-pagination-total-text {
+    text-transform: uppercase;
+    @include mq(md) {
+      font-size: 16px;
+    }
+    @include mq(md, "max") {
+      font-size: 14px;
+    }
+  }
+  .ant-pagination-next,
+  .ant-pagination-prev {
+    color: $smoke-12-color;
+    background-color: $white-color;
+    border: 1px solid $smoke-11-color;
+  }
   .ant-pagination-item-active {
-    background: #1677ff !important;
+    background: $blue-5-color !important;
+    border: 1px solid $blue-5-color;
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
     a {
       color: $white-color !important;
+      font-weight: 400;
     }
     &:hover {
       a {
@@ -27,19 +45,39 @@ body {
       }
     }
   }
+
   .ant-pagination-item {
-    border-radius: 50%;
     background: none;
-    min-width: 24px;
-    height: 24px;
+    border: 1px solid $smoke-11-color;
+
     a {
       padding: 0;
-      color: $black-color;
+      color: $smoke-12-color;
       height: 100%;
       width: 100%;
-      position: relative;
-      top: -4px;
-      font-size: 12px;
+      font-weight: 300;
+      @include mq(md) {
+        font-size: 16px;
+      }
+      @include mq(md, "max") {
+        font-size: 14px;
+      }
+    }
+  }
+  .ant-pagination-item,
+  .ant-pagination-next,
+  .ant-pagination-prev {
+    border-radius: 50%;
+    overflow: hidden;
+    @include mq(md) {
+      width: 36px;
+      height: 36px;
+      line-height: 32px;
+    }
+    @include mq(md, "max") {
+      width: 28px;
+      height: 28px;
+      line-height: 26px;
     }
   }
 }
@@ -67,40 +105,178 @@ body {
 .ant-table {
   margin: 0 !important;
   .ant-table-container {
-    .ant-table-content {
-      table {
-        .ant-table-tbody {
-          .ant-table-row {
-            td.ant-table-cell {
-              padding: 10px 15px;
-              .material-symbols-outlined {
-                font-size: 30px;
-                color: $gray-2-color;
-                opacity: 0.6;
-              }
-              .ant-image {
-                img {
-                  width: 100%;
-                  height: 40px;
-                  object-fit: contain;
-                  border-radius: 5px;
-                }
-                .ant-image-mask {
-                  .ant-image-mask-info {
-                    display: none;
-                  }
-                }
+    .ant-table-tbody {
+      tr {
+        &:hover {
+          td {
+            background: none;
+          }
+        }
+        td {
+          background: $white-color !important;
+          a {
+            &:hover,
+            &:active {
+              text-decoration: underline;
+            }
+          }
+          color: $blue-4-color;
+          @include mq(md) {
+            font-size: 16px;
+          }
+          @include mq(md, "max") {
+            font-size: 12px;
+          }
+        }
+        td.ant-table-cell {
+          @include mq(md, "max") {
+            padding: 7px 5px !important;
+          }
+        }
+      }
+      .ant-table-row {
+        td.ant-table-cell {
+          padding: 10px 15px;
+          .material-symbols-outlined {
+            font-size: 30px;
+            color: $blue-4-color;
+            opacity: 0.6;
+          }
+          .ant-image {
+            img {
+              width: 100%;
+              height: 40px;
+              object-fit: contain;
+              border-radius: 5px;
+            }
+            .ant-image-mask {
+              .ant-image-mask-info {
+                display: none;
               }
             }
           }
         }
-        .ant-table-thead {
-          th,
-          td {
-            padding: 10px 15px;
-          }
+      }
+    }
+    .ant-table-thead {
+      height: 55px;
+      th,
+      td {
+        color: $blue-4-color;
+        padding: 10px 15px;
+        background-color: $white-1-color;
+        font-weight: 300;
+        @include mq(md) {
+          font-size: 16px;
+        }
+        @include mq(md, "max") {
+          font-size: 12px;
+          font-weight: 500;
         }
       }
+      th {
+        @include mq(md, "max") {
+          padding: 7px 5px !important;
+        }
+      }
+    }
+  }
+}
+
+//Form
+form {
+  label {
+    @include mq(md) {
+      font-size: 16px !important;
+    }
+    @include mq(md, "max") {
+      font-size: 14px !important;
+    }
+  }
+  input,
+  .ant-select,
+  .ant-select-selector {
+    @include mq(md) {
+      height: 3em !important;
+    }
+    @include mq(md, "max") {
+      height: 2.5em !important;
+    }
+  }
+  // .ant-input-number,
+  // input,
+  // .ant-select-focused,
+  // .ant-select-selector {
+  //   &:focus {
+  //     outline: none !important;
+  //     box-shadow: none !important;
+  //   }
+  // }
+  .ant-select {
+    .ant-select-selector {
+      display: flex;
+      align-items: center;
+      @include mq(md) {
+        height: 3em !important;
+      }
+      @include mq(md, "max") {
+        height: 2.5em !important;
+      }
+      background-color: $white-color;
+      input {
+        height: 100% !important;
+      }
+    }
+  }
+  input,
+  textarea {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid $smoke-color;
+    padding: 0 0.75em;
+    max-width: 100%;
+    width: 100%;
+    vertical-align: middle;
+    background-color: $white-color;
+    color: $smoke-2-color;
+    &:focus {
+      outline: none;
+    }
+
+    @include mq(md) {
+      font-size: 16px;
+    }
+    @include mq(md, "max") {
+      font-size: 14px;
+    }
+  }
+
+  button {
+    width: 100%;
+    height: 100%;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    font-weight: bolder;
+    text-align: center;
+    line-height: 2.4em;
+    min-height: 2.5em;
+    padding: 0 1.2em;
+    max-width: 100%;
+    background-color: $pink-2-color;
+    border: 1px solid $pink-2-color;
+    color: $white-color;
+
+    &:hover {
+      background: linear-gradient(87deg, #11cdef, #1171ef) !important;
+      span {
+        color: $white-color;
+      }
+    }
+    @include mq(md) {
+      font-size: 16px;
+    }
+    @include mq(md, "max") {
+      font-size: 14px;
     }
   }
 }
@@ -111,19 +287,29 @@ body {
   transition: width 200ms;
 }
 
-.btn-submit-login {
-  width: 279px;
-  border-radius: 50px;
-  height: 64px;
-  text-align: center;
-  font-size: 24px;
-  opacity: 0.5;
-}
-
 input:-internal-autofill-selected {
   background: none;
 }
 
 .mb-30 {
   margin-bottom: 30px;
+}
+
+//ant-drawer
+.ant-drawer {
+  .ant-drawer-content-wrapper {
+    .ant-drawer-content {
+      .ant-drawer-wrapper-body {
+        .ant-drawer-header {
+          .ant-drawer-header-title {
+            button {
+              order: 2;
+              padding: 0;
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
 }

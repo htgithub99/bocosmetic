@@ -2,7 +2,9 @@ import { Drawer, Dropdown, Image, MenuProps, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import MainContainer from "components/MainContainer";
 import SearchHeaderTable from "components/SearchHeaderTable";
+import { BreakpointsUp } from "constants/enum";
 import { useState } from "react";
+import useViewport from "utils/hooks/useViewport";
 import CreatePurchaseOrders from "./components/CreatePurchaseOrders";
 import EditPurchaseOrders from "./components/EditPurchaseOrders";
 import styles from "./styles.module.scss";
@@ -18,25 +20,24 @@ interface DataType {
   staff_create: string;
 }
 
-// interface childDataType {
-//   key: React.Key;
-//   id: number;
-//   image: string;
-//   code_sku: string;
-//   name_product: string;
-//   quantity: number;
-//   unit_price: number;
-//   into_money: number;
-// }
-
 const PurchaseOrders = () => {
+  const { isMobile: isViewport767, width } = useViewport();
+  const { isMobile: isViewport1023 } = useViewport(BreakpointsUp.LG);
   const [isDrawerCreate, setIsDrawerCreate] = useState<boolean>(false);
   const [isDrawerEdit, setIsDrawerEdit] = useState<boolean>(false);
+  const [updateDrawer, setUpdateDrawer] = useState<{
+    orderId: number | null;
+    modalHas: boolean;
+  }>({
+    orderId: null,
+    modalHas: false,
+  });
 
   const items: MenuProps["items"] = [
     {
       key: "1",
       label: <div className="disabled-div">Sửa</div>,
+      onClick: ({ item, key, keyPath, domEvent }) => _onClickUpdateOrder(item),
     },
     {
       key: "2",
@@ -47,61 +48,62 @@ const PurchaseOrders = () => {
     },
   ];
 
-  const columns: ColumnsType<DataType> = [
+  const COLUMNS_PURCHASE_ORDER: ColumnsType<DataType> = [
     {
       title: "Mã đơn nhập",
       dataIndex: "code_stock",
-      ellipsis: true,
-      responsive: ["md"],
+      align: "center",
+      width: isViewport767 ? 125 : 170,
       render: (text: string) => <a>{text}</a>,
     },
     {
       title: "Ngày nhập",
       dataIndex: "Create_at",
-      ellipsis: true,
-      responsive: ["md"],
+      align: "center",
+      width: isViewport767 ? 125 : 170,
       render: (text: string) => text,
     },
     {
       title: "Trạng thái",
       dataIndex: "status",
-      ellipsis: true,
-      responsive: ["md"],
+      align: "center",
+      width: isViewport767 ? 125 : 170,
       render: (text: string) => text,
     },
     {
       title: "Trạng thái nhập",
       dataIndex: "status_stock",
-      ellipsis: true,
-      responsive: ["md"],
+      align: "center",
+      width: isViewport767 ? 125 : 200,
       render: (text: string) => text,
     },
     {
       title: "Chi nhánh nhập",
       dataIndex: "branch_stock",
-      ellipsis: true,
-      responsive: ["md"],
+      align: "center",
+      width: isViewport767 ? 125 : 200,
       render: (text: string) => text,
     },
     {
       title: "Nhà cung cấp",
       dataIndex: "supplier",
-      ellipsis: true,
-      responsive: ["md"],
+      align: "center",
+      width: isViewport767 ? 125 : 200,
       render: (text: string) => text,
     },
     {
       title: "Nhân viên tạo",
       dataIndex: "staff_create",
-      ellipsis: true,
-      responsive: ["md"],
+      align: "center",
+      width: isViewport767 ? 125 : 200,
       render: (text: string) => text,
     },
     {
       title: "Tác vụ",
       dataIndex: "action",
-      ellipsis: true,
-      responsive: ["md"],
+      fixed: "right",
+      width: 100,
+      align: "center",
       render: (text: string) => (
         <div className={styles.wrapAction}>
           <Dropdown menu={{ items }} placement="topCenter" arrow>
@@ -266,66 +268,53 @@ const PurchaseOrders = () => {
   ];
 
   //child table
-  const childColumns: ColumnsType<any> = [
+  const CHILD_COLUMNS_ORDER: ColumnsType<any> = [
     {
       title: "STT",
       dataIndex: "id",
-      ellipsis: true,
-      responsive: ["md"],
-      width: 100,
-      align: 'center',
+      width: isViewport767 ? 85 : 100,
+      align: "center",
       render: (text: string) => <a>{text}</a>,
     },
     {
       title: "Ảnh",
       dataIndex: "image",
-      ellipsis: true,
-      responsive: ["md"],
-      align: 'center',
-      width: 150,
+      align: "center",
+      width: isViewport767 ? 125 : 150,
       render: (url: string) => <Image src={url} alt={url} />,
     },
     {
       title: "Mã SKU",
       dataIndex: "code_sku",
-      ellipsis: true,
-      responsive: ["md"],
-      align: 'center',
-      width: 150,
+      align: "center",
+      width: isViewport767 ? 125 : 170,
       render: (text: string) => text,
     },
     {
       title: "Tên sản phẩm",
       dataIndex: "name_product",
-      ellipsis: true,
-      responsive: ["md"],
+      width: isViewport767 ? 250 : 300,
       render: (text: string) => text,
     },
     {
       title: "Số lượng",
       dataIndex: "quantity",
-      ellipsis: true,
-      responsive: ["md"],
-      align: 'center',
-      width: 150,
+      align: "center",
+      width: isViewport767 ? 125 : 150,
       render: (text: string) => text,
     },
     {
       title: "Đơn giá",
       dataIndex: "unit_price",
-      ellipsis: true,
-      responsive: ["md"],
-      align: 'right',
-      width: 150,
+      align: "center",
+      width: isViewport767 ? 125 : 170,
       render: (text: string) => text,
     },
     {
       title: "Thành tiền",
       dataIndex: "into_money",
-      ellipsis: true,
-      responsive: ["md"],
-      align: 'right',
-      width: 150,
+      align: "center",
+      width: isViewport767 ? 125 : 170,
       render: (text: string) => text,
     },
   ];
@@ -394,59 +383,96 @@ const PurchaseOrders = () => {
 
   const _onCloseDrawerCreate = () => setIsDrawerCreate(false);
 
-  const _onCloseDrawerEdit = () => setIsDrawerEdit(false);
+  const _onClickUpdateOrder = ({ _id }: any) => {
+    setUpdateDrawer({
+      orderId: _id,
+      modalHas: true,
+    });
+  };
+
+  const _onCloseDrawerEdit = () =>
+    setUpdateDrawer({
+      orderId: null,
+      modalHas: false,
+    });
+
+  const _renderDrawerCreate = () => {
+    if (isDrawerCreate)
+      return (
+        <Drawer
+          title="Tạo đơn nhập hàng"
+          placement="right"
+          onClose={_onCloseDrawerCreate}
+          open={isDrawerCreate}
+          size={isViewport767 ? "default" : "large"}
+        >
+          <CreatePurchaseOrders />
+        </Drawer>
+      );
+    return null;
+  };
+
+  const _renderDrawerEdit = () => {
+    if (updateDrawer?.modalHas)
+      return (
+        <Drawer
+          title="Sửa đơn nhập hàng"
+          placement="right"
+          onClose={_onCloseDrawerEdit}
+          open={isDrawerEdit}
+          size={isViewport767 ? "default" : "large"}
+        >
+          <EditPurchaseOrders items={items} />
+        </Drawer>
+      );
+    return null;
+  };
 
   return (
-    <MainContainer>
-      <div className={styles.wrapPurchaseOrders}>
-        <SearchHeaderTable _onCreate={() => setIsDrawerCreate(true)} />
-        <div className={styles.wrapContent}>
-          <Table
-            rowSelection={{
-              type: "checkbox",
-              ...rowSelection,
-            }}
-            columns={columns}
-            dataSource={data}
-            expandable={{
-              expandedRowRender: (record) => (
-                <Table
-                  columns={childColumns}
-                  dataSource={childData}
-                  loading={false}
-                  pagination={false}
-                />
-              ),
-              rowExpandable: (record) => record.code_stock !== "Not Expandable",
-            }}
-            loading={false}
-            pagination={{
-              total: 85,
-              showTotal: (total, range) =>
-                `${range[0]}-${range[1]} of ${total} items`,
-              defaultPageSize: 20,
-              defaultCurrent: 1,
-            }}
-          />
+    <>
+      <SearchHeaderTable _onCreate={() => setIsDrawerCreate(true)} />
+      <MainContainer>
+        <div className={styles.wrapPurchaseOrders}>
+          <div className={styles.wrapContent}>
+            <Table
+              style={{
+                width: isViewport1023 ? width - 30 : width - (60 + 250),
+                overflow: "scroll",
+              }}
+              rowSelection={{
+                type: "checkbox",
+                ...rowSelection,
+              }}
+              columns={COLUMNS_PURCHASE_ORDER}
+              dataSource={data}
+              expandable={{
+                expandedRowRender: (record) => (
+                  <Table
+                    columns={CHILD_COLUMNS_ORDER}
+                    dataSource={childData}
+                    loading={false}
+                    pagination={false}
+                  />
+                ),
+                rowExpandable: (record) =>
+                  record.code_stock !== "Not Expandable",
+              }}
+              loading={false}
+              scroll={{ y: 325 }}
+              // pagination={{
+              //   total: 85,
+              //   showTotal: (total, range) =>
+              //     `${range[0]}-${range[1]} of ${total} items`,
+              //   defaultPageSize: 20,
+              //   defaultCurrent: 1,
+              // }}
+            />
+          </div>
         </div>
-      </div>
-      <Drawer
-        title="Tạo đơn nhập hàng"
-        placement="right"
-        onClose={_onCloseDrawerCreate}
-        open={isDrawerCreate}
-      >
-        <CreatePurchaseOrders />
-      </Drawer>
-      <Drawer
-        title="Sửa đơn nhập hàng"
-        placement="right"
-        onClose={_onCloseDrawerEdit}
-        open={isDrawerEdit}
-      >
-        <EditPurchaseOrders items={items} />
-      </Drawer>
-    </MainContainer>
+        {_renderDrawerCreate()}
+        {_renderDrawerEdit()}
+      </MainContainer>
+    </>
   );
 };
 

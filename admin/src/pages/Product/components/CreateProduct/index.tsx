@@ -42,11 +42,10 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
             rules={[
               {
                 required: true,
-                message: "Trường này không được để trống!",
+                message: "",
               },
             ]}
             name="product_name"
-            tooltip="Nhập tên sản phẩm"
           >
             <Input placeholder="Nhập tên sản phẩm" />
           </Form.Item>
@@ -55,11 +54,10 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
             rules={[
               {
                 required: true,
-                message: "Trường này không được để trống!",
+                message: "",
               },
             ]}
             name="entry_price"
-            tooltip="Nhập giá nhập"
           >
             <InputNumber
               prefix="￥"
@@ -75,7 +73,7 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
                 rules={[
                   {
                     required: true,
-                    message: "Loại sản phẩm không được để trống!",
+                    message: "",
                   },
                 ]}
               >
@@ -114,10 +112,9 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
                 rules={[
                   {
                     required: true,
-                    message: "Mã vạch không được để trống!",
+                    message: "",
                   },
                 ]}
-                tooltip="Nhập mã vạch"
                 name="barcode"
               >
                 <InputNumber className="w-100" placeholder="Nhập mã vạch" />
@@ -131,10 +128,9 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
                 rules={[
                   {
                     required: true,
-                    message: "Giá cộng tác viên không được để trống!",
+                    message: "",
                   },
                 ]}
-                tooltip="Nhập giá cộng tác viên"
                 name="contributor_price"
               >
                 <InputNumber
@@ -150,10 +146,9 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
                 rules={[
                   {
                     required: true,
-                    message: "Giá bán không được để trống!",
+                    message: "",
                   },
                 ]}
-                tooltip="Nhập giá bán"
                 name="price"
               >
                 <InputNumber
@@ -171,10 +166,9 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
                 rules={[
                   {
                     required: true,
-                    message: "Số lượng không được để trống!",
+                    message: "",
                   },
                 ]}
-                tooltip="Nhập số lượng"
                 name="quantity"
               >
                 <InputNumber className="w-100" placeholder="Nhập số lượng" />
@@ -187,7 +181,7 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
                 rules={[
                   {
                     required: true,
-                    message: "Chi nhánh không được để trống!",
+                    message: "",
                   },
                 ]}
               >
@@ -218,9 +212,7 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
             </Col>
           </Row>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Tạo mới
-            </Button>
+            <Button htmlType="submit">Tạo mới</Button>
           </Form.Item>
         </Form>
       </div>

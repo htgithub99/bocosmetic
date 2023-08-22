@@ -1,33 +1,54 @@
 @import "assets/variables.scss";
 @import "assets/mixin.scss";
 .wrapSideNav {
-  background: $bg-side-nav;
-  border-right: 1px solid $bg-side-nav;
+  min-width: 250px;
   height: 100%;
   transition: width 200ms;
-  width: 230px;
+  width: 250px;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
+  @include mq(lg) {
+  }
+  @include mq(lg, "max") {
+    position: fixed;
+    z-index: 99;
+    height: 100vh;
+    top: 0;
+    -webkit-transition: -webkit-transform 0.2s;
+    transition: -webkit-transform 0.2s;
+    -o-transition: transform 0.2s;
+    transition: transform 0.2s;
+    transition: transform 0.2s, -webkit-transform 0.2s;
+    -webkit-transform: translateX(-500%);
+    -ms-transform: translateX(-500%);
+    transform: translateX(-500%);
+    -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  }
 
-  .wrapLogo {
+  .sideNav_logo {
     width: 100%;
-    padding: 5px 0;
     display: flex;
     justify-content: space-around;
     align-items: center;
     position: sticky;
     top: 0;
-    background: $bg-side-nav;
     z-index: 2;
-    border-bottom: 1px solid #263d53;
+    box-shadow: 0px 2px 0 rgba(168, 168, 168, 0.25);
+    @include mq(md) {
+      padding: 10px 0;
+    }
+    @include mq(md, "max") {
+      padding: 7px 0;
+    }
 
     img {
-      width: 130px;
-      height: 55px;
+      width: 100%;
+      height: 40px;
       cursor: pointer;
     }
 
@@ -39,40 +60,74 @@
     }
   }
 
-  .wrapContent {
+  .sideNav_content {
     overflow-y: scroll;
     @include customScrollBar(0, 0, 0);
-    height: calc(100% - 65px);
-    padding-bottom: 20px;
+    // height: calc(100% - 65px);
+    // padding-bottom: 20px;
+    @include mq(lg) {
+      margin-top: 15px;
+    }
+    @include mq(lg, "max") {
+      height: 100%;
+    }
 
     :global {
-      .ant-menu-inline,
-      .ant-menu-vertical,
-      .ant-menu-vertical-left {
-        border: none;
-      }
-
       .ant-menu {
-        .ant-menu-item,
-        .ant-menu-submenu {
-          .anticon {
-            min-width: 18px;
-            font-size: 18px;
+        height: 100%;
+        background: $white-color !important;
+      }
+      .ant-menu-item,
+      .ant-menu-submenu {
+        .ant-menu-title-content,
+        .ant-menu-submenu-arrow {
+          color: $black-color;
+          @include mq(lg) {
+            font-size: 16px;
+          }
+          @include mq(lg, "max") {
+            font-size: 14px;
           }
         }
       }
-
-      span.material-symbols-outlined {
-        cursor: pointer;
-        color: $white-color;
+      .ant-menu-submenu-title,
+      .ant-menu-item,
+      .ant-menu-submenu {
+        &:active,
+        &:focus {
+          background-color: $white-color !important;
+        }
+      }
+      .ant-menu-item-icon {
+        svg {
+          color: $black-color;
+          @include mq(lg) {
+            font-size: 16px;
+          }
+          @include mq(lg, "max") {
+            font-size: 14px;
+          }
+        }
+      }
+      .ant-menu-item-selected {
+        background: linear-gradient(87deg, #11cdef, #1171ef) !important;
+        .ant-menu-title-content {
+          color: $white-color;
+        }
       }
     }
   }
-
-
 }
 
-.sideNavCollapsed {
-  width: 85px;
-  transition: width 200ms;
+.wrapSideNav_active {
+  @include mq(lg, "max") {
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+    -webkit-transition: -webkit-transform 0.2s;
+    transition: -webkit-transform 0.2s;
+    -o-transition: transform 0.2s;
+    transition: transform 0.2s;
+    transition: transform 0.2s, -webkit-transform 0.2s;
+  }
 }

@@ -1,23 +1,23 @@
 import {
-  HomeOutlined,
   AuditOutlined,
-  LogoutOutlined,
   DropboxOutlined,
-  UserOutlined,
+  HomeOutlined,
+  LogoutOutlined,
   PrinterOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import classNames from "classnames";
 import { RoutePath } from "constants/constant";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import useToggleSideNav from "utils/hooks/useToggleSideNav";
+import useToggleMenu from "utils/hooks/useToggleMenu";
 import styles from "./styles.module.scss";
 
 const { SubMenu } = Menu;
 
 export default function SideNav() {
-  const { collapsed, toggleSideNav } = useToggleSideNav();
+  const { collapsed, onToggleMenu } = useToggleMenu();
   const location = useLocation();
   const [selectedKey, setSelectedKey] = useState("1");
 
@@ -149,31 +149,29 @@ export default function SideNav() {
 
   return (
     <div
-      className={classNames({
-        [styles.wrapSideNav]: true,
-        [styles.sideNavCollapsed]: collapsed,
+      className={classNames(styles.wrapSideNav, {
+        [styles.wrapSideNav_active]: collapsed,
       })}
     >
-      <div className={styles.wrapLogo}>
-        <Link to="/" className={classNames({ "toggle-side-nav": collapsed })}>
+      <div className={styles.sideNav_logo}>
+        <Link to="/">
           <img
-            src="https://sapo.dktcdn.net/fe-cdn-production/images/logo_sapo_white.svg"
+            src="https://demos.creative-tim.com/argon-dashboard-react/static/media/argon-react.128d71d3.png"
             alt="logo"
           />
         </Link>
-        <span
+        {/* <span
           onClick={() => toggleSideNav()}
           className="material-symbols-outlined"
         >
           more_vert
-        </span>
+        </span> */}
       </div>
-      <div className={styles.wrapContent}>
+      <div className={styles.sideNav_content}>
         <Menu
           selectedKeys={[selectedKey]}
           defaultOpenKeys={[]}
           mode="inline"
-          inlineCollapsed={collapsed}
           theme={"dark"}
         >
           {routes.map((route) => {
@@ -185,7 +183,7 @@ export default function SideNav() {
                       disabled={childRoute?.disabled}
                       key={childRoute.key}
                     >
-                      <Link to={childRoute?.disabled ? "#" : childRoute.url}>
+                      <Link onClick={onToggleMenu} to={childRoute?.disabled ? "#" : childRoute.url}>
                         {childRoute.text}
                       </Link>
                     </Menu.Item>

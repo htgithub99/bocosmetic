@@ -26,4 +26,10 @@ export const QueryKey = {
   GET_BY_ID_PRODUCT: "GET_BY_ID_PRODUCT",
   LIST_ORDER_KEY: "LIST_ORDER_KEY",
   GET_BY_ID_ORDER: "GET_BY_ID_ORDER",
+  TOGGLE_MENU_KEY: "TOGGLE_MENU_KEY",
+};
+
+export const TypeButton = {
+  DELETE: "delete",
+  EDIT: "edit",
 };

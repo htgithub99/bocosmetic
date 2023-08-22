@@ -1,14 +1,16 @@
-import { Button, Drawer, Image, Popconfirm, Space, Table } from "antd";
-import { FileImageOutlined } from "@ant-design/icons";
+import { Drawer, Image, Popconfirm, Space, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { getListProduct } from "api/product";
+import Button from "components/Button/Button";
 import MainContainer from "components/MainContainer";
 import SearchHeaderTable from "components/SearchHeaderTable";
-import { QueryKey } from "constants/constant";
+import { QueryKey, TypeButton } from "constants/constant";
+import { BreakpointsUp } from "constants/enum";
 import { formatMoney } from "constants/format";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import useViewport from "utils/hooks/useViewport";
 import EditProduct from "./components/EditProduct";
 import styles from "./styles.module.scss";
 
@@ -22,6 +24,8 @@ interface DataType {
 }
 
 const Variants = () => {
+  const { isMobile: isViewport767, width } = useViewport();
+  const { isMobile: isViewport1023 } = useViewport(BreakpointsUp.LG);
   const [sizePage, setSizePage] = useState<any>({
     name: null,
   });
@@ -39,23 +43,19 @@ const Variants = () => {
     {}
   );
 
-  const columns: ColumnsType<DataType> = [
+  const COLUMNS_VARIANTS: ColumnsType<DataType> = [
     {
       title: "Mã vạch",
       dataIndex: "barcode",
-      ellipsis: true,
-      responsive: ["md"],
-      align: "left",
-      width: 150,
+      align: "center",
+      width: isViewport767 ? 125 : 170,
       render: (text: string) => <a>{text}</a>,
     },
     {
       title: "Ảnh",
       dataIndex: "image",
-      ellipsis: true,
-      responsive: ["md"],
       align: "center",
-      width: 150,
+      width: isViewport767 ? 125 : 150,
       render: (url: string) =>
         url ? (
           <Image src={url} alt={url} />
@@ -66,27 +66,22 @@ const Variants = () => {
     {
       title: "Tồn kho",
       dataIndex: "quantity",
-      ellipsis: true,
-      responsive: ["md"],
       align: "center",
-      width: 150,
+      width: isViewport767 ? 125 : 170,
       render: (text: string) => text,
     },
     {
       title: "Giá bán lẻ",
       dataIndex: "price",
-      ellipsis: true,
-      responsive: ["md"],
-      align: "right",
-      width: 150,
+      align: "center",
+      width: isViewport767 ? 125 : 170,
       render: (text: string) => text,
     },
     {
       title: "Tên phiên bản sản phẩm",
       dataIndex: "product_version_name",
-      ellipsis: true,
-      responsive: ["md"],
       align: "left",
+      width: isViewport767 ? 250 : 300,
       render: (_, record) => {
         return (
           <div className={styles.productVersionName}>
@@ -99,32 +94,18 @@ const Variants = () => {
     {
       title: "Tác vụ",
       dataIndex: "action",
-      ellipsis: true,
-      responsive: ["md"],
-      width: 200,
+      width: isViewport767 ? 125 : 200,
       align: "center",
+      fixed: "right",
       render: (_, record) => (
         <Space size="middle">
           <Button
-            type="dashed"
             onClick={() => onClickUpdateProduct(record)}
-            htmlType="button"
-            size="small"
+            classNameT={TypeButton.EDIT}
           >
-            Chỉnh sửa
+            Sửa
           </Button>
-          <Popconfirm
-            title="Xóa phiên bản"
-            placement="topLeft"
-            description="Bạn chắc chắn muốn xóa?"
-            onConfirm={() => {}}
-            okText="Xác nhận"
-            cancelText="Hủy"
-          >
-            <Button type="dashed" htmlType="button" size="small">
-              Xóa
-            </Button>
-          </Popconfirm>
+          <Button classNameT={TypeButton.DELETE}>Xóa</Button>
         </Space>
       ),
     },
@@ -172,6 +153,7 @@ const Variants = () => {
           placement="right"
           onClose={_onCloseDrawerEdit}
           open={updateDrawer.modalHas}
+          size={isViewport767 ? "default" : "large"}
         >
           <EditProduct
             productId={updateDrawer.productId}
@@ -183,33 +165,40 @@ const Variants = () => {
     return null;
   };
   return (
-    <MainContainer classW="h-100">
-      <div className={styles.wrapVariants}>
-        <SearchHeaderTable btnCreateHas={false} />
-        <div className={styles.wrapContent}>
-          <Table
-            rowSelection={{
-              type: "checkbox",
-              ...rowSelection,
-            }}
-            columns={columns}
-            dataSource={data}
-            loading={isLoadingProductData}
-            pagination={{
-              total: productData?.totalItems,
-              showTotal: (total, range) =>
-                `Từ ${productData?.pageIndex || 1} đến ${total} trên tổng ${
-                  productData?.totalItems
-                }`,
-              defaultPageSize: productData?.pageSize || 5,
-              defaultCurrent: 1,
-              onChange: (page) => _onPaginationTable(page),
-            }}
-          />
+    <>
+      <SearchHeaderTable btnCreateHas={false} />
+      <MainContainer classW="h-100">
+        <div className={styles.wrapVariants}>
+          <div className={styles.wrapContent}>
+            <Table
+              style={{
+                width: isViewport1023 ? width - 30 : width - (60 + 250),
+                overflow: "scroll",
+              }}
+              rowSelection={{
+                type: "checkbox",
+                ...rowSelection,
+              }}
+              columns={COLUMNS_VARIANTS}
+              dataSource={data}
+              loading={isLoadingProductData}
+              scroll={{ y: 325 }}
+              // pagination={{
+              //   total: productData?.totalItems,
+              //   showTotal: (total, range) =>
+              //     `Từ ${productData?.pageIndex || 1} đến ${total} trên tổng ${
+              //       productData?.totalItems
+              //     }`,
+              //   defaultPageSize: productData?.pageSize || 5,
+              //   defaultCurrent: 1,
+              //   onChange: (page) => _onPaginationTable(page),
+              // }}
+            />
+          </div>
         </div>
-      </div>
-      {_renderDrawerEdit()}
-    </MainContainer>
+        {_renderDrawerEdit()}
+      </MainContainer>
+    </>
   );
 };
 

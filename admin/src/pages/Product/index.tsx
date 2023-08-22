@@ -1,13 +1,15 @@
-import { Button, Drawer, Popconfirm, Space, Table } from "antd";
+import { Drawer, Space, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { deleteProduct, getListProduct } from "api/product";
+import Button from "components/Button/Button";
 import MainContainer from "components/MainContainer";
 import SearchHeaderTable from "components/SearchHeaderTable";
-import { QueryKey } from "constants/constant";
+import { QueryKey, TypeButton } from "constants/constant";
 import { formatMoney } from "constants/format";
 import { handleErrorMessage, handleSuccessMessage } from "i18n";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import useViewport from "utils/hooks/useViewport";
 import CreateProduct from "./components/CreateProduct";
 import styles from "./styles.module.scss";
 
@@ -22,6 +24,7 @@ interface DataType {
 const Product = () => {
   const queryClient = useQueryClient();
   const [isDrawerCreate, setIsDrawerCreate] = useState<boolean>(false);
+  const { isMobile: isViewport767, width } = useViewport();
 
   const [sizePage, setSizePage] = useState<any>({
     name: null,
@@ -63,32 +66,23 @@ const Product = () => {
     {
       title: "Tên sản phẩm",
       dataIndex: "product_name",
-      ellipsis: true,
-      responsive: ["md"],
       align: "left",
       render: (text: string) => <a>{text}</a>,
     },
     {
       title: "Tác vụ",
       dataIndex: "action",
-      ellipsis: true,
-      responsive: ["md"],
-      width: 200,
+      width: isViewport767 ? 95 : 200,
       align: "center",
+      fixed: "right",
       render: (_, record) => (
         <Space size="middle">
-          <Popconfirm
-            title="Xóa sản phẩm"
-            placement="topLeft"
-            description="Bạn chắc chắn muốn xóa?"
+          <Button
             onConfirm={() => onDeleteProduct(record)}
-            okText="Xác nhận"
-            cancelText="Hủy"
+            classNameT={TypeButton.DELETE}
           >
-            <Button type="dashed" htmlType="button" size="small">
-              Xóa
-            </Button>
-          </Popconfirm>
+            Xóa
+          </Button>
         </Space>
       ),
     },
@@ -118,6 +112,7 @@ const Product = () => {
           placement="right"
           onClose={_onCloseDrawerCreate}
           open={isDrawerCreate}
+          size={isViewport767 ? "default" : "large"}
         >
           <CreateProduct
             _onCloseModal={() => _onCloseDrawerCreate()}
@@ -129,37 +124,40 @@ const Product = () => {
   };
 
   return (
-    <MainContainer classW="h-100">
-      <div className={styles.wrapProduct}>
-        <SearchHeaderTable
-          _onSearchField={(value) => _onSearchField(value)}
-          _onCreate={() => setIsDrawerCreate(true)}
-          placeholderInputSearch="Tìm kiếm theo tên sản phẩm..."
-        />
-        <div className={styles.wrapContent}>
-          <Table
-            rowSelection={{
-              type: "checkbox",
-              ...rowSelection,
-            }}
-            columns={COLUMNS_PRODUCT}
-            dataSource={data}
-            loading={isLoadingProduct}
-            pagination={{
-              total: productData?.totalItems,
-              showTotal: (total, range) =>
-                `Từ ${productData?.pageIndex || 1} đến ${total} trên tổng ${
-                  productData?.totalItems
-                }`,
-              defaultPageSize: productData?.pageSize || 5,
-              defaultCurrent: 1,
-              onChange: (page) => _onPaginationTable(page),
-            }}
-          />
+    <>
+      <SearchHeaderTable
+        _onSearchField={(value) => _onSearchField(value)}
+        _onCreate={() => setIsDrawerCreate(true)}
+        placeholderInputSearch="Tìm kiếm theo tên sản phẩm..."
+      />
+      <MainContainer classW="h-100">
+        <div className={styles.wrapProduct}>
+          <div className={styles.wrapContent}>
+            <Table
+              rowSelection={{
+                type: "checkbox",
+                ...rowSelection,
+              }}
+              columns={COLUMNS_PRODUCT}
+              dataSource={data}
+              loading={isLoadingProduct}
+              scroll={{ y: 325 }}
+              // pagination={{
+              //   total: productData?.totalItems,
+              //   showTotal: (total, range) =>
+              //     `Từ ${productData?.pageIndex || 1} đến ${total} trên tổng ${
+              //       productData?.totalItems
+              //     }`,
+              //   defaultPageSize: productData?.pageSize || 5,
+              //   defaultCurrent: 1,
+              //   onChange: (page) => _onPaginationTable(page),
+              // }}
+            />
+          </div>
         </div>
-      </div>
-      {_renderDrawerCreate()}
-    </MainContainer>
+        {_renderDrawerCreate()}
+      </MainContainer>
+    </>
   );
 };
 

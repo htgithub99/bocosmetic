@@ -62,7 +62,6 @@ export default function Login() {
               <Button
                 type="primary"
                 htmlType="submit"
-                className="btn-submit-login"
               >
                 Đăng nhập
               </Button>

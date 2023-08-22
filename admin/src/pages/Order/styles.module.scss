@@ -1,6 +1,17 @@
+@import "assets/variables.scss";
+@import "assets/mixin.scss";
 .wrapOrder {
   .wrapContent {
-    margin-top: 25px;
+    position: relative;
+    top: -200px;
+    z-index: 95;
+    @include mq(md) {
+      top: -200px;
+    }
+
+    @include mq(md, "max") {
+      top: -225px;
+    }
   }
 
   .wrapAction {
