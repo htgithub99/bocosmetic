@@ -9,5 +9,7 @@ module.exports = (app) => {
   router.post("/api/category/create", category.createCategory);
   router.post("/api/category/update", category.updateCategory);
   router.get("/api/category", category.getCategory);
+  /* <- - - Admin - - -> */
+  router.get("/api/admin/category", verifyAuth, category.getCategory);
   app.use(router);
 };

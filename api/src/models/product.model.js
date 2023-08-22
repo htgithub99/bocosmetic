@@ -11,7 +11,7 @@ const Product = new mongoose.Schema(
     product_type: { type: String }, // tên danh mục sp
     color: { type: String },
     size: { type: String },
-    category_id: { type: Number }, //danh mục sp
+    category_id: { type: String }, //danh mục sp
     price: { type: Number }, // Giá bán lẻ
     inventory: { type: Number }, // sl hàng tồn kho
     vendor_price: { type: Number }, //giá buôn
@@ -19,7 +19,7 @@ const Product = new mongoose.Schema(
     sale_price: { type: Number }, // giá bán sale
     images: { type: Array },
     branch: { type: String }, //chi nhánh
-    barcode: { type: Number },
+    barcode: { type: String },
     description: { type: String }, // mô tả sp
     made_in: { type: String }, //xuất xứ
   },

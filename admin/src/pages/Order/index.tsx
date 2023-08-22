@@ -4,9 +4,9 @@ import { getOrder } from "api/order";
 import Button from "components/Button/Button";
 import MainContainer from "components/MainContainer";
 import SearchHeaderTable from "components/SearchHeaderTable";
-import { QueryKey, TypeButton } from "constants/constant";
+import { calculateWidthTable } from "constants/calculate";
+import { HIEGHT_TABLE_SCROLL, QueryKey, TypeButton } from "constants/constant";
 import { BreakpointsUp } from "constants/enum";
-import { DATA_FAKE_LIST_ORDER } from "constants/json";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import useViewport from "utils/hooks/useViewport";
@@ -114,19 +114,12 @@ const Order = () => {
     },
   ];
 
-  // const data: DataType[] = orderData?.data?.map((item: any, index: number) => ({
-  //   key: index,
-  //   ...item,
-  //   create_at: `19/02/2023 14:59`,
-  // }));
-
-  const data: DataType[] = DATA_FAKE_LIST_ORDER?.map(
-    (item: any, index: number) => ({
+  const DATA_ORDER = () =>
+    orderData?.data?.map((item: any, index: number) => ({
       key: index,
       ...item,
       create_at: `19/02/2023 14:59`,
-    })
-  );
+    })) as DataType[];
 
   //child table
   const childColumns: ColumnsType<any> = [
@@ -249,10 +242,17 @@ const Order = () => {
       modalHas: false,
     });
 
-  const _onPaginationTable = (pageIndex: any) => {
+  // const _onPaginationTable = (pageIndex: any) => {
+  //   setSizePage({
+  //     ...sizePage,
+  //     pageIndex,
+  //   });
+  // };
+
+  const _onSearchField = (value: any) => {
     setSizePage({
       ...sizePage,
-      pageIndex,
+      name: value,
     });
   };
 
@@ -297,21 +297,23 @@ const Order = () => {
 
   return (
     <>
-      <SearchHeaderTable _onCreate={() => setIsDrawerCreate(true)} />
+      <SearchHeaderTable
+        _onSearchField={(value) => _onSearchField(value)}
+        _onCreate={() => setIsDrawerCreate(true)}
+      />
       <MainContainer>
         <div className={styles.wrapOrder}>
           <div className={styles.wrapContent}>
             <Table
               style={{
-                width: isViewport1023 ? width - 30 : width - (60 + 250),
-                overflow: "scroll",
+                width: calculateWidthTable(width, isViewport1023),
               }}
               rowSelection={{
                 type: "checkbox",
                 ...rowSelection,
               }}
               columns={COLUMNS_ORDER}
-              dataSource={data}
+              dataSource={DATA_ORDER()}
               loading={isLoadingOrder}
               expandable={{
                 expandedRowRender: (record: any) => {
@@ -334,7 +336,7 @@ const Order = () => {
                 rowExpandable: (record) =>
                   record.code_order !== "Not Expandable",
               }}
-              scroll={{ y: 325 }}
+              scroll={{ y: HIEGHT_TABLE_SCROLL }}
               // pagination={{
               //   total: orderData?.totalItems,
               //   showTotal: (total, range) =>

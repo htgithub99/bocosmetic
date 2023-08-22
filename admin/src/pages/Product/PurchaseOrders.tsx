@@ -2,6 +2,8 @@ import { Drawer, Dropdown, Image, MenuProps, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import MainContainer from "components/MainContainer";
 import SearchHeaderTable from "components/SearchHeaderTable";
+import { calculateWidthTable } from "constants/calculate";
+import { HIEGHT_TABLE_SCROLL } from "constants/constant";
 import { BreakpointsUp } from "constants/enum";
 import { useState } from "react";
 import useViewport from "utils/hooks/useViewport";
@@ -436,8 +438,7 @@ const PurchaseOrders = () => {
           <div className={styles.wrapContent}>
             <Table
               style={{
-                width: isViewport1023 ? width - 30 : width - (60 + 250),
-                overflow: "scroll",
+                width: calculateWidthTable(width, isViewport1023),
               }}
               rowSelection={{
                 type: "checkbox",
@@ -458,7 +459,7 @@ const PurchaseOrders = () => {
                   record.code_stock !== "Not Expandable",
               }}
               loading={false}
-              scroll={{ y: 325 }}
+              scroll={{ y: HIEGHT_TABLE_SCROLL }}
               // pagination={{
               //   total: 85,
               //   showTotal: (total, range) =>

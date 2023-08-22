@@ -1,5 +1,5 @@
 import { CloseOutlined } from "@ant-design/icons";
-import { notification, Table } from "antd";
+import { message, notification, Table } from "antd";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { ColumnsType } from "antd/es/table";
 import blogImg from "assets/images/blog-img.jpg";
@@ -51,6 +51,7 @@ const CartTable = () => {
   }, []);
 
   const onnotification = (placement: NotificationPlacement) => {
+    message.destroy();
     api.success({
       message: MESSAGE_NOTIFICATION.TITLE_DELETE_PRODUCT,
       description: MESSAGE_NOTIFICATION.DESCRIPTION_DELETE_PRODUCT,

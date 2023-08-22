@@ -145,9 +145,14 @@ body {
           .ant-image {
             img {
               width: 100%;
-              height: 40px;
               object-fit: contain;
               border-radius: 5px;
+              @include mq(md) {
+                height: 65px;
+              }
+              @include mq(md, 'max') {
+                height: 45px;
+              }
             }
             .ant-image-mask {
               .ant-image-mask-info {

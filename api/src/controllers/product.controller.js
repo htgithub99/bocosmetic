@@ -8,19 +8,26 @@ const {
   TypeCategoryID,
   FieldByProduct,
   FieldResultQueryProduct,
+  FieldResultQueryProductAdmin,
+  FieldResultQueryProductByIdAdmin,
 } = require("../constants/constant");
 
 exports.getProduct = async (req, res) => {
-  const pageIndex = parseInt(req.query.pageIndex) - 1 || 0;
-  const pageSize = parseInt(req.query.pageSize) || 5;
-
-  try {
-    Product.find(
+  const params = req.query;
+  const pageIndex = parseInt(params.pageIndex) - 1 || 0;
+  const pageSize = parseInt(params.pageSize) || 5;
+  const query = {
+    $or: [
       {
-        product_name: new RegExp(req.query.name, "i"),
+        product_name: new RegExp(params.name, "i"),
       },
-      FieldResultQueryProduct
-    )
+      {
+        barcode: new RegExp(params.name, "i"),
+      },
+    ],
+  };
+  try {
+    Product.find(query, FieldResultQueryProduct)
       .sort({
         createdAt: "desc",
       })
@@ -165,9 +172,12 @@ exports.getProductTopPage = async (req, res) => {
       break;
   }
   try {
-    Product.find({
-      product_name: new RegExp(params.name, "i"),
-    }, FieldResultQueryProduct)
+    Product.find(
+      {
+        product_name: new RegExp(params.name, "i"),
+      },
+      FieldResultQueryProduct
+    )
       .sort(sort)
       .skip(pageIndex * pageSize)
       .limit(pageSize)
@@ -294,5 +304,88 @@ exports.addProducts = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(400).json({ error: "Tập tin không hợp lệ." });
+  }
+};
+
+/* <- - - Admin - - -> */
+exports.getProductAdmin = async (req, res) => {
+  const params = req.query;
+  const pageIndex = parseInt(params.pageIndex) - 1 || 0;
+  const pageSize = parseInt(params.pageSize) || 5;
+  const query = {
+    $or: [
+      {
+        product_name: new RegExp(params.name, "i"),
+      },
+      {
+        barcode: new RegExp(params.name, "i"),
+      },
+    ],
+  };
+
+  try {
+    Product.find(query, FieldResultQueryProductAdmin)
+      .sort({
+        createdAt: "desc",
+      })
+      .skip(pageIndex * pageSize)
+      .limit(pageSize)
+      .exec((error, products) => {
+        Product.countDocuments((error, count) => {
+          if (error)
+            return res.status(400).send({
+              message: "Lỗi!",
+            });
+          res.send({
+            data: products,
+            pageIndex: pageIndex + 1,
+            totalPages: Math.ceil(count / pageSize),
+            pageSize,
+            totalItems: Math.ceil(count),
+          });
+        });
+      });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+exports.getByIdProductAdmin = async (req, res) => {
+  const { _id } = req.params;
+  try {
+    const response = await Product.findById(
+      _id,
+      FieldResultQueryProductByIdAdmin
+    );
+    res.send({
+      data: response,
+    });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+exports.updateProductAdmin = async (req, res) => {
+  const { _id } = req.params;
+  console.log("__________________ req.body", req.body);
+  const { error } = productVal(req.body);
+  if (error)
+    return res.status(400).send({
+      message: error.details[0].message,
+    });
+  try {
+    await Product.updateOne(
+      { _id },
+      {
+        ...req.body,
+      }
+    );
+    res.send({
+      message: "Chỉnh sửa sản phẩm thành công!",
+    });
+  } catch (error) {
+    res.status(400).send({
+      message: error,
+    });
   }
 };

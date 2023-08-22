@@ -4,7 +4,7 @@ import { deleteProduct, getListProduct } from "api/product";
 import Button from "components/Button/Button";
 import MainContainer from "components/MainContainer";
 import SearchHeaderTable from "components/SearchHeaderTable";
-import { QueryKey, TypeButton } from "constants/constant";
+import { HIEGHT_TABLE_SCROLL, QueryKey, TypeButton } from "constants/constant";
 import { formatMoney } from "constants/format";
 import { handleErrorMessage, handleSuccessMessage } from "i18n";
 import { useState } from "react";
@@ -55,12 +55,12 @@ const Product = () => {
     });
   };
 
-  const _onPaginationTable = (pageIndex: any) => {
-    setSizePage({
-      ...sizePage,
-      pageIndex,
-    });
-  };
+  // const _onPaginationTable = (pageIndex: any) => {
+  //   setSizePage({
+  //     ...sizePage,
+  //     pageIndex,
+  //   });
+  // };
 
   const COLUMNS_PRODUCT: ColumnsType<DataType> = [
     {
@@ -88,11 +88,12 @@ const Product = () => {
     },
   ];
 
-  const data: DataType[] = productData?.data?.map((item: any) => ({
-    ...item,
-    key: item._id,
-    price: formatMoney(item?.price),
-  }));
+  const sourceData = () =>
+    productData?.data?.map((item: any) => ({
+      ...item,
+      key: item._id,
+      price: formatMoney(item?.price),
+    })) as DataType[];
 
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {},
@@ -139,9 +140,9 @@ const Product = () => {
                 ...rowSelection,
               }}
               columns={COLUMNS_PRODUCT}
-              dataSource={data}
+              dataSource={sourceData()}
               loading={isLoadingProduct}
-              scroll={{ y: 325 }}
+              scroll={{ y: HIEGHT_TABLE_SCROLL }}
               // pagination={{
               //   total: productData?.totalItems,
               //   showTotal: (total, range) =>

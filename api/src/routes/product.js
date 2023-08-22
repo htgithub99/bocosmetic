@@ -9,15 +9,25 @@ module.exports = (app) => {
     "/api/product/get-product-by-category",
     product.getProductByCategory
   );
-  router.get(
-    "/api/product/get-filter-by-product",
-    product.getFilterByProduct
-  );
+  router.get("/api/product/get-filter-by-product", product.getFilterByProduct);
   router.post("/api/product/create", product.createProduct);
   router.get("/api/product/:_id", product.getByIdProduct);
   router.put("/api/product/update/:_id", product.updateProduct);
   router.delete("/api/product/delete/:_id", verifyAuth, product.destroyProduct);
   router.get("/api/product", verifyAuth, product.getProduct);
+
+  /* <- - - Admin - - -> */
+  router.put(
+    "/api/admin/product/update/:_id",
+    verifyAuth,
+    product.updateProductAdmin
+  );
+  router.get(
+    "/api/admin/product/:_id",
+    verifyAuth,
+    product.getByIdProductAdmin
+  );
+  router.get("/api/admin/product", verifyAuth, product.getProductAdmin);
   router.post(
     "/api/product/add-products",
     upload__.single("file"),

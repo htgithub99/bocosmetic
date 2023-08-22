@@ -22,6 +22,7 @@ export const RoutePath = {
 
 export const QueryKey = {
   LIST_PRODUCT_KEY: "LIST_PRODUCT_KEY",
+  GET_CATEGORY_KEY: "GET_CATEGORY_KEY",
   LIST_PRODUCT_CREATE_KEY: "LIST_PRODUCT_CREATE_KEY",
   GET_BY_ID_PRODUCT: "GET_BY_ID_PRODUCT",
   LIST_ORDER_KEY: "LIST_ORDER_KEY",
@@ -33,3 +34,50 @@ export const TypeButton = {
   DELETE: "delete",
   EDIT: "edit",
 };
+
+export const OPTIONS_BRANCH = [
+  {
+    value: "Cơ sở 1",
+    label: "Cơ sở 1",
+  },
+  {
+    value: "Cơ sở 2",
+    label: "Cơ sở 2",
+  },
+];
+
+export const OPTIONS_STATUS_ORDER = [
+  {
+    value: "Đặt hàng",
+    label: "Đặt hàng",
+  },
+  {
+    value: "Đang giao dịch",
+    label: "Đang giao dịch",
+  },
+  {
+    value: "Hoàn thành",
+    label: "Hoàn thành",
+  },
+  {
+    value: "Đã hủy",
+    label: "Đã hủy",
+  },
+];
+
+export const OPTIONS_STATUS_PAYMENT_ORDER = [
+  {
+    value: "Chưa thanh toán",
+    label: "Chưa thanh toán",
+  },
+  {
+    value: "Thanh toán một phần",
+    label: "Thanh toán một phần",
+  },
+  {
+    value: "Thanh toán toàn bộ",
+    label: "Thanh toán toàn bộ",
+  },
+];
+
+export const HIEGHT_TABLE_SCROLL = 400

@@ -1,4 +1,4 @@
-import { Breadcrumb, notification, Radio, RadioChangeEvent, Rate } from "antd";
+import { Breadcrumb, message, notification, Radio, RadioChangeEvent, Rate } from "antd";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { getProductById } from "api/product";
 import Button from "components/Button/Button";
@@ -56,6 +56,7 @@ const ProductDetail = () => {
   );
 
   const onnotification = (placement: NotificationPlacement) => {
+    message.destroy();
     api.success({
       message: MESSAGE_NOTIFICATION.TITLE_ADD_PRODUCT,
       description: MESSAGE_NOTIFICATION.DESCRIPTION_ADD_PRODUCT,

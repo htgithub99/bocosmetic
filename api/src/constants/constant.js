@@ -54,10 +54,38 @@ const FieldResultQueryProduct = {
   made_in: 1,
 };
 
+const FieldResultQueryProductAdmin = {
+  product_name: 1,
+  trade_mark: 1,
+  quantity: 1,
+  quantity_sold: 1,
+  percentage_discount: 1,
+  number_of_reviews: 1,
+  category_id: 1,
+  price: 1,
+  sale_price: 1,
+  images: 1,
+  made_in: 1,
+  barcode: 1,
+};
+
+const FieldResultQueryProductByIdAdmin = {
+  product_name: 1,
+  intial_price: 1,
+  category_id: 1,
+  barcode: 1,
+  vendor_price: 1,
+  price: 1,
+  quantity: 1,
+  branch: 1,
+};
+
 module.exports = {
   SortOrder,
   TypeTopPage,
   TypeCategoryID,
   FieldByProduct,
-  FieldResultQueryProduct
+  FieldResultQueryProduct,
+  FieldResultQueryProductAdmin,
+  FieldResultQueryProductByIdAdmin,
 };

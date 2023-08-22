@@ -2,7 +2,12 @@ import { Button, Col, Form, Input, InputNumber, Row, Select } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { createOrder } from "api/order";
 import ModalListProduct from "components/Modal/ModalListProduct";
-import { QueryKey } from "constants/constant";
+import {
+  OPTIONS_BRANCH,
+  OPTIONS_STATUS_ORDER,
+  OPTIONS_STATUS_PAYMENT_ORDER,
+  QueryKey,
+} from "constants/constant";
 import { handleErrorMessage, handleSuccessMessage } from "i18n";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
@@ -42,7 +47,6 @@ const CreateOrder = ({ sizePage, _onCloseModal }: IProps) => {
 
   useEffect(() => {
     return () => {
-      console.log("Run...");
       form.resetFields();
       setPayData([]);
     };
@@ -104,24 +108,7 @@ const CreateOrder = ({ sizePage, _onCloseModal }: IProps) => {
                   showSearch
                   placeholder="Chi nhánh tạo đơn"
                   optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? "")
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? "").toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: "Cơ sở 1",
-                      label: "Cơ sở 1",
-                    },
-                    {
-                      value: "Cơ sở 2",
-                      label: "Cơ sở 2",
-                    },
-                  ]}
+                  options={OPTIONS_BRANCH}
                 />
               </Form.Item>
             </Col>
@@ -133,32 +120,7 @@ const CreateOrder = ({ sizePage, _onCloseModal }: IProps) => {
                   showSearch
                   placeholder="Chọn trạng thái đơn hàng"
                   optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? "")
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? "").toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: "Đặt hàng",
-                      label: "Đặt hàng",
-                    },
-                    {
-                      value: "Đang giao dịch",
-                      label: "Đang giao dịch",
-                    },
-                    {
-                      value: "Hoàn thành",
-                      label: "Hoàn thành",
-                    },
-                    {
-                      value: "Đã hủy",
-                      label: "Đã hủy",
-                    },
-                  ]}
+                  options={OPTIONS_STATUS_ORDER}
                 />
               </Form.Item>
             </Col>
@@ -168,28 +130,7 @@ const CreateOrder = ({ sizePage, _onCloseModal }: IProps) => {
                   showSearch
                   placeholder="Chọn trạng thái Thanh toán"
                   optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? "")
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? "").toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: "Chưa thanh toán",
-                      label: "Chưa thanh toán",
-                    },
-                    {
-                      value: "Thanh toán một phần",
-                      label: "Thanh toán một phần",
-                    },
-                    {
-                      value: "Thanh toán toàn bộ",
-                      label: "Thanh toán toàn bộ",
-                    },
-                  ]}
+                  options={OPTIONS_STATUS_PAYMENT_ORDER}
                 />
               </Form.Item>
             </Col>

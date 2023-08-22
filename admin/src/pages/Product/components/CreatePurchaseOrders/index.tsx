@@ -1,6 +1,7 @@
 import { Button, Col, Form, Row, Select } from "antd";
 import { useForm } from "antd/es/form/Form";
 import ModalListProduct from "components/Modal/ModalListProduct";
+import { OPTIONS_BRANCH, OPTIONS_STATUS_ORDER } from "constants/constant";
 import { useState } from "react";
 
 import styles from "./styles.module.scss";
@@ -39,27 +40,19 @@ const CreatePurchaseOrders = () => {
               options={[
                 {
                   value: "1",
-                  label: "Not Identified",
+                  label: "Nhân viên 1",
                 },
                 {
                   value: "2",
-                  label: "Closed",
+                  label: "Nhân viên 2",
                 },
                 {
                   value: "3",
-                  label: "Communicated",
+                  label: "Nhân viên 3",
                 },
                 {
                   value: "4",
-                  label: "Identified",
-                },
-                {
-                  value: "5",
-                  label: "Resolved",
-                },
-                {
-                  value: "6",
-                  label: "Cancelled",
+                  label: "Nhân viên 4",
                 },
               ]}
             />
@@ -71,40 +64,7 @@ const CreatePurchaseOrders = () => {
                   showSearch
                   placeholder="Chọn trạng thái"
                   optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? "")
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? "").toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: "1",
-                      label: "Not Identified",
-                    },
-                    {
-                      value: "2",
-                      label: "Closed",
-                    },
-                    {
-                      value: "3",
-                      label: "Communicated",
-                    },
-                    {
-                      value: "4",
-                      label: "Identified",
-                    },
-                    {
-                      value: "5",
-                      label: "Resolved",
-                    },
-                    {
-                      value: "6",
-                      label: "Cancelled",
-                    },
-                  ]}
+                  options={OPTIONS_STATUS_ORDER}
                 />
               </Form.Item>
             </Col>
@@ -114,40 +74,7 @@ const CreatePurchaseOrders = () => {
                   showSearch
                   placeholder="Chọn trạng thái nhập"
                   optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? "")
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? "").toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: "1",
-                      label: "Not Identified",
-                    },
-                    {
-                      value: "2",
-                      label: "Closed",
-                    },
-                    {
-                      value: "3",
-                      label: "Communicated",
-                    },
-                    {
-                      value: "4",
-                      label: "Identified",
-                    },
-                    {
-                      value: "5",
-                      label: "Resolved",
-                    },
-                    {
-                      value: "6",
-                      label: "Cancelled",
-                    },
-                  ]}
+                  options={OPTIONS_STATUS_ORDER}
                 />
               </Form.Item>
             </Col>
@@ -159,40 +86,7 @@ const CreatePurchaseOrders = () => {
                   showSearch
                   placeholder="Chọn chi nhánh nhập"
                   optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? "")
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? "").toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: "1",
-                      label: "Not Identified",
-                    },
-                    {
-                      value: "2",
-                      label: "Closed",
-                    },
-                    {
-                      value: "3",
-                      label: "Communicated",
-                    },
-                    {
-                      value: "4",
-                      label: "Identified",
-                    },
-                    {
-                      value: "5",
-                      label: "Resolved",
-                    },
-                    {
-                      value: "6",
-                      label: "Cancelled",
-                    },
-                  ]}
+                  options={OPTIONS_BRANCH}
                 />
               </Form.Item>
             </Col>
@@ -202,40 +96,7 @@ const CreatePurchaseOrders = () => {
                   showSearch
                   placeholder="Chọn nhà cung cấp"
                   optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? "")
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? "").toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: "1",
-                      label: "Not Identified",
-                    },
-                    {
-                      value: "2",
-                      label: "Closed",
-                    },
-                    {
-                      value: "3",
-                      label: "Communicated",
-                    },
-                    {
-                      value: "4",
-                      label: "Identified",
-                    },
-                    {
-                      value: "5",
-                      label: "Resolved",
-                    },
-                    {
-                      value: "6",
-                      label: "Cancelled",
-                    },
-                  ]}
+                  options={OPTIONS_BRANCH}
                 />
               </Form.Item>
             </Col>
@@ -250,9 +111,7 @@ const CreatePurchaseOrders = () => {
             </Button>
           </Form.Item>
           <Form.Item>
-            <Button htmlType="submit">
-              Tạo mới
-            </Button>
+            <Button htmlType="submit">Tạo mới</Button>
           </Form.Item>
         </Form>
       </div>

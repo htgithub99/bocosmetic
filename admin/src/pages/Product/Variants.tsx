@@ -1,10 +1,11 @@
-import { Drawer, Image, Popconfirm, Space, Table } from "antd";
+import { Drawer, Image, Space, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { getListProduct } from "api/product";
 import Button from "components/Button/Button";
 import MainContainer from "components/MainContainer";
 import SearchHeaderTable from "components/SearchHeaderTable";
-import { QueryKey, TypeButton } from "constants/constant";
+import { calculateWidthTable } from "constants/calculate";
+import { HIEGHT_TABLE_SCROLL, QueryKey, TypeButton } from "constants/constant";
 import { BreakpointsUp } from "constants/enum";
 import { formatMoney } from "constants/format";
 import { useState } from "react";
@@ -53,12 +54,12 @@ const Variants = () => {
     },
     {
       title: "Ảnh",
-      dataIndex: "image",
+      dataIndex: "images",
       align: "center",
       width: isViewport767 ? 125 : 150,
-      render: (url: string) =>
-        url ? (
-          <Image src={url} alt={url} />
+      render: (item: string[]) =>
+        item.length ? (
+          <Image src={item[0]} alt={item[0]} />
         ) : (
           <span className="material-symbols-outlined">imagesmode</span>
         ),
@@ -68,7 +69,7 @@ const Variants = () => {
       dataIndex: "quantity",
       align: "center",
       width: isViewport767 ? 125 : 170,
-      render: (text: string) => text,
+      render: (item: string) => item,
     },
     {
       title: "Giá bán lẻ",
@@ -82,11 +83,11 @@ const Variants = () => {
       dataIndex: "product_version_name",
       align: "left",
       width: isViewport767 ? 250 : 300,
-      render: (_, record) => {
+      render: ({ product_name, barcode }) => {
         return (
           <div className={styles.productVersionName}>
-            <Link to="#">Nước hoa hồng Sắc Ngọc Khang 195ml</Link>
-            <p>8809471816521</p>
+            <Link to="#">{product_name}</Link>
+            <p>{barcode}</p>
           </div>
         );
       },
@@ -111,12 +112,12 @@ const Variants = () => {
     },
   ];
 
-  const _onPaginationTable = (pageIndex: any) => {
-    setSizePage({
-      ...sizePage,
-      pageIndex,
-    });
-  };
+  // const _onPaginationTable = (pageIndex: any) => {
+  //   setSizePage({
+  //     ...sizePage,
+  //     pageIndex,
+  //   });
+  // };
 
   const onClickUpdateProduct = ({ _id }: any) => {
     setUpdateDrawer({
@@ -131,11 +132,20 @@ const Variants = () => {
       modalHas: false,
     });
 
-  const data: DataType[] = productData?.data?.map((item: any) => ({
-    ...item,
-    key: item._id,
-    price: formatMoney(item?.price),
-  }));
+  const _onSearchField = (value: any) => {
+    setSizePage({
+      ...sizePage,
+      name: value,
+    });
+  };
+
+  const sourceData = () =>
+    productData?.data?.map((item: any) => ({
+      ...item,
+      key: item._id,
+      product_version_name: item,
+      price: formatMoney(item?.price),
+    })) as DataType[];
 
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {},
@@ -164,25 +174,28 @@ const Variants = () => {
       );
     return null;
   };
+
   return (
     <>
-      <SearchHeaderTable btnCreateHas={false} />
+      <SearchHeaderTable
+        _onSearchField={(value) => _onSearchField(value)}
+        btnCreateHas={false}
+      />
       <MainContainer classW="h-100">
         <div className={styles.wrapVariants}>
           <div className={styles.wrapContent}>
             <Table
               style={{
-                width: isViewport1023 ? width - 30 : width - (60 + 250),
-                overflow: "scroll",
+                width: calculateWidthTable(width, isViewport1023),
               }}
               rowSelection={{
                 type: "checkbox",
                 ...rowSelection,
               }}
               columns={COLUMNS_VARIANTS}
-              dataSource={data}
+              dataSource={sourceData()}
               loading={isLoadingProductData}
-              scroll={{ y: 325 }}
+              scroll={{ y: HIEGHT_TABLE_SCROLL }}
               // pagination={{
               //   total: productData?.totalItems,
               //   showTotal: (total, range) =>

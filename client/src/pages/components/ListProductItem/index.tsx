@@ -1,4 +1,4 @@
-import { Col, notification, Row } from "antd";
+import { Col, message, notification, Row } from "antd";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import ProductCard from "components/ProductCard";
 import { LocalStorageKey, NotificationDuration } from "constants/constant";
@@ -20,6 +20,7 @@ const ListProductItem = ({ data }: IProps) => {
   const [api, contextHolder] = notification.useNotification();
     
   const onnotification = (placement: NotificationPlacement) => {
+    message.destroy();
     api.success({
       message: MESSAGE_NOTIFICATION.TITLE_ADD_PRODUCT,
       description: MESSAGE_NOTIFICATION.DESCRIPTION_ADD_PRODUCT,

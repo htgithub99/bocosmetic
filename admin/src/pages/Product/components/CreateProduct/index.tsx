@@ -1,9 +1,11 @@
 import { Button, Col, Form, Input, InputNumber, Row, Select } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { createProduct } from "api/product";
-import { QueryKey } from "constants/constant";
+import { OPTIONS_BRANCH, QueryKey } from "constants/constant";
+import { convertDataCategoryToOptions } from "constants/convert";
 import { handleErrorMessage, handleSuccessMessage } from "i18n";
 import { useMutation, useQueryClient } from "react-query";
+import useCategory from "utils/hooks/useCategory";
 
 import styles from "./styles.module.scss";
 
@@ -14,6 +16,7 @@ interface IProps {
 
 const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
   const [form] = useForm();
+  const { categoryData } = useCategory({});
   const queryClient = useQueryClient();
 
   const { mutate: _onSubmit } = useMutation(
@@ -69,7 +72,7 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
             <Col span={12}>
               <Form.Item
                 label="Loại sản phẩm"
-                name="product_type"
+                name="category_id"
                 rules={[
                   {
                     required: true,
@@ -81,28 +84,7 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
                   showSearch
                   placeholder="Chọn loại sản phẩm"
                   optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? "")
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? "").toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: "Nước hoa",
-                      label: "Nước hoa",
-                    },
-                    {
-                      value: "Dầu gội",
-                      label: "Dầu gội",
-                    },
-                    {
-                      value: "Phấn trang điểm",
-                      label: "Phấn trang điểm",
-                    },
-                  ]}
+                  options={convertDataCategoryToOptions(categoryData?.data)}
                 />
               </Form.Item>
             </Col>
@@ -117,7 +99,7 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
                 ]}
                 name="barcode"
               >
-                <InputNumber className="w-100" placeholder="Nhập mã vạch" />
+                <Input className="w-100" placeholder="Nhập mã vạch" />
               </Form.Item>
             </Col>
           </Row>
@@ -189,24 +171,7 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
                   showSearch
                   placeholder="Chọn chi nhánh"
                   optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? "")
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? "").toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: "Chi nhánh 1",
-                      label: "Chi nhánh 1",
-                    },
-                    {
-                      value: "Chi nhánh 2",
-                      label: "Chi nhánh 2",
-                    },
-                  ]}
+                  options={OPTIONS_BRANCH}
                 />
               </Form.Item>
             </Col>

@@ -3,12 +3,21 @@ const { orderVal } = require("../constants/validate");
 const xlsx = require("xlsx");
 
 exports.getOrder = async (req, res) => {
-  const pageIndex = parseInt(req.query.pageIndex) - 1 || 0;
-  const pageSize = parseInt(req.query.pageSize) || 5;
+  const params = req.query;
+  const pageIndex = parseInt(params.pageIndex) - 1 || 0;
+  const pageSize = parseInt(params.pageSize) || 5;
+  const query = {
+    $or: [
+      {
+        customer_name: new RegExp(params.name, "i"),
+      },
+      {
+        code_order: new RegExp(params.name, "i"),
+      },
+    ],
+  };
   try {
-    await Order.find({
-      customer_name: new RegExp(req.query.name, "i"),
-    })
+    await Order.find(query)
       .sort({
         createdAt: "desc",
       })

@@ -1,5 +1,6 @@
 import { Button, Col, Form, Row, Select } from "antd";
 import { useForm } from "antd/es/form/Form";
+import { OPTIONS_BRANCH, OPTIONS_STATUS_ORDER } from "constants/constant";
 
 import styles from "./styles.module.scss";
 
@@ -14,49 +15,27 @@ const EditPurchaseOrders = ({ items }: IProps) => {
     <>
       <div className={styles.wrapEditPurchaseOrders}>
         <Form form={form} layout="vertical">
-          {/* <Form.Item
-            label="Mã đơn nhập"
-            required
-          >
-            <Input placeholder="Nhập mã đơn nhập" />
-          </Form.Item> */}
           <Form.Item label="Nhân viên tạo">
             <Select
               showSearch
               placeholder="Chọn nhân viên tạo"
               optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? "").includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? "")
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? "").toLowerCase())
-              }
               options={[
                 {
                   value: "1",
-                  label: "Not Identified",
+                  label: "Nhân viên 1",
                 },
                 {
                   value: "2",
-                  label: "Closed",
+                  label: "Nhân viên 2",
                 },
                 {
                   value: "3",
-                  label: "Communicated",
+                  label: "Nhân viên 3",
                 },
                 {
                   value: "4",
-                  label: "Identified",
-                },
-                {
-                  value: "5",
-                  label: "Resolved",
-                },
-                {
-                  value: "6",
-                  label: "Cancelled",
+                  label: "Nhân viên 4",
                 },
               ]}
             />
@@ -68,40 +47,7 @@ const EditPurchaseOrders = ({ items }: IProps) => {
                   showSearch
                   placeholder="Chọn trạng thái"
                   optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? "")
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? "").toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: "1",
-                      label: "Not Identified",
-                    },
-                    {
-                      value: "2",
-                      label: "Closed",
-                    },
-                    {
-                      value: "3",
-                      label: "Communicated",
-                    },
-                    {
-                      value: "4",
-                      label: "Identified",
-                    },
-                    {
-                      value: "5",
-                      label: "Resolved",
-                    },
-                    {
-                      value: "6",
-                      label: "Cancelled",
-                    },
-                  ]}
+                  options={OPTIONS_STATUS_ORDER}
                 />
               </Form.Item>
             </Col>
@@ -111,40 +57,7 @@ const EditPurchaseOrders = ({ items }: IProps) => {
                   showSearch
                   placeholder="Chọn trạng thái nhập"
                   optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? "")
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? "").toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: "1",
-                      label: "Not Identified",
-                    },
-                    {
-                      value: "2",
-                      label: "Closed",
-                    },
-                    {
-                      value: "3",
-                      label: "Communicated",
-                    },
-                    {
-                      value: "4",
-                      label: "Identified",
-                    },
-                    {
-                      value: "5",
-                      label: "Resolved",
-                    },
-                    {
-                      value: "6",
-                      label: "Cancelled",
-                    },
-                  ]}
+                  options={OPTIONS_STATUS_ORDER}
                 />
               </Form.Item>
             </Col>
@@ -156,40 +69,7 @@ const EditPurchaseOrders = ({ items }: IProps) => {
                   showSearch
                   placeholder="Chọn chi nhánh nhập"
                   optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? "")
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? "").toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: "1",
-                      label: "Not Identified",
-                    },
-                    {
-                      value: "2",
-                      label: "Closed",
-                    },
-                    {
-                      value: "3",
-                      label: "Communicated",
-                    },
-                    {
-                      value: "4",
-                      label: "Identified",
-                    },
-                    {
-                      value: "5",
-                      label: "Resolved",
-                    },
-                    {
-                      value: "6",
-                      label: "Cancelled",
-                    },
-                  ]}
+                  options={OPTIONS_BRANCH}
                 />
               </Form.Item>
             </Col>
@@ -199,48 +79,13 @@ const EditPurchaseOrders = ({ items }: IProps) => {
                   showSearch
                   placeholder="Chọn nhà cung cấp"
                   optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? "")
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? "").toLowerCase())
-                  }
-                  options={[
-                    {
-                      value: "1",
-                      label: "Not Identified",
-                    },
-                    {
-                      value: "2",
-                      label: "Closed",
-                    },
-                    {
-                      value: "3",
-                      label: "Communicated",
-                    },
-                    {
-                      value: "4",
-                      label: "Identified",
-                    },
-                    {
-                      value: "5",
-                      label: "Resolved",
-                    },
-                    {
-                      value: "6",
-                      label: "Cancelled",
-                    },
-                  ]}
+                  options={OPTIONS_BRANCH}
                 />
               </Form.Item>
             </Col>
           </Row>
           <Form.Item>
-            <Button htmlType="submit">
-              Chỉnh sửa
-            </Button>
+            <Button htmlType="submit">Chỉnh sửa</Button>
           </Form.Item>
         </Form>
       </div>
