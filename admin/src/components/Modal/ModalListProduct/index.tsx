@@ -114,12 +114,15 @@ const ModalListProduct = ({
       cancelText="Thoát"
       onOk={_onOkModal}
       onCancel={_onCancelModal}
+      className={styles.wrapModalListProduct}
     >
-      <SearchHeaderTable
-        btnHeaderImport={false}
-        background="none"
-        placeholderInputSearch="Tìm kiếm theo tên sản phẩm..."
-      />
+      <div className={styles.wrapHeader}>
+        <SearchHeaderTable
+          btnHeaderImport={false}
+          background="none"
+          placeholderInputSearch="Tìm kiếm theo tên sản phẩm..."
+        />
+      </div>
       <div className={styles.wrapContent}>
         <div className={styles.content_title}>
           <Checkbox defaultChecked={false}>
@@ -138,13 +141,10 @@ const ModalListProduct = ({
             scrollableTarget="scrollable-list-product-modal"
           >
             <List
-              dataSource={convertDataQueryInfinite(productData)?.map((m) => ({
-                ...m,
-                quantity: defaultQuantity,
-              }))}
+              dataSource={convertDataQueryInfinite(productData)}
               renderItem={(item: any) => (
                 <List.Item
-                  key={item.email}
+                  key={item._id}
                   className={classNames(
                     styles.wrapListMeta,
                     "custom-ant-image-mask"
@@ -159,8 +159,8 @@ const ModalListProduct = ({
                     avatar={
                       <Image
                         style={{ ...stylesImage }}
-                        src={item?.image || userDefault}
-                        width={50}
+                        src={item?.images[0] || userDefault}
+                        width={70}
                       />
                     }
                     title={
@@ -172,7 +172,7 @@ const ModalListProduct = ({
                     <div className={styles.detailProduct__entryPrice}>
                       Giá nhập:{" "}
                       <span className={styles.priceEntry}>
-                        {formatMoney(item?.entry_price)}
+                        {formatMoney(item?.intial_price)}
                       </span>
                     </div>
                     <div className={styles.detailProduct__entryPrice}>

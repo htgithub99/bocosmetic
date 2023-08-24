@@ -1,9 +1,13 @@
 import { Button, Col, Form, Input, InputNumber, Row, Select } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { createProduct } from "api/product";
+import { uploadMultiple } from "api/upload";
+import UploadImage from "components/UploadImage";
+import configs from "constants/config";
 import { OPTIONS_BRANCH, QueryKey } from "constants/constant";
 import { convertDataCategoryToOptions } from "constants/convert";
 import { handleErrorMessage, handleSuccessMessage } from "i18n";
+import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import useCategory from "utils/hooks/useCategory";
 
@@ -18,9 +22,22 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
   const [form] = useForm();
   const { categoryData } = useCategory({});
   const queryClient = useQueryClient();
+  const [fileImages, setFileImages] = useState<any>([]);
 
   const { mutate: _onSubmit } = useMutation(
-    (payload) => createProduct(payload),
+    async (payload: any) => {
+      const images = new FormData();
+      fileImages.forEach((file: any) => {
+        images.append("file", file);
+      });
+      const response = await uploadMultiple(images);
+      return createProduct({
+        ...payload,
+        images: response?.data?.urls.map(
+          (item: any) => `${configs.API_UPLOAD_DOMAIN}${item.path}`
+        ),
+      });
+    },
     {
       onSuccess: (data) => {
         handleSuccessMessage(data);
@@ -52,22 +69,45 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
           >
             <Input placeholder="Nhập tên sản phẩm" />
           </Form.Item>
-          <Form.Item
-            label="Giá nhập"
-            rules={[
-              {
-                required: true,
-                message: "",
-              },
-            ]}
-            name="entry_price"
-          >
-            <InputNumber
-              prefix="￥"
-              className="w-100"
-              placeholder="Nhập giá nhập"
-            />
-          </Form.Item>
+          <Row gutter={[16, 16]}>
+            <Col span={12}>
+              <Form.Item
+                label="Giá bán"
+                rules={[
+                  {
+                    required: true,
+                    message: "",
+                  },
+                ]}
+                name="price"
+              >
+                <InputNumber
+                  className="w-100"
+                  prefix="￥"
+                  placeholder="Nhập giá bán"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Giá Sale"
+                rules={[
+                  {
+                    required: true,
+                    message: "",
+                  },
+                ]}
+                name="sale_price"
+              >
+                <InputNumber
+                  className="w-100"
+                  prefix="￥"
+                  placeholder="Nhập giá sale"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
           <Row gutter={[16, 16]}>
             <Col span={12}>
               <Form.Item
@@ -113,7 +153,7 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
                     message: "",
                   },
                 ]}
-                name="contributor_price"
+                name="vendor_price"
               >
                 <InputNumber
                   className="w-100"
@@ -124,19 +164,19 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
             </Col>
             <Col span={12}>
               <Form.Item
-                label="Giá bán"
+                label="Giá nhập"
                 rules={[
                   {
                     required: true,
                     message: "",
                   },
                 ]}
-                name="price"
+                name="intial_price"
               >
                 <InputNumber
-                  className="w-100"
                   prefix="￥"
-                  placeholder="Nhập giá bán"
+                  className="w-100"
+                  placeholder="Nhập giá nhập"
                 />
               </Form.Item>
             </Col>
@@ -176,6 +216,13 @@ const CreateProduct = ({ _onCloseModal, sizePage }: IProps) => {
               </Form.Item>
             </Col>
           </Row>
+          <Form.Item label="Ảnh sản phẩm" name="images">
+            <UploadImage
+              getListImage={(images) =>
+                setFileImages(images.map((item) => item.originFileObj))
+              }
+            />
+          </Form.Item>
           <Form.Item>
             <Button htmlType="submit">Tạo mới</Button>
           </Form.Item>

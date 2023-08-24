@@ -1,14 +1,16 @@
 import { Drawer, Space, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
-import { deleteProduct, getListProduct } from "api/product";
+import { deleteProduct, getListProduct, importProduct } from "api/product";
 import Button from "components/Button/Button";
 import MainContainer from "components/MainContainer";
+import ModalDelete from "components/Modal/ModalDelete";
 import SearchHeaderTable from "components/SearchHeaderTable";
 import { HIEGHT_TABLE_SCROLL, QueryKey, TypeButton } from "constants/constant";
 import { formatMoney } from "constants/format";
+import { MESSAGE_MODAL } from "constants/message";
 import { handleErrorMessage, handleSuccessMessage } from "i18n";
 import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import useViewport from "utils/hooks/useViewport";
 import CreateProduct from "./components/CreateProduct";
 import styles from "./styles.module.scss";
@@ -22,29 +24,37 @@ interface DataType {
 }
 
 const Product = () => {
-  const queryClient = useQueryClient();
   const [isDrawerCreate, setIsDrawerCreate] = useState<boolean>(false);
   const { isMobile: isViewport767, width } = useViewport();
-
   const [sizePage, setSizePage] = useState<any>({
     name: null,
   });
+  const [modalDelete, setModalDelete] = useState<{
+    isModal: boolean;
+    _id: string;
+  }>({
+    isModal: false,
+    _id: "",
+  });
 
-  const { data: productData, isLoading: isLoadingProduct } = useQuery(
+  const {
+    data: productData,
+    isLoading: isLoadingProduct,
+    refetch: refetchProduct,
+  } = useQuery(
     [QueryKey.LIST_PRODUCT_KEY, sizePage],
     () => getListProduct(sizePage),
     {}
   );
 
   const { mutate: onDeleteProduct } = useMutation(
-    ({ _id }: any) => deleteProduct(_id),
+    (_id: string) => deleteProduct(_id),
     {
       onSuccess: (data) => {
         handleSuccessMessage(data);
       },
       onError: (error) => handleErrorMessage(error),
-      onSettled: () =>
-        queryClient.invalidateQueries([QueryKey.LIST_PRODUCT_KEY, sizePage]),
+      onSettled: () => refetchProduct(),
     }
   );
 
@@ -55,12 +65,23 @@ const Product = () => {
     });
   };
 
-  // const _onPaginationTable = (pageIndex: any) => {
-  //   setSizePage({
-  //     ...sizePage,
-  //     pageIndex,
-  //   });
-  // };
+  const { mutate: onImportFile } = useMutation(
+    (file: any) => importProduct(file),
+    {
+      onSuccess: (data) => {
+        handleSuccessMessage(data);
+      },
+      onError: (error) => handleErrorMessage(error),
+      onSettled: () => refetchProduct(),
+    }
+  );
+
+  const _onPaginationTable = (pageIndex: any) => {
+    setSizePage({
+      ...sizePage,
+      pageIndex,
+    });
+  };
 
   const COLUMNS_PRODUCT: ColumnsType<DataType> = [
     {
@@ -75,10 +96,12 @@ const Product = () => {
       width: isViewport767 ? 95 : 200,
       align: "center",
       fixed: "right",
-      render: (_, record) => (
+      render: (_, item) => (
         <Space size="middle">
           <Button
-            onConfirm={() => onDeleteProduct(record)}
+            onClick={() =>
+              setModalDelete({ isModal: true, _id: (item as any)._id })
+            }
             classNameT={TypeButton.DELETE}
           >
             Xóa
@@ -124,9 +147,19 @@ const Product = () => {
     return null;
   };
 
+  const _onCloseModalDelete = () => {
+    setModalDelete({ isModal: false, _id: "" });
+  };
+
+  const _onSubmitModalDelete = () => {
+    onDeleteProduct(modalDelete._id);
+    _onCloseModalDelete();
+  };
+
   return (
     <>
       <SearchHeaderTable
+        onImportFile={onImportFile}
         _onSearchField={(value) => _onSearchField(value)}
         _onCreate={() => setIsDrawerCreate(true)}
         placeholderInputSearch="Tìm kiếm theo tên sản phẩm..."
@@ -143,21 +176,28 @@ const Product = () => {
               dataSource={sourceData()}
               loading={isLoadingProduct}
               scroll={{ y: HIEGHT_TABLE_SCROLL }}
-              // pagination={{
-              //   total: productData?.totalItems,
-              //   showTotal: (total, range) =>
-              //     `Từ ${productData?.pageIndex || 1} đến ${total} trên tổng ${
-              //       productData?.totalItems
-              //     }`,
-              //   defaultPageSize: productData?.pageSize || 5,
-              //   defaultCurrent: 1,
-              //   onChange: (page) => _onPaginationTable(page),
-              // }}
+              pagination={{
+                total: productData?.totalItems,
+                // showTotal: (total, range) =>
+                //   `Từ ${productData?.pageIndex || 1} đến ${total} trên tổng ${
+                //     productData?.totalItems
+                //   }`,
+                defaultPageSize: productData?.pageSize || 5,
+                defaultCurrent: 1,
+                onChange: (page) => _onPaginationTable(page),
+              }}
             />
           </div>
         </div>
         {_renderDrawerCreate()}
       </MainContainer>
+      <ModalDelete
+        isModalOpen={modalDelete.isModal}
+        _onClose={_onCloseModalDelete}
+        _onSubmit={_onSubmitModalDelete}
+        title={MESSAGE_MODAL.MESSAGE_MODAL_DELETE_PRODUCT_TITLE}
+        descriptions={MESSAGE_MODAL.MESSAGE_MODAL_DELETE_PRODUCT_DESCRIPTION}
+      />
     </>
   );
 };

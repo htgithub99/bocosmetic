@@ -73,7 +73,6 @@ export default function SideNav() {
       </Link>
       <Menu selectedKeys={[selectedKey]} defaultOpenKeys={[]} mode="inline" inlineCollapsed={collapsed}>
         {routes.map((route) => {
-          console.log('routes', routes)
           if (route.children) {
             return (
               <SubMenu key={route.key} icon={route.icon} title={route.text}>

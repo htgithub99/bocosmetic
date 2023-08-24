@@ -70,7 +70,14 @@ const Order = () => {
       title: "Tên khách hàng",
       dataIndex: "customer_name",
       align: "left",
-      width: 300,
+      width: 200,
+      render: (text: string) => text,
+    },
+    {
+      title: "Địa chỉ khách hàng",
+      dataIndex: "customer_address",
+      align: "left",
+      width: 250,
       render: (text: string) => text,
     },
     {
@@ -98,7 +105,7 @@ const Order = () => {
       title: "Tác vụ",
       dataIndex: "action",
       align: "center",
-      width: isViewport767 ? 125 : 200,
+      width: isViewport767 ? 125 : 170,
       fixed: "right",
       render: (_, record) => (
         <Space size="small">
@@ -242,12 +249,12 @@ const Order = () => {
       modalHas: false,
     });
 
-  // const _onPaginationTable = (pageIndex: any) => {
-  //   setSizePage({
-  //     ...sizePage,
-  //     pageIndex,
-  //   });
-  // };
+  const _onPaginationTable = (pageIndex: any) => {
+    setSizePage({
+      ...sizePage,
+      pageIndex,
+    });
+  };
 
   const _onSearchField = (value: any) => {
     setSizePage({
@@ -337,16 +344,16 @@ const Order = () => {
                   record.code_order !== "Not Expandable",
               }}
               scroll={{ y: HIEGHT_TABLE_SCROLL }}
-              // pagination={{
-              //   total: orderData?.totalItems,
-              //   showTotal: (total, range) =>
-              //     `Từ ${orderData?.pageIndex || 1} đến ${total} trên tổng ${
-              //       orderData?.totalItems
-              //     }`,
-              //   defaultPageSize: orderData?.pageSize || 5,
-              //   defaultCurrent: 1,
-              //   onChange: (page) => _onPaginationTable(page),
-              // }}
+              pagination={{
+                total: orderData?.totalItems,
+                // showTotal: (total, range) =>
+                //   `Từ ${orderData?.pageIndex || 1} đến ${total} trên tổng ${
+                //     orderData?.totalItems
+                //   }`,
+                defaultPageSize: orderData?.pageSize || 5,
+                defaultCurrent: 1,
+                onChange: (page) => _onPaginationTable(page),
+              }}
             />
           </div>
         </div>

@@ -69,7 +69,7 @@
         color: $smoke-9-color;
         font-size: 0.9em;
         font-weight: bolder;
-        @include mq(lg, "max") {
+        @include mq(xl, "max") {
           font-size: 0.8em;
         }
         &:hover,

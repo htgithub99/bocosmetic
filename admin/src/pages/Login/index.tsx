@@ -15,7 +15,7 @@ export default function Login() {
 
   const { mutate: onFinish } = useMutation((payload) => signin(payload), {
     onSuccess: (data) => {
-      Cookies.set("token", data?.data?.token);
+      Cookies.set("token", data?.token);
     },
     onError: (error) => handleErrorMessage(error),
   });

@@ -1,8 +1,25 @@
 @import "assets/variables.scss";
 @import "assets/mixin.scss";
+.wrapHeader {
+  margin-right: -15px;
+  margin-left: -15px;
+}
 .wrapContent {
+  position: relative;
+  z-index: 95;
+  background-color: $white-color;
+  padding: 10px;
+  border-radius: 10px;
+  max-height: 500px;
+  @include mq(md) {
+    margin-top: -155px;
+  }
+
+  @include mq(md, "max") {
+    margin-top: -165px;
+  }
   .content_title {
-    margin: 30px 0 15px 0;
+    margin: 0 0 15px 0;
 
     :global {
       .ant-checkbox-wrapper {
@@ -23,16 +40,32 @@
     overflow: auto;
     border: 1px solid rgba(140, 140, 140, 0.35);
     @include customScrollBar();
+    :global {
+      .ant-list-items {
+        @include mq(lg, "max") {
+          min-width: 500px;
+          overflow-x: scroll;
+        }
+      }
+    }
     .wrapListMeta {
       padding: 10px 15px;
-
       :global {
+        .ant-list-item-meta-content {
+          overflow: hidden;
+          display: -webkit-box;
+          text-overflow: ellipsis;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 3;
+        }
         .ant-checkbox-wrapper {
           margin-right: 10px;
         }
       }
     }
     .wrapDetailProduct {
+      width: 170px;
+      margin-left: 10px;
       .detailProduct__entryPrice {
         color: $smoke-5-color;
 
@@ -47,7 +80,8 @@
           margin-left: 5px;
           padding: 0 3px;
 
-          &:hover, &:focus {
+          &:hover,
+          &:focus {
             box-shadow: none;
           }
         }
@@ -55,6 +89,13 @@
           color: $blue-color;
         }
       }
+    }
+  }
+}
+.wrapModalListProduct {
+  :global {
+    .ant-modal-content {
+      padding: 15px;
     }
   }
 }

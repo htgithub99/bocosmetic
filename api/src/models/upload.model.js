@@ -2,8 +2,14 @@ const mongoose = require("mongoose");
 
 const Image = new mongoose.Schema(
   {
-    url: { type: String },
-    product_id: { type: String, require: true },
+    fieldname: { type: String },
+    originalname: { type: String },
+    encoding: { type: String },
+    mimetype: { type: String },
+    destination: { type: String },
+    filename: { type: String },
+    path: { type: String },
+    size: { type: Number },
   },
   { timestamps: true }
 );

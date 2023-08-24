@@ -5,6 +5,7 @@ import {
   LogoutOutlined,
   PrinterOutlined,
   UserOutlined,
+  FileOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import classNames from "classnames";
@@ -127,6 +128,12 @@ export default function SideNav() {
     },
     {
       key: "6",
+      text: "Quản lý bài viết",
+      url: RoutePath.MANAGE_POST_LIST_PATH,
+      icon: <FileOutlined />,
+    },
+    {
+      key: "7",
       text: "Đăng xuất",
       icon: <LogoutOutlined />,
     },
@@ -183,7 +190,10 @@ export default function SideNav() {
                       disabled={childRoute?.disabled}
                       key={childRoute.key}
                     >
-                      <Link onClick={onToggleMenu} to={childRoute?.disabled ? "#" : childRoute.url}>
+                      <Link
+                        onClick={onToggleMenu}
+                        to={childRoute?.disabled ? "#" : childRoute.url}
+                      >
                         {childRoute.text}
                       </Link>
                     </Menu.Item>

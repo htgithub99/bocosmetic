@@ -54,6 +54,7 @@ const orderVal = (data) => {
     payment_status: Joi.string().required(),
     creator_order: Joi.string().required(),
     ordering_branch: Joi.string().required(),
+    customer_address: Joi.string().required(),
     guest_must_pay: Joi.number().required(),
     product: Joi.array(),
   });

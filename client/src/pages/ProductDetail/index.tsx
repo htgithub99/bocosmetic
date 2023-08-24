@@ -1,4 +1,11 @@
-import { Breadcrumb, message, notification, Radio, RadioChangeEvent, Rate } from "antd";
+import {
+  Breadcrumb,
+  message,
+  notification,
+  Radio,
+  RadioChangeEvent,
+  Rate,
+} from "antd";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { getProductById } from "api/product";
 import Button from "components/Button/Button";
@@ -143,7 +150,7 @@ const ProductDetail = () => {
                     <Rate defaultValue={100} disabled />
                   </div>
                   <div className={styles.more_____slot}>
-                    Đã bán {items?.data?.percentage_discount}
+                    Đã bán {items?.data?.quantity_sold}
                   </div>
                 </div>
                 <div className={styles.info____price}>
@@ -212,10 +219,11 @@ const ProductDetail = () => {
           </div>
           <div className={styles.content__bottom}>
             <div className={styles.bottom___description}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
-              velit corporis quo voluptate culpa soluta, esse accusamus, sunt
-              quia omnis amet temporibus sapiente harum quam itaque libero
-              tempore. Ipsum, ducimus. lorem
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: items?.data?.description,
+                }}
+              />
             </div>
             <div className={styles.bottom___review}></div>
           </div>

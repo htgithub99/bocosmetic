@@ -42,7 +42,7 @@
           flex: 1;
           overflow: hidden;
           // border: 1px solid $smoke-14-color;
-          padding: 30.69px;
+          padding: 0 30.69px 0 0;
         }
         @include mq(md) {
           display: flex;
@@ -50,9 +50,9 @@
         }
 
         .top___images {
-          flex: 1;
           @include mq(md) {
-            width: 40%;
+            width: 50%;
+            padding-right: 12.5px;
           }
 
           @include mq(md, "max") {
@@ -66,10 +66,12 @@
 
         .top___info {
           @include mq(md) {
-            padding-left: 42px;
+            width: 50%;
+            padding-left: 12.5px;
           }
 
           @include mq(md, "max") {
+            width: 100%;
             margin-top: 30px;
           }
 
@@ -145,7 +147,7 @@
 
             .more_____slot {
               font-size: 12px;
-              font-weight: 700;
+              font-weight: 400;
             }
           }
 
@@ -220,10 +222,10 @@
             }
 
             h5 {
-              font-weight: 600;
+              font-weight: 400;
               margin-top: 10px;
               @include mq(md) {
-                font-size: 18px;
+                font-size: 16px;
               }
               @include mq(md, "max") {
                 font-size: 14px;
@@ -233,14 +235,10 @@
 
           .info____qty {
             h5 {
-              font-weight: 600;
+              font-weight: 400;
               margin-top: 10px;
 
-              @include mq(lg) {
-                font-size: 18px;
-              }
-
-              @include mq(lg, "max") {
+              @include mq(md) {
                 font-size: 16px;
               }
 
@@ -313,7 +311,7 @@
             .qty_____slot {
               margin-left: 10px;
               font-size: 12px;
-              font-weight: 700;
+              font-weight: 400;
             }
           }
         }
@@ -329,12 +327,46 @@
         margin-top: 20px;
       }
       .bottom___description {
-        @include mq(md) {
-          font-size: 16px;
+        font-weight: 300;
+        @include mq(lg) {
+          margin-right: 25px;
         }
+        p {
+          text-align: justify;
+          @include mq(lg) {
+            font-size: 18px;
+          }
 
-        @include mq(md, "max") {
-          font-size: 14px;
+          @include mq(lg, "max") {
+            font-size: 14px;
+          }
+
+          @include mq(md, "max") {
+            font-size: 12px;
+          }
+        }
+        li {
+          @include mq(lg) {
+            font-size: 16px;
+          }
+
+          @include mq(lg, "max") {
+            font-size: 14px;
+          }
+
+          @include mq(md, "max") {
+            font-size: 12px;
+          }
+          &:not(:last-child) {
+            margin-bottom: 10px;
+            @include mq(md, "max") {
+              margin-bottom: 5px;
+            }
+          }
+          span {
+            font-weight: bold;
+            margin-right: 5px;
+          }
         }
       }
     }

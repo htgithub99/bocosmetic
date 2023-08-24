@@ -1,0 +1,11 @@
+.wrapReactQuill {
+  :global {
+    .quill {
+      .ql-container {
+        .ql-editor {
+          min-height: 200px;
+        }
+      }
+    }
+  }
+}

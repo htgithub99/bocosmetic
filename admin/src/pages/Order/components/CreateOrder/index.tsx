@@ -73,8 +73,8 @@ const CreateOrder = ({ sizePage, _onCloseModal }: IProps) => {
             </Col>
             <Col span={12}>
               <Form.Item
-                label="Mã đơn hàng"
-                name="code_order"
+                label="Địa chỉ nhận đơn"
+                name="customer_address"
                 rules={[
                   {
                     required: true,
@@ -82,7 +82,7 @@ const CreateOrder = ({ sizePage, _onCloseModal }: IProps) => {
                   },
                 ]}
               >
-                <Input placeholder="Nhập mã đơn hàng" />
+                <Input placeholder="Nhập địa chỉ nhận đơn" />
               </Form.Item>
             </Col>
           </Row>
@@ -135,18 +135,40 @@ const CreateOrder = ({ sizePage, _onCloseModal }: IProps) => {
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item
-            label="Khách phải trả"
-            name="guest_must_pay"
-            rules={[
-              {
-                required: true,
-                message: "",
-              },
-            ]}
-          >
-            <InputNumber className="w-100" placeholder="Nhập khách phải trả" />
-          </Form.Item>
+          <Row gutter={[16, 16]}>
+            <Col span={12}>
+              <Form.Item
+                label="Khách phải trả"
+                name="guest_must_pay"
+                rules={[
+                  {
+                    required: true,
+                    message: "",
+                  },
+                ]}
+              >
+                <InputNumber
+                  className="w-100"
+                  placeholder="Nhập khách phải trả"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Mã đơn hàng"
+                name="code_order"
+                rules={[
+                  {
+                    required: true,
+                    message: "",
+                  },
+                ]}
+              >
+                <Input placeholder="Nhập mã đơn hàng" />
+              </Form.Item>
+            </Col>
+          </Row>
+
           <Form.Item>
             <Button
               htmlType="button"

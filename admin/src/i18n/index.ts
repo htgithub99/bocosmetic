@@ -20,7 +20,7 @@ export const handleSuccessMessage = (success: any) => {
 };
 
 export const getErrorMessage = (error: any) => {
-  return error?.response?.data?.message || "Something went wrong!";
+  return error?.response?.data?.message || error?.message || "Something went wrong!";
 };
 
 export const getSuccessMessage = (success: any) => {

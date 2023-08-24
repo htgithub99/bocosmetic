@@ -1,15 +1,18 @@
 import { Drawer, Image, Space, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
-import { getListProduct } from "api/product";
+import { deleteProduct, getListProduct } from "api/product";
 import Button from "components/Button/Button";
 import MainContainer from "components/MainContainer";
+import ModalDelete from "components/Modal/ModalDelete";
 import SearchHeaderTable from "components/SearchHeaderTable";
 import { calculateWidthTable } from "constants/calculate";
 import { HIEGHT_TABLE_SCROLL, QueryKey, TypeButton } from "constants/constant";
 import { BreakpointsUp } from "constants/enum";
 import { formatMoney } from "constants/format";
+import { MESSAGE_MODAL } from "constants/message";
+import { handleSuccessMessage, handleErrorMessage } from "i18n";
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import useViewport from "utils/hooks/useViewport";
 import EditProduct from "./components/EditProduct";
@@ -37,11 +40,33 @@ const Variants = () => {
     productId: null,
     modalHas: false,
   });
+  const [modalDelete, setModalDelete] = useState<{
+    isModal: boolean;
+    _id: string;
+  }>({
+    isModal: false,
+    _id: "",
+  });
 
-  const { data: productData, isLoading: isLoadingProductData } = useQuery(
+  const {
+    data: productData,
+    isLoading: isLoadingProductData,
+    refetch: refetchProduct,
+  } = useQuery(
     [QueryKey.LIST_PRODUCT_KEY, sizePage],
     () => getListProduct(sizePage),
     {}
+  );
+
+  const { mutate: onDeleteProduct } = useMutation(
+    (_id: string) => deleteProduct(_id),
+    {
+      onSuccess: (data) => {
+        handleSuccessMessage(data);
+      },
+      onError: (error) => handleErrorMessage(error),
+      onSettled: () => refetchProduct(),
+    }
   );
 
   const COLUMNS_VARIANTS: ColumnsType<DataType> = [
@@ -95,29 +120,36 @@ const Variants = () => {
     {
       title: "Tác vụ",
       dataIndex: "action",
-      width: isViewport767 ? 125 : 200,
+      width: isViewport767 ? 125 : 170,
       align: "center",
       fixed: "right",
-      render: (_, record) => (
+      render: (_, item) => (
         <Space size="middle">
           <Button
-            onClick={() => onClickUpdateProduct(record)}
+            onClick={() => onClickUpdateProduct(item)}
             classNameT={TypeButton.EDIT}
           >
             Sửa
           </Button>
-          <Button classNameT={TypeButton.DELETE}>Xóa</Button>
+          <Button
+            onClick={() =>
+              setModalDelete({ isModal: true, _id: (item as any)._id })
+            }
+            classNameT={TypeButton.DELETE}
+          >
+            Xóa
+          </Button>
         </Space>
       ),
     },
   ];
 
-  // const _onPaginationTable = (pageIndex: any) => {
-  //   setSizePage({
-  //     ...sizePage,
-  //     pageIndex,
-  //   });
-  // };
+  const _onPaginationTable = (pageIndex: any) => {
+    setSizePage({
+      ...sizePage,
+      pageIndex,
+    });
+  };
 
   const onClickUpdateProduct = ({ _id }: any) => {
     setUpdateDrawer({
@@ -175,6 +207,15 @@ const Variants = () => {
     return null;
   };
 
+  const _onCloseModalDelete = () => {
+    setModalDelete({ isModal: false, _id: "" });
+  };
+
+  const _onSubmitModalDelete = () => {
+    onDeleteProduct(modalDelete._id);
+    _onCloseModalDelete();
+  };
+
   return (
     <>
       <SearchHeaderTable
@@ -196,21 +237,28 @@ const Variants = () => {
               dataSource={sourceData()}
               loading={isLoadingProductData}
               scroll={{ y: HIEGHT_TABLE_SCROLL }}
-              // pagination={{
-              //   total: productData?.totalItems,
-              //   showTotal: (total, range) =>
-              //     `Từ ${productData?.pageIndex || 1} đến ${total} trên tổng ${
-              //       productData?.totalItems
-              //     }`,
-              //   defaultPageSize: productData?.pageSize || 5,
-              //   defaultCurrent: 1,
-              //   onChange: (page) => _onPaginationTable(page),
-              // }}
+              pagination={{
+                total: productData?.totalItems,
+                // showTotal: (total, range) =>
+                //   `Từ ${productData?.pageIndex || 1} đến ${total} trên tổng ${
+                //     productData?.totalItems
+                //   }`,
+                defaultPageSize: productData?.pageSize || 5,
+                defaultCurrent: 1,
+                onChange: (page) => _onPaginationTable(page),
+              }}
             />
           </div>
         </div>
         {_renderDrawerEdit()}
       </MainContainer>
+      <ModalDelete
+        isModalOpen={modalDelete.isModal}
+        _onClose={_onCloseModalDelete}
+        _onSubmit={_onSubmitModalDelete}
+        title={MESSAGE_MODAL.MESSAGE_MODAL_DELETE_PRODUCT_TITLE}
+        descriptions={MESSAGE_MODAL.MESSAGE_MODAL_DELETE_PRODUCT_DESCRIPTION}
+      />
     </>
   );
 };

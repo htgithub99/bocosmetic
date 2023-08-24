@@ -2,7 +2,7 @@
 @import "assets/mixin.scss";
 .wrapContainer {
   @include mq(lg) {
-    max-width: 1476px;
+    max-width: 1200px;
     margin: 0 auto;
   }
 }

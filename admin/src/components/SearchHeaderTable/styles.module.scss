@@ -7,11 +7,11 @@
 
   background: linear-gradient(87deg, #11cdef, #1171ef) !important;
   @include mq(lg) {
-    padding: 20px 30px 250px 30px;
+    padding: 20px 30px 200px 30px;
   }
 
   @include mq(lg, "max") {
-    padding: 20px 15px 250px 15px;
+    padding: 20px 15px 200px 15px;
   }
   .wrapSearchHeaderTable {
     display: flex;
@@ -35,11 +35,16 @@
     @include mq(md) {
       margin-bottom: 20px;
     }
-  
+
     @include mq(md, "max") {
       margin-bottom: 15px;
     }
     .btn__import {
+      :global {
+        .ant-upload-list {
+          display: none;
+        }
+      }
       button {
         @include mq(md) {
           font-size: 16px;

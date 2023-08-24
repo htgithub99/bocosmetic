@@ -1,6 +1,7 @@
 const customer = require("../controllers/customer.controller");
 const verifyAuth = require("./verifyToken");
 const { upload__ } = require("../constants");
+const { RoutePath } = require("../constants/constant");
 
 module.exports = (app) => {
   const router = require("express").Router();
@@ -10,7 +11,7 @@ module.exports = (app) => {
   //   router.post("/api/customer/create", verifyAuth, product.createProduct);
   //   router.get("/api/customer", verifyAuth, product.getProduct);
   router.post(
-    "/api/customer/add-customers",
+    RoutePath.CUSTOMERS_ADD_PATH,
     upload__.single("file"),
     verifyAuth,
     customer.addCustomers

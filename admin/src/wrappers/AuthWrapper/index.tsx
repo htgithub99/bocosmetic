@@ -11,7 +11,10 @@ const Variants = lazy(() => import("pages/Product/Variants"));
 const PurchaseOrders = lazy(() => import("pages/Product/PurchaseOrders"));
 
 //Order
-const Order = lazy(() => import("pages/Order"))
+const Order = lazy(() => import("pages/Order"));
+
+//Post
+const Post = lazy(() => import("pages/Post"));
 
 const Dashboard = lazy(() => import("pages/Dashboard"));
 
@@ -19,7 +22,7 @@ export default function PageWrapper() {
   const isAuthenticated = !!Cookies.get("token");
   // const { profile } = useProfile(isAuthenticated);
 
-  // if (!isAuthenticated) return <Navigate to="/login" />;
+  if (!isAuthenticated) return <Navigate to="/login" />;
   // if (!profile) return null;
 
   return (
@@ -42,10 +45,8 @@ export default function PageWrapper() {
               />
 
               {/* Order */}
-              <Route
-                path={RoutePath.ORDER_LIST_PATH}
-                element={<Order />}
-              />
+              <Route path={RoutePath.ORDER_LIST_PATH} element={<Order />} />
+              <Route path={RoutePath.MANAGE_POST_LIST_PATH} element={<Post />} />
             </Routes>
           </Suspense>
         </div>

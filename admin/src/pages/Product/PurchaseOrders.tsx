@@ -460,13 +460,13 @@ const PurchaseOrders = () => {
               }}
               loading={false}
               scroll={{ y: HIEGHT_TABLE_SCROLL }}
-              // pagination={{
-              //   total: 85,
-              //   showTotal: (total, range) =>
-              //     `${range[0]}-${range[1]} of ${total} items`,
-              //   defaultPageSize: 20,
-              //   defaultCurrent: 1,
-              // }}
+              pagination={{
+                total: 85,
+                // showTotal: (total, range) =>
+                //   `${range[0]}-${range[1]} of ${total} items`,
+                defaultPageSize: 20,
+                defaultCurrent: 1,
+              }}
             />
           </div>
         </div>

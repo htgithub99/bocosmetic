@@ -17,7 +17,7 @@ const ProductCard: React.FC<IProps> = ({ item, addProductToCart }) => {
     images,
     sale_price,
     percentage_discount,
-    quantity_sold,
+    quantity_sold = 0,
     price,
     product_name,
     _id,
@@ -32,7 +32,7 @@ const ProductCard: React.FC<IProps> = ({ item, addProductToCart }) => {
         </Link>
       </div>
       <div className="p-5">
-        <div className={styles.productCard_sale}>{`Off ${
+        <div className={styles.productCard_sale}>{`Giảm ${
           percentage_discount || percentageDiscount(price, sale_price)
         }%`}</div>
         <div className={styles.productCard_more}>

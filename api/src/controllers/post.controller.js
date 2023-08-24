@@ -2,10 +2,21 @@ const Post = require("../models/post.model");
 const { postVal } = require("../constants/validate");
 
 exports.getPost = async (req, res) => {
+  const params = req.query;
   const pageIndex = parseInt(req.query.pageIndex) - 1 || 0;
   const pageSize = parseInt(req.query.pageSize) || 5;
+  const query = {
+    $or: [
+      {
+        title: new RegExp(params.name, "i"),
+      },
+      {
+        content: new RegExp(params.name, "i"),
+      },
+    ],
+  };
   try {
-    Post.find()
+    Post.find(query)
       .sort({
         createdAt: "desc",
       })
@@ -17,7 +28,7 @@ exports.getPost = async (req, res) => {
             return res.status(400).send({
               message: "Lỗi!",
             });
-          res.send({
+          res.status(200).send({
             data: post,
             pageIndex: pageIndex + 1,
             totalPages: Math.ceil(count / pageSize),
@@ -32,9 +43,9 @@ exports.getPost = async (req, res) => {
 };
 
 exports.getByIdPost = async (req, res) => {
-  const { id } = req.params;
+  const { _id } = req.params;
   try {
-    const response = await Post.findById(id);
+    const response = await Post.findById(_id);
     res.send({
       data: response,
     });
@@ -54,7 +65,7 @@ exports.createPost = async (req, res) => {
   });
   try {
     await post.save();
-    res.send({
+    res.status(200).send({
       message: "Tạo bài viết thành công!",
     });
   } catch (error) {
@@ -65,7 +76,7 @@ exports.createPost = async (req, res) => {
 };
 
 exports.updatePost = async (req, res) => {
-  const { id } = req.params;
+  const { _id } = req.params;
   const { error } = postVal(req.body);
   if (error)
     return res.status(400).send({
@@ -73,12 +84,12 @@ exports.updatePost = async (req, res) => {
     });
   try {
     await Post.updateOne(
-      { _id: id },
+      { _id },
       {
         ...req.body,
       }
     );
-    res.send({
+    res.status(200).send({
       message: "Chỉnh sửa bài viết thành công!",
     });
   } catch (error) {
@@ -92,7 +103,7 @@ exports.destroyPost = async (req, res) => {
   const { _id } = req.params;
   try {
     await Post.deleteOne({ _id });
-    res.send({
+    res.status(200).send({
       message: "Xóa bài viết thành công",
     });
   } catch (error) {

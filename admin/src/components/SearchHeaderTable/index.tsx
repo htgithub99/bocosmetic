@@ -1,7 +1,11 @@
 import {
-  DownloadOutlined, PlusOutlined, SearchOutlined, UploadOutlined
+  DownloadOutlined,
+  PlusOutlined,
+  SearchOutlined,
+  UploadOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, Upload } from "antd";
+import type { UploadProps } from "antd/es/upload/interface";
 import { useState } from "react";
 import useViewport from "utils/hooks/useViewport";
 import styles from "./styles.module.scss";
@@ -10,6 +14,8 @@ interface IProps {
   _onCreate?: () => void;
   btnCreateHas?: boolean;
   btnHeaderImport?: boolean;
+  onImportFile?: (excelData: any) => void;
+  onExportFile?: () => void;
   _onSearchField?: (value: any) => void;
   placeholderInputSearch?: string;
   background?: string;
@@ -21,10 +27,20 @@ const SearchHeaderTable = ({
   btnHeaderImport = true,
   _onSearchField,
   placeholderInputSearch,
+  onImportFile = () => {},
+  onExportFile = () => {},
   background = "#f0f1f1",
 }: IProps) => {
   const { isMobile } = useViewport();
   const [inputValue, setInputValue] = useState<string>("");
+
+  const onChange: UploadProps["onChange"] = ({ file: fileI }) => {
+    const file = fileI.originFileObj;
+    const formData = new FormData();
+    formData.append("file", file as any);
+    onImportFile(formData);
+  };
+
   return (
     <>
       <div className={styles.sticky__search}>
@@ -32,15 +48,16 @@ const SearchHeaderTable = ({
           <div className={styles.wrapBtnHeaderTable}>
             <div className={styles.btn__import}>
               <Button
-                // type="dashed"
                 icon={<DownloadOutlined />}
                 htmlType="button"
                 size={isMobile ? "middle" : "large"}
               >
-                Nhập file
+                <Upload accept=".xlsx, .xls" fileList={[]} onChange={onChange}>
+                  Nhập file
+                </Upload>
               </Button>
               <Button
-                // type="dashed"
+                onClick={() => onExportFile()}
                 icon={<UploadOutlined />}
                 htmlType="button"
                 size={isMobile ? "middle" : "large"}
@@ -77,7 +94,6 @@ const SearchHeaderTable = ({
           </div>
           <div className={styles.search_button}>
             <Button
-              // type="dashed"
               htmlType="button"
               size={isMobile ? "middle" : "large"}
               onClick={() => _onSearchField && _onSearchField(inputValue)}

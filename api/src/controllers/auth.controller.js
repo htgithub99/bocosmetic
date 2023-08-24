@@ -14,7 +14,7 @@ exports.register = async (req, res) => {
   const emailExist = await User.findOne({ email });
   if (emailExist)
     return res.status(400).send({
-      message: "Email already exists!",
+      message: "Email này đã tồn tại!",
     });
   const salt = await bcrypt.genSalt(11);
   const passwordHash = await bcrypt.hash(password, salt);
@@ -26,9 +26,7 @@ exports.register = async (req, res) => {
   try {
     await user.save();
     res.send({
-      data: {
-        message: "Register success!",
-      },
+      message: "Đăng ký tài khoản thành công!",
     });
   } catch (error) {
     res.status(400).send(error);
@@ -38,26 +36,23 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   const { email, password } = req.body;
   const { error } = loginVal(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error)
+    return res.status(400).send({
+      message: error.details[0].message,
+    });
   const user = await User.findOne({ email });
   if (!user)
     return res.status(400).send({
-      data: {
-        message: "Email not found!",
-      },
+      message: "Email không tồn tại!",
     });
   const passwordVali = await bcrypt.compare(password, user.password);
   if (!passwordVali)
     return res.status(400).send({
-      data: {
-        message: "Invalid password",
-      },
+      message: "Invalid password",
     });
   const token = jwt.sign({ _id: user._id }, "skjhfdjsdhfkkjwer");
   res.header("auth-token", token).send({
-    data: {
-      message: "Login success",
-      token,
-    },
+    message: "Đăng nhập thành công",
+    token,
   });
 };

@@ -3,7 +3,7 @@ const Resources = require("../models/resources.model");
 exports.getResources = async (req, res) => {
   try {
     const response = await Resources.find({});
-    res.send({
+    res.status(200).send({
       data: response[0],
     });
   } catch (error) {
@@ -18,7 +18,7 @@ exports.createResources = async (req, res) => {
   });
   try {
     await resources.save();
-    res.send({
+    res.status(200).send({
       message: "Tạo tài nguyên thành công!",
     });
   } catch (error) {
@@ -37,7 +37,7 @@ exports.updateResources = async (req, res) => {
         ...req.body,
       }
     );
-    res.send({
+    res.status(200).send({
       message: "Chỉnh sửa tài nguyên thành công!",
     });
   } catch (error) {

@@ -4,15 +4,13 @@
 .wrapVariants,
 .wrapPurchaseOrders {
   .wrapContent {
-    position: relative;
     @include mq(md) {
-      top: -200px;
+      margin-top: -155px;
     }
 
     @include mq(md, "max") {
-      top: -225px;
+      margin-top: -165px;
     }
-    z-index: 95;
     .productVersionName {
       p {
         margin-bottom: 0;

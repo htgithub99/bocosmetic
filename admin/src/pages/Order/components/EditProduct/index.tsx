@@ -6,7 +6,7 @@ import {
   OPTIONS_BRANCH,
   OPTIONS_STATUS_ORDER,
   OPTIONS_STATUS_PAYMENT_ORDER,
-  QueryKey
+  QueryKey,
 } from "constants/constant";
 import { handleErrorMessage, handleSuccessMessage } from "i18n";
 import { useEffect, useState } from "react";
@@ -81,8 +81,8 @@ const EditOrder = ({ orderId, sizePage, _onCloseModal }: IProps) => {
             </Col>
             <Col span={12}>
               <Form.Item
-                label="Mã đơn hàng"
-                name="code_order"
+                label="Địa chỉ nhận đơn"
+                name="customer_address"
                 rules={[
                   {
                     required: true,
@@ -90,7 +90,7 @@ const EditOrder = ({ orderId, sizePage, _onCloseModal }: IProps) => {
                   },
                 ]}
               >
-                <Input placeholder="Nhập mã đơn hàng" />
+                <Input placeholder="Nhập địa chỉ nhận đơn" />
               </Form.Item>
             </Col>
           </Row>
@@ -143,18 +143,40 @@ const EditOrder = ({ orderId, sizePage, _onCloseModal }: IProps) => {
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item
-            label="Khách phải trả"
-            name="guest_must_pay"
-            rules={[
-              {
-                required: true,
-                message: "",
-              },
-            ]}
-          >
-            <InputNumber className="w-100" placeholder="Nhập khách phải trả" />
-          </Form.Item>
+          <Row gutter={[16, 16]}>
+            <Col span={12}>
+              <Form.Item
+                label="Khách phải trả"
+                name="guest_must_pay"
+                rules={[
+                  {
+                    required: true,
+                    message: "",
+                  },
+                ]}
+              >
+                <InputNumber
+                  className="w-100"
+                  placeholder="Nhập khách phải trả"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Mã đơn hàng"
+                name="code_order"
+                rules={[
+                  {
+                    required: true,
+                    message: "",
+                  },
+                ]}
+              >
+                <Input placeholder="Nhập mã đơn hàng" />
+              </Form.Item>
+            </Col>
+          </Row>
+
           <Form.Item>
             <Button
               htmlType="button"
@@ -165,7 +187,7 @@ const EditOrder = ({ orderId, sizePage, _onCloseModal }: IProps) => {
             </Button>
           </Form.Item>
           <Form.Item>
-            <Button htmlType="submit">Tạo mới</Button>
+            <Button htmlType="submit">Chỉnh sửa</Button>
           </Form.Item>
         </Form>
       </div>

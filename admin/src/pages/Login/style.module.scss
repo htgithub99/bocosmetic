@@ -36,7 +36,7 @@
       }
     }
   }
-  
+
   .wrapContent {
     width: 100%;
     form {
@@ -69,6 +69,18 @@
       margin-top: 50px;
       display: flex;
       justify-content: center;
+      button {
+        width: 279px;
+        border-radius: 50px;
+        text-align: center;
+        height: 3em;
+        @include mq(md) {
+          font-size: 16px;
+        }
+        @include mq(md, "max") {
+          font-size: 14px;
+        }
+      }
     }
   }
 }

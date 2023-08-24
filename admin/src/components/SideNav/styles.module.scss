@@ -11,13 +11,14 @@
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
+  overflow-y: scroll;
   @include mq(lg) {
   }
   @include mq(lg, "max") {
     position: fixed;
     z-index: 99;
     height: 100vh;
-    top: 0;
+    top: 55px;
     -webkit-transition: -webkit-transform 0.2s;
     transition: -webkit-transform 0.2s;
     -o-transition: transform 0.2s;
@@ -35,10 +36,10 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    box-shadow: 0px 2px 0 rgba(168, 168, 168, 0.25);
+    background-color: $white-color;
+    @include mq(lg) {
+      box-shadow: 0px 2px 0 rgba(168, 168, 168, 0.25);
+    }
     @include mq(md) {
       padding: 10px 0;
     }
@@ -61,7 +62,6 @@
   }
 
   .sideNav_content {
-    overflow-y: scroll;
     @include customScrollBar(0, 0, 0);
     // height: calc(100% - 65px);
     // padding-bottom: 20px;

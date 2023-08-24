@@ -65,8 +65,8 @@
 
 .wrapButton_delete {
   @include mq(md) {
-    width: 75px;
-    height: 35px;
+    width: 65px;
+    height: 30px;
   }
   @include mq(md, "max") {
     width: 50px;
@@ -83,8 +83,8 @@
 
 .wrapButton_edit {
   @include mq(md) {
-    width: 75px;
-    height: 35px;
+    width: 65px;
+    height: 30px;
   }
   @include mq(md, "max") {
     width: 50px;

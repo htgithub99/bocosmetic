@@ -17,7 +17,7 @@ exports.getOrder = async (req, res) => {
     ],
   };
   try {
-    await Order.find(query)
+    Order.find(query)
       .sort({
         createdAt: "desc",
       })
@@ -29,7 +29,7 @@ exports.getOrder = async (req, res) => {
             return res.status(400).send({
               message: "Lỗi!",
             });
-          res.send({
+          res.status(200).send({
             data: order,
             pageIndex: pageIndex + 1,
             totalPages: Math.ceil(count / pageSize),
@@ -44,10 +44,10 @@ exports.getOrder = async (req, res) => {
 };
 
 exports.getByIdOrder = async (req, res) => {
-  const { id } = req.params;
+  const { _id } = req.params;
   try {
-    const response = await Order.findById(id);
-    res.send({
+    const response = await Order.findById(_id);
+    res.status(200).send({
       data: response,
     });
   } catch (error) {
@@ -66,7 +66,7 @@ exports.createOrder = async (req, res) => {
   });
   try {
     await order.save();
-    res.send({
+    res.status(200).send({
       message: "Tạo đơn hàng thành công!",
     });
   } catch (error) {
@@ -77,7 +77,7 @@ exports.createOrder = async (req, res) => {
 };
 
 exports.updateOrder = async (req, res) => {
-  const { id } = req.params;
+  const { _id } = req.params;
   const { error } = orderVal(req.body);
   if (error)
     return res.status(400).send({
@@ -85,12 +85,12 @@ exports.updateOrder = async (req, res) => {
     });
   try {
     await Order.updateOne(
-      { _id: id },
+      { _id },
       {
         ...req.body,
       }
     );
-    res.send({
+    res.status(200).send({
       message: "Chỉnh sửa đơn hàng thành công!",
     });
   } catch (error) {
@@ -109,11 +109,9 @@ exports.addOrders = async (req, res) => {
     // Save the data to MongoDB
     Order.insertMany(jsonData, (error, docs) => {
       if (error) {
-        console.error(error);
-        res.status(500).json({ error: "Không thể nhập dữ liệu." });
-      } else {
-        res.json({ message: "Dữ liệu đã được nhập thành công." });
+        return res.status(500).json({ message: "Không thể nhập dữ liệu." });
       }
+      res.status(200).json({ message: "Dữ liệu đã được nhập thành công." });
     });
   } catch (error) {
     console.error(error);

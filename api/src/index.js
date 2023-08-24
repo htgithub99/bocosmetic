@@ -6,14 +6,16 @@ dotenv.config();
 const app = express();
 const configs = require("./constants/config");
 app.use(morgan("combined"));
+app.use("/public", express.static("public"));
+app.use(cors());
 app.use(
   express.urlencoded({
     extended: true,
+    limit: "25mb",
   })
 );
-app.use(express.json());
+app.use(express.json({ limit: "25mb" }));
 const connection = require("./db");
-app.use(cors());
 const port = configs.PORT || 3003;
 connection();
 

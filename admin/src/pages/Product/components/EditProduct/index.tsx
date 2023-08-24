@@ -1,10 +1,13 @@
 import { Button, Col, Form, Input, InputNumber, Row, Select } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { getByIdProduct, updateProduct } from "api/product";
+import { uploadMultiple } from "api/upload";
+import UploadImage from "components/UploadImage";
+import configs from "constants/config";
 import { OPTIONS_BRANCH, QueryKey } from "constants/constant";
 import { convertDataCategoryToOptions } from "constants/convert";
 import { handleSuccessMessage } from "i18n";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import useCategory from "utils/hooks/useCategory";
 
@@ -20,6 +23,7 @@ const EditProduct = ({ productId, _onCloseModal, sizePage }: IProps) => {
   const [form] = useForm();
   const queryClient = useQueryClient();
   const { categoryData } = useCategory({});
+  const [fileImages, setFileImages] = useState<any>([]);
 
   const { data: detailProduct, isLoading } = useQuery(
     [QueryKey.GET_BY_ID_PRODUCT, productId],
@@ -30,7 +34,23 @@ const EditProduct = ({ productId, _onCloseModal, sizePage }: IProps) => {
   );
 
   const { mutate: _onSubmit } = useMutation(
-    (payload) => updateProduct(productId, payload),
+    async (payload: any) => {
+      // let images = [];
+      // if (fileImages.length) {
+      //   const formData = new FormData();
+      //   fileImages.forEach((file: any) => {
+      //     formData.append("file", file);
+      //   });
+      //   const response = await uploadMultiple(formData);
+      //   images = response?.data?.urls.map(
+      //     (item: any) => `${configs.API_UPLOAD_DOMAIN}${item.path}`
+      //   );
+      // }
+      return updateProduct(productId, {
+        ...payload,
+        images: detailProduct.images,
+      });
+    },
     {
       onSuccess: (data) => {
         handleSuccessMessage(data);
@@ -45,6 +65,12 @@ const EditProduct = ({ productId, _onCloseModal, sizePage }: IProps) => {
 
   useEffect(() => {
     form.setFieldsValue(detailProduct?.data);
+    setFileImages(
+      detailProduct?.data?.images?.map((item: string, ix: number) => ({
+        url: item,
+        uid: ix + 1,
+      }))
+    );
     return () => form.resetFields();
   }, [detailProduct]);
 
@@ -65,19 +91,19 @@ const EditProduct = ({ productId, _onCloseModal, sizePage }: IProps) => {
             <Input placeholder="Nhập tên sản phẩm" />
           </Form.Item>
           <Form.Item
-            label="Giá nhập"
+            label="Giá bán"
             rules={[
               {
                 required: true,
                 message: "",
               },
             ]}
-            name="intial_price"
+            name="price"
           >
             <InputNumber
-              prefix="￥"
               className="w-100"
-              placeholder="Nhập giá nhập"
+              prefix="￥"
+              placeholder="Nhập giá bán"
             />
           </Form.Item>
           <Row gutter={[16, 16]}>
@@ -136,19 +162,19 @@ const EditProduct = ({ productId, _onCloseModal, sizePage }: IProps) => {
             </Col>
             <Col span={12}>
               <Form.Item
-                label="Giá bán"
+                label="Giá nhập"
                 rules={[
                   {
                     required: true,
                     message: "",
                   },
                 ]}
-                name="price"
+                name="intial_price"
               >
                 <InputNumber
-                  className="w-100"
                   prefix="￥"
-                  placeholder="Nhập giá bán"
+                  className="w-100"
+                  placeholder="Nhập giá nhập"
                 />
               </Form.Item>
             </Col>
@@ -188,6 +214,16 @@ const EditProduct = ({ productId, _onCloseModal, sizePage }: IProps) => {
               </Form.Item>
             </Col>
           </Row>
+          <Form.Item label="Ảnh sản phẩm" name="images">
+            <UploadImage
+              getListImage={(images) => {
+                if (!images.length) return;
+                setFileImages(images.map((item) => item.originFileObj));
+              }}
+              listDf={fileImages}
+              disabled={true}
+            />
+          </Form.Item>
           <Form.Item>
             <Button htmlType="submit">Chỉnh sửa</Button>
           </Form.Item>

@@ -39,7 +39,7 @@ exports.getProduct = async (req, res) => {
             return res.status(400).send({
               message: "Lỗi!",
             });
-          res.send({
+          res.status(200).send({
             data: products,
             pageIndex: pageIndex + 1,
             totalPages: Math.ceil(count / pageSize),
@@ -88,7 +88,7 @@ exports.getProductByCategory = async (req, res) => {
               return res.status(400).send({
                 message: "Không lấy được dữ liệu!",
               });
-            res.send({
+            res.status(200).send({
               data: products,
               pageIndex: pageIndex + 1,
               totalPages: Math.ceil(count / pageSize),
@@ -142,7 +142,7 @@ exports.getFilterByProduct = async (req, res) => {
       if (item.color) customData[2].item.push(item.color);
       if (item.size) customData[3].item.push(item.size);
     });
-    res.send({
+    res.status(200).send({
       data: customData
         .map((item) => ({
           ...item,
@@ -187,7 +187,7 @@ exports.getProductTopPage = async (req, res) => {
             return res.status(400).send({
               message: "Không lấy được dữ liệu!",
             });
-          res.send({
+          res.status(200).send({
             data: products,
             pageIndex: pageIndex + 1,
             totalPages: Math.ceil(count / pageSize),
@@ -205,7 +205,7 @@ exports.getByIdProduct = async (req, res) => {
   const { _id } = req.params;
   try {
     const response = await Product.findById(_id, FieldResultQueryProduct);
-    res.send({
+    res.status(200).send({
       data: response,
     });
   } catch (error) {
@@ -215,20 +215,16 @@ exports.getByIdProduct = async (req, res) => {
 
 exports.createProduct = async (req, res) => {
   const payload = req.body;
+  const { price, sale_price = 0, product_name } = payload;
   if (!payload.percentage_discount) {
-    payload.percentage_discount = percentageDiscount(
-      payload.price,
-      payload.price_sale
-    );
+    payload.percentage_discount = percentageDiscount(price, sale_price);
   }
   const { error } = productVal(payload);
   if (error)
     return res.status(400).send({
       message: error.details[0].message,
     });
-  const productNameExist = await Product.findOne({
-    product_name: payload.product_name,
-  });
+  const productNameExist = await Product.findOne({ product_name });
   if (productNameExist)
     return res.status(400).send({
       message: "Sản phẩm này đã tồn tại!",
@@ -238,7 +234,7 @@ exports.createProduct = async (req, res) => {
   });
   try {
     await product.save();
-    res.send({
+    res.status(200).send({
       message: "Tạo sản phẩm thành công!",
     });
   } catch (error) {
@@ -262,7 +258,7 @@ exports.updateProduct = async (req, res) => {
         ...req.body,
       }
     );
-    res.send({
+    res.status(200).send({
       message: "Chỉnh sửa sản phẩm thành công!",
     });
   } catch (error) {
@@ -295,15 +291,13 @@ exports.addProducts = async (req, res) => {
     // Save the data to MongoDB
     Product.insertMany(jsonData, (error, docs) => {
       if (error) {
-        console.error(error);
-        res.status(500).json({ error: "Không thể nhập dữ liệu." });
-      } else {
-        res.json({ message: "Dữ liệu đã được nhập thành công." });
+        return res.status(500).json({ message: "Không thể nhập dữ liệu." });
       }
+      res.status(200).json({ message: "Dữ liệu đã được nhập thành công." });
     });
   } catch (error) {
     console.error(error);
-    res.status(400).json({ error: "Tập tin không hợp lệ." });
+    res.status(400).json({ message: "Tập tin không hợp lệ." });
   }
 };
 
@@ -367,7 +361,6 @@ exports.getByIdProductAdmin = async (req, res) => {
 
 exports.updateProductAdmin = async (req, res) => {
   const { _id } = req.params;
-  console.log("__________________ req.body", req.body);
   const { error } = productVal(req.body);
   if (error)
     return res.status(400).send({

@@ -28,7 +28,7 @@ exports.getCategory = async (req, res) => {
             return res.status(400).send({
               message: "Không lấy được dữ liệu!",
             });
-          res.send({
+          res.status(200).send({
             data: categorys,
             pageIndex: pageIndex + 1,
             totalPages: Math.ceil(count / pageSize),
@@ -60,7 +60,7 @@ exports.createCategory = async (req, res) => {
   });
   try {
     await category.save();
-    res.send({
+    res.status(200).send({
       message: "Tạo danh mục thành công!",
     });
   } catch (error) {
@@ -71,7 +71,7 @@ exports.createCategory = async (req, res) => {
 };
 
 exports.updateCategory = async (req, res) => {
-  const { id } = req.params;
+  const { _id } = req.params;
   const { error } = categoryVal(req.body);
   if (error)
     return res.status(400).send({
@@ -79,12 +79,12 @@ exports.updateCategory = async (req, res) => {
     });
   try {
     await Category.updateOne(
-      { _id: id },
+      { _id: _id },
       {
         ...req.body,
       }
     );
-    res.send({
+    res.status(200).send({
       message: "Chỉnh sửa danh mục thành công!",
     });
   } catch (error) {

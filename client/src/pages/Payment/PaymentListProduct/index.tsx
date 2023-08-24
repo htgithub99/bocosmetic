@@ -23,7 +23,6 @@ const PaymentListProduct = () => {
 
   // const onDeleteProduct = useCallback(
   //   (_id: string) => {
-  //     console.log("______ _____ onDeleteProduct");
   //     const newValue = storedValue.filter(
   //       (item: IProductCard) => item._id !== _id
   //     );

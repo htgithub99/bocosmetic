@@ -9,6 +9,7 @@ const Order = new mongoose.Schema(
     guest_must_pay: { type: Number, require: true },
     creator_order: { type: String, require: true },
     ordering_branch: { type: String, require: true },
+    customer_address: { type: String, require: true },
     product: { type: Array },
   },
   { timestamps: true }
